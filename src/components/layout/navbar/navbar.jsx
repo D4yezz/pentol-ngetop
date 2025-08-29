@@ -23,7 +23,7 @@ const navigasi = [
   },
   {
     id: 3,
-    text: "Produk",
+    text: "Menu",
     href: "/",
     icon: <Store size={20} />,
   },
@@ -51,7 +51,7 @@ export default function Navbar() {
               {navigasi.map((item) => (
                 <li
                   key={item.id}
-                  className="group flex items-center px-2 py-2 rounded-full hover:scale-105 duration-300 ease-in-out text-yellow-300 hover:bg-yellow-300 hover:text-red-800 h-full"
+                  className="group flex items-center px-2 py-2 rounded-full cursor-pointer hover:scale-105 duration-300 ease-in-out text-yellow-300 hover:bg-yellow-300 hover:text-red-800 h-full"
                 >
                   <Link href={item.href} className="flex gap-2 items-center text-[1rem] font-semibold ">
                     <span className="group-hover:-rotate-6">{item.icon}</span>{" "}

@@ -1,5 +1,4 @@
 import TextType from "@/components/ReactBites/TextType";
-import { Button } from "@/components/ui/button";
 import BtnGeserAtas from "@/components/uiVerse/btnGeserAtas";
 import ButtonMengkilap from "@/components/uiVerse/btnMengkilap";
 import { Link2, Phone, Send, ShoppingBasket } from "lucide-react";
@@ -8,17 +7,18 @@ import Link from "next/link";
 export default function TeksWelcome() {
   return (
     <>
-      <section className="flex flex-col gap-6 w-1/2 h-full justify-center">
-        <h1 className="font-semibold text-red-800 flex flex-col font-poppins">
-          <Link href={"/"} className="group flex items-center gap-1 w-fit">
+      <section className="flex flex-col w-1/2 h-full justify-center">
+        <h1 className="font-semibold gradiasi-btn-merah text-transparent bg-clip-text flex flex-col font-poppins text-5xl h-2/4">
+          <Link href={"/"} className="group flex items-center gap-1 w-fit hover:text-red-600">
             <p>Pentol Ngetop,</p>
             <Link2
               size={28}
               className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 duration-200 ease-in-out"
             />
+            
           </Link>
           Pedasnya nendang,
-          <br /> hangatnya bikin kenyang.
+          <br /> <span className="">hangatnya bikin kenyang.</span>
         </h1>
         <TextType
           text={[
@@ -29,16 +29,16 @@ export default function TeksWelcome() {
           pauseDuration={1500}
           showCursor={true}
           cursorCharacter="|"
-          className="text-xl font-medium text-orange-700 mb-6 font-poppins"
+          className="text-xl font-medium text-orange-600 mb-6 font-poppins"
         />
         <div className="flex gap-4">
           <ButtonMengkilap
             text={"Beli Pentol"}
             icon={<ShoppingBasket size={18} />}
             textColor={"yellow-300"}
-            ring={"red-800"}
+            // ring={"red-800"}
             className={
-              "gradiasi-btn-merah rounded-full font-semibold w-44 py-3"
+              "gradiasi-btn-merah rounded-full font-semibold w-44 py-3 hover:ring-2 hover:ring-red-800 hover:ring-offset-2"
             }
           />
           <BtnGeserAtas
