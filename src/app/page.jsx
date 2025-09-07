@@ -13,8 +13,8 @@ export default function Home() {
         <Navbar />
         <Beranda/>
         <About/>
-        <Testimonial/>
         <ProductHome/>
+        <Testimonial/>
       </div>
     </>
   );

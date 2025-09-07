@@ -26,7 +26,7 @@ const konten = [
 export default function Testimonial() {
   return (
     <>
-      <div className="relative overflow-hidden h-[370px] font-quicksand bg-neutral-100 flex items-center justify-center">
+      <div className="relative overflow-hidden h-[420px] font-quicksand bg-neutral-100 flex items-center justify-center">
         <LogoLoop
           logos={konten}
           speed={70}

@@ -22,7 +22,7 @@ const dataTester = [
     img: "/navanken.png",
     name: "NavanKen",
     desc: "Saya udah coba banyak makanan pedas, tapi pentol ini punya sensasi unik. Level pedas bisa dipilih sesuai selera, dan rasanya konsisten dari awal sampai habis.",
-    work: "Odoo Developer",
+    work: "Odoo Engineer",
     rateOn: 4,
     rateOff: 1,
   },
@@ -78,7 +78,9 @@ export default function ContentTester({ index = null }) {
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-col gap-1.5">
-                <h2 className="text-[1rem] font-medium font-poppins">{item.name}</h2>
+                <h2 className="text-[1rem] font-medium font-poppins">
+                  {item.name}
+                </h2>
                 <p className="text-sm font-normal text-red-800 font-poppins">
                   {item.work}
                 </p>
