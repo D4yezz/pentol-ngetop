@@ -73,7 +73,10 @@ const productKonten = [
 
 export default function ProductHome() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: false,
+    watchDrag: false,
+  });
 
   React.useEffect(() => {
     if (!emblaApi) return;
