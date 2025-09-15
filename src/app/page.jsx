@@ -12,11 +12,11 @@ export default function Home() {
     <>
       <div className="bg-neutral-100">
         <Navbar />
-        <Beranda/>
-        <About/>
-        <ProductHome/>
-        <Testimonial/>
-        <Faq/>
+        <Beranda />
+        <About />
+        <ProductHome />
+        <Testimonial />
+        <Faq />
       </div>
     </>
   );

@@ -48,17 +48,16 @@ export default function FaqSection() {
         defaultValue="1"
       >
         {dataFaq.map((item) => (
-          <>
             <AccordionItem
               key={item.id}
               value={item.id}
               className={
-                "my-4 text-neutral-900 border-[1px] border-red-800 px-4 rounded-2xl last:border-b-[1px] shadow-[0px_3px_9px] shadow-red-800/20"
+                "my-4 text-neutral-100 border-[1px] border-yellow-300 px-4 rounded-2xl last:border-b-[1px] shadow-[0px_3px_9px] shadow-yellow-300/30"
               }
             >
               <AccordionTrigger
                 className={
-                  "cursor-pointer text-red-800 rounded-none text-lg font-medium hover:no-underline [&[data-orientation=vertical]>svg]:text-red-800 flex items-center"
+                  "cursor-pointer text-yellow-300 rounded-none text-lg font-medium hover:no-underline [&[data-orientation=vertical]>svg]:text-yellow-300 flex items-center"
                 }
               >
                 {item.question}
@@ -67,38 +66,7 @@ export default function FaqSection() {
                 <p>{item.answer}</p>
               </AccordionContent>
             </AccordionItem>
-          </>
         ))}
-
-        {/* <AccordionItem value="item-2">
-          <AccordionTrigger>Shipping Details</AccordionTrigger>
-          <AccordionContent className="flex flex-col gap-4 text-balance">
-            <p>
-              We offer worldwide shipping through trusted courier partners.
-              Standard delivery takes 3-5 business days, while express shipping
-              ensures delivery within 1-2 business days.
-            </p>
-            <p>
-              All orders are carefully packaged and fully insured. Track your
-              shipment in real-time through our dedicated tracking portal.
-            </p>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Return Policy</AccordionTrigger>
-          <AccordionContent className="flex flex-col gap-4 text-balance">
-            <p>
-              We stand behind our products with a comprehensive 30-day return
-              policy. If you&apos;re not completely satisfied, simply return the
-              item in its original condition.
-            </p>
-            <p>
-              Our hassle-free return process includes free return shipping and
-              full refunds processed within 48 hours of receiving the returned
-              item.
-            </p>
-          </AccordionContent>
-        </AccordionItem> */}
       </Accordion>
     </>
   );
