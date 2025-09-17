@@ -1,4 +1,5 @@
 import ProductContent from "@/components/layout/ProductSection/ProductContent";
+import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import React from "react";
 
@@ -73,10 +74,13 @@ const productKonten = [
 
 export default function ProductHome() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: false,
-    watchDrag: false,
-  });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: false,
+      watchDrag: false,
+    },
+    [Autoplay({ delay: 5000 })]
+  );
 
   React.useEffect(() => {
     if (!emblaApi) return;

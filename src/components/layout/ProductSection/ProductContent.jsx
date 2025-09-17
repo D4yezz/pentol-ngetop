@@ -4,8 +4,6 @@ import { Varian } from "./Varian";
 import { ShoppingCart, ThumbsUp } from "lucide-react";
 import Magnet from "@/components/ReactBites/Magnet";
 
-
-
 export default function ProductContent({
   title,
   price,
@@ -18,14 +16,14 @@ export default function ProductContent({
   return (
     <>
       <div
-        className={`w-full h-[100vh] min-w-full flex items-center justify-center  px-18 ${
+        className={`w-full h-[100vh] min-w-full flex items-center justify-center px-18 ${
           pedas ? "bg-transparent" : "bg-transparent"
         }`}
       >
-        <div className="grid grid-cols-3 grid-rows-3 gap-6 w-full h-full">
+        <div className="flex items-center justify-between w-full h-full">
           <div
             key="item-1"
-            className="col-start-1 row-start-1 col-span-1 row-span-3 flex flex-col justify-center gap-4 px-4"
+            className="flex flex-col justify-center gap-4 px-4 h-[65%] w-[30%] "
           >
             <h2
               className={`text-6xl font-black text-transparent bg-clip-text pb-2 gradiasi-btn-merah`}
@@ -50,20 +48,20 @@ export default function ProductContent({
           </div>
           <div
             key="item-2"
-            className="col-start-2 row-start-1 col-span-1 row-span-3"
+            className="h-[80%] w-[30%]"
           >
             <MenuImage images={img} />
           </div>
           <div
             key="item-3"
-            className={`col-start-3 row-start-1 col-span-1 row-span-3 px-4 flex flex-col pb-24 pt-4 ${
+            className={`px-4 pb-12 flex flex-col h-[65%] w-[30%] ${
               pedas ? "justify-between" : "justify-end"
             }`}
           >
             {recommendation ? (
-              <Magnet padding={100} disabled={false} magnetStrength={4}>
-                <div className="flex gap-2 items-center bg-gradient-to-br from-yellow-400 to-orange-500 text-white w-fit h-8 pr-4 rounded-full mt-30">
-                  <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center border-4 border-neutral-100 rounded-full -ml-1">
+              <Magnet padding={70} disabled={false} magnetStrength={4}>
+                <div className="flex gap-2 items-center bg-gradient-to-br from-yellow-400 to-orange-500 text-white w-fit h-8 pr-4 rounded-full mt-12">
+                  <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center border-4 border-neutral-100 rounded-full -ml-2">
                     <ThumbsUp size={18} />
                   </div>
                   <p className="text-sm font-bold font-quicksand">

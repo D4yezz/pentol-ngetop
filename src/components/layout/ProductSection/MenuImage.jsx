@@ -20,7 +20,7 @@ export default function MenuImage({ images }) {
             stopOnInteraction: false,
           }),
         ]}
-        className={"w-full h-full items-center flex"}
+        className={"w-full h-full items-center flex justify-center"}
       >
         <div className="gradiasi-btn-merah rounded-full overflow-hidden h-90 w-90 flex items-center justify-center shadow-xl">
           <CarouselContent>
@@ -40,13 +40,13 @@ export default function MenuImage({ images }) {
         </div>
         <CarouselPrevious
           className={
-            "bottom-0 right-1/2 mr-4 mb-8 scale-[130%] gradiasi-btn-merah text-white hover:text-yellow-300 border-0"
+            "bottom-0 right-1/2 mr-4 mb-3 scale-[130%] gradiasi-btn-merah text-white hover:text-yellow-300 border-0"
           }
           size="w-20"
         />
         <CarouselNext
           className={
-            "bottom-0 left-1/2 ml-4 mb-8 scale-[130%] gradiasi-btn-merah text-white hover:text-yellow-300 border-0"
+            "bottom-0 left-1/2 ml-4 mb-3 scale-[130%] gradiasi-btn-merah text-white hover:text-yellow-300 border-0"
           }
         />
       </Carousel>
