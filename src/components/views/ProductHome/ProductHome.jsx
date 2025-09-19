@@ -9,12 +9,7 @@ const productKonten = [
     title: "Pentol Pedas Original",
     price: ["Rp. 15.000", "Rp. 20.000"],
     desc: "Rasakan sensasi adrenalin dari rasa pedas pentol yang menggigit dan penuh karakter, pilihan sempurna bagi pecinta pedas sejati yang tak mau kompromi!",
-    img: [
-      "/pentol.jpg",
-      "/pentol2.jpg",
-      "/pentol3.jpg",
-      "/pentol5.jpeg",
-    ],
+    img: ["/pentol.jpg", "/pentol2.jpg", "/pentol3.jpg", "/pentol5.jpeg"],
     recommendation: true,
     pedas: true,
     itemVarian: [
@@ -41,12 +36,7 @@ const productKonten = [
     title: "Pentol Pedas Manis",
     price: ["Rp. 17.000", "Rp. 22.000"],
     desc: "Kombinasi unik rasa pedas yang berpadu manis gurih. Pilihan tepat untuk pecinta kuliner yang suka sensasi pedas namun tetap lembut di lidah.",
-    img: [
-      "/pentol-about.jpg",
-      "/pentol6.jpg",
-      "/pentol7.jpg",
-      "/pentol4.jpeg",
-    ],
+    img: ["/pentol-about.jpg", "/pentol6.jpg", "/pentol7.jpg", "/pentol4.jpeg"],
     recommendation: false,
     pedas: false,
     itemVarian: [
@@ -77,7 +67,13 @@ export default function ProductHome() {
       loop: false,
       watchDrag: false,
     },
-    [Autoplay({ delay: 3000, stopOnMouseEnter:true,stopOnInteraction:false})]
+    [
+      Autoplay({
+        delay: 3000,
+        stopOnMouseEnter: true,
+        stopOnInteraction: false,
+      }),
+    ]
   );
 
   React.useEffect(() => {

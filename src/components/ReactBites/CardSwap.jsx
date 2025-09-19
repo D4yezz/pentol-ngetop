@@ -1,20 +1,30 @@
-import React, { Children, cloneElement, forwardRef, isValidElement, useEffect, useMemo, useRef } from 'react';
-import gsap from 'gsap';
+import React, {
+  Children,
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
+import gsap from "gsap";
 
 export const Card = forwardRef(({ customClass, ...rest }, ref) => (
   <div
     ref={ref}
     {...rest}
-    className={`absolute top-1/2 left-1/2 rounded-xl [transform-style:preserve-3d] [will-change:transform] [backface-visibility:hidden] ${customClass ?? ''} ${rest.className ?? ''}`.trim()}
+    className={`absolute top-1/2 left-1/2 rounded-xl [transform-style:preserve-3d] [will-change:transform] [backface-visibility:hidden] ${
+      customClass ?? ""
+    } ${rest.className ?? ""}`.trim()}
   />
 ));
-Card.displayName = 'Card';
+Card.displayName = "Card";
 
 const makeSlot = (i, distX, distY, total) => ({
   x: i * distX,
   y: -i * distY,
   z: -i * distX * 1.5,
-  zIndex: total - i
+  zIndex: total - i,
 });
 
 const placeNow = (el, slot, skew) =>
@@ -25,9 +35,9 @@ const placeNow = (el, slot, skew) =>
     xPercent: -50,
     yPercent: -50,
     skewY: skew,
-    transformOrigin: 'center center',
+    transformOrigin: "center center",
     zIndex: slot.zIndex,
-    force3D: true
+    force3D: true,
   });
 
 const CardSwap = ({
@@ -39,26 +49,26 @@ const CardSwap = ({
   pauseOnHover = false,
   onCardClick,
   skewAmount = 6,
-  easing = 'elastic',
-  children
+  easing = "elastic",
+  children,
 }) => {
   const config =
-    easing === 'elastic'
+    easing === "elastic"
       ? {
-          ease: 'elastic.out(0.6,0.9)',
+          ease: "elastic.out(0.6,0.9)",
           durDrop: 2,
           durMove: 2,
           durReturn: 2,
           promoteOverlap: 0.9,
-          returnDelay: 0.05
+          returnDelay: 0.05,
         }
       : {
-          ease: 'power1.inOut',
+          ease: "power1.inOut",
           durDrop: 0.8,
           durMove: 0.8,
           durReturn: 0.8,
           promoteOverlap: 0.45,
-          returnDelay: 0.2
+          returnDelay: 0.2,
         };
 
   const childArr = useMemo(() => Children.toArray(children), [children]);
@@ -76,7 +86,13 @@ const CardSwap = ({
 
   useEffect(() => {
     const total = refs.length;
-    refs.forEach((r, i) => placeNow(r.current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
+    refs.forEach((r, i) =>
+      placeNow(
+        r.current,
+        makeSlot(i, cardDistance, verticalDistance, total),
+        skewAmount
+      )
+    );
 
     const swap = () => {
       if (order.current.length < 2) return;
@@ -87,16 +103,16 @@ const CardSwap = ({
       tlRef.current = tl;
 
       tl.to(elFront, {
-        y: '+=500',
+        y: "+=500",
         duration: config.durDrop,
-        ease: config.ease
+        ease: config.ease,
       });
 
-      tl.addLabel('promote', `-=${config.durDrop * config.promoteOverlap}`);
+      tl.addLabel("promote", `-=${config.durDrop * config.promoteOverlap}`);
       rest.forEach((idx, i) => {
         const el = refs[idx].current;
         const slot = makeSlot(i, cardDistance, verticalDistance, refs.length);
-        tl.set(el, { zIndex: slot.zIndex }, 'promote');
+        tl.set(el, { zIndex: slot.zIndex }, "promote");
         tl.to(
           el,
           {
@@ -104,20 +120,25 @@ const CardSwap = ({
             y: slot.y,
             z: slot.z,
             duration: config.durMove,
-            ease: config.ease
+            ease: config.ease,
           },
           `promote+=${i * 0.15}`
         );
       });
 
-      const backSlot = makeSlot(refs.length - 1, cardDistance, verticalDistance, refs.length);
-      tl.addLabel('return', `promote+=${config.durMove * config.returnDelay}`);
+      const backSlot = makeSlot(
+        refs.length - 1,
+        cardDistance,
+        verticalDistance,
+        refs.length
+      );
+      tl.addLabel("return", `promote+=${config.durMove * config.returnDelay}`);
       tl.call(
         () => {
           gsap.set(elFront, { zIndex: backSlot.zIndex });
         },
         undefined,
-        'return'
+        "return"
       );
       tl.to(
         elFront,
@@ -126,9 +147,9 @@ const CardSwap = ({
           y: backSlot.y,
           z: backSlot.z,
           duration: config.durReturn,
-          ease: config.ease
+          ease: config.ease,
         },
-        'return'
+        "return"
       );
 
       tl.call(() => {
@@ -149,11 +170,11 @@ const CardSwap = ({
         tlRef.current?.play();
         intervalRef.current = window.setInterval(swap, delay);
       };
-      node.addEventListener('mouseenter', pause);
-      node.addEventListener('mouseleave', resume);
+      node.addEventListener("mouseenter", pause);
+      node.addEventListener("mouseleave", resume);
       return () => {
-        node.removeEventListener('mouseenter', pause);
-        node.removeEventListener('mouseleave', resume);
+        node.removeEventListener("mouseenter", pause);
+        node.removeEventListener("mouseleave", resume);
         clearInterval(intervalRef.current);
       };
     }
@@ -167,10 +188,10 @@ const CardSwap = ({
           key: i,
           ref: refs[i],
           style: { width, height, ...(child.props.style ?? {}) },
-          onClick: e => {
+          onClick: (e) => {
             child.props.onClick?.(e);
             onCardClick?.(i);
-          }
+          },
         })
       : child
   );
@@ -178,7 +199,7 @@ const CardSwap = ({
   return (
     <div
       ref={container}
-      className="absolute bottom-0 right-0 transform translate-x-[5%] translate-y-[20%] origin-bottom-right perspective-[900px] overflow-visible max-[768px]:translate-x-[25%] max-[768px]:translate-y-[25%] max-[768px]:scale-[0.75] max-[480px]:translate-x-[25%] max-[480px]:translate-y-[25%] max-[480px]:scale-[0.55]"
+      className="absolute z-0 bottom-0 right-0 transform translate-x-[5%] translate-y-[20%] origin-bottom-right perspective-[900px] overflow-visible max-[768px]:translate-x-[25%] max-[768px]:translate-y-[25%] max-[768px]:scale-[0.75] max-[480px]:translate-x-[25%] max-[480px]:translate-y-[25%] max-[480px]:scale-[0.55]"
       style={{ width, height }}
     >
       {rendered}
