@@ -13,7 +13,6 @@ const productKonten = [
       "/pentol.jpg",
       "/pentol2.jpg",
       "/pentol3.jpg",
-      "/pentol4.jpeg",
       "/pentol5.jpeg",
     ],
     recommendation: true,
@@ -43,11 +42,10 @@ const productKonten = [
     price: ["Rp. 17.000", "Rp. 22.000"],
     desc: "Kombinasi unik rasa pedas yang berpadu manis gurih. Pilihan tepat untuk pecinta kuliner yang suka sensasi pedas namun tetap lembut di lidah.",
     img: [
-      "/pentol.jpg",
-      "/pentol2.jpg",
-      "/pentol3.jpg",
+      "/pentol-about.jpg",
+      "/pentol6.jpg",
+      "/pentol7.jpg",
       "/pentol4.jpeg",
-      "/pentol5.jpeg",
     ],
     recommendation: false,
     pedas: false,
@@ -79,7 +77,7 @@ export default function ProductHome() {
       loop: false,
       watchDrag: false,
     },
-    [Autoplay({ delay: 5000 })]
+    [Autoplay({ delay: 3000, stopOnMouseEnter:true,stopOnInteraction:false})]
   );
 
   React.useEffect(() => {

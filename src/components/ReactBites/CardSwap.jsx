@@ -5,7 +5,8 @@ export const Card = forwardRef(({ customClass, ...rest }, ref) => (
   <div
     ref={ref}
     {...rest}
-    className={`absolute top-1/2 left-1/2 rounded-xl border border-white bg-black [transform-style:preserve-3d] [will-change:transform] [backface-visibility:hidden] ${customClass ?? ''} ${rest.className ?? ''}`.trim()} />
+    className={`absolute top-1/2 left-1/2 rounded-xl [transform-style:preserve-3d] [will-change:transform] [backface-visibility:hidden] ${customClass ?? ''} ${rest.className ?? ''}`.trim()}
+  />
 ));
 Card.displayName = 'Card';
 
@@ -75,9 +76,7 @@ const CardSwap = ({
 
   useEffect(() => {
     const total = refs.length;
-    refs.forEach(
-      (r, i) => placeNow(r.current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount)
-    );
+    refs.forEach((r, i) => placeNow(r.current, makeSlot(i, cardDistance, verticalDistance, total), skewAmount));
 
     const swap = () => {
       if (order.current.length < 2) return;
@@ -98,27 +97,39 @@ const CardSwap = ({
         const el = refs[idx].current;
         const slot = makeSlot(i, cardDistance, verticalDistance, refs.length);
         tl.set(el, { zIndex: slot.zIndex }, 'promote');
-        tl.to(el, {
-          x: slot.x,
-          y: slot.y,
-          z: slot.z,
-          duration: config.durMove,
-          ease: config.ease
-        }, `promote+=${i * 0.15}`);
+        tl.to(
+          el,
+          {
+            x: slot.x,
+            y: slot.y,
+            z: slot.z,
+            duration: config.durMove,
+            ease: config.ease
+          },
+          `promote+=${i * 0.15}`
+        );
       });
 
       const backSlot = makeSlot(refs.length - 1, cardDistance, verticalDistance, refs.length);
       tl.addLabel('return', `promote+=${config.durMove * config.returnDelay}`);
-      tl.call(() => {
-        gsap.set(elFront, { zIndex: backSlot.zIndex });
-      }, undefined, 'return');
-      tl.to(elFront, {
-        x: backSlot.x,
-        y: backSlot.y,
-        z: backSlot.z,
-        duration: config.durReturn,
-        ease: config.ease
-      }, 'return');
+      tl.call(
+        () => {
+          gsap.set(elFront, { zIndex: backSlot.zIndex });
+        },
+        undefined,
+        'return'
+      );
+      tl.to(
+        elFront,
+        {
+          x: backSlot.x,
+          y: backSlot.y,
+          z: backSlot.z,
+          duration: config.durReturn,
+          ease: config.ease
+        },
+        'return'
+      );
 
       tl.call(() => {
         order.current = [...rest, front];
@@ -161,13 +172,15 @@ const CardSwap = ({
             onCardClick?.(i);
           }
         })
-      : child);
+      : child
+  );
 
   return (
     <div
       ref={container}
-      className="absolute bottom-0 right-0 left-0 transform translate-x-[30%] translate-y-[20%] origin-bottom-right perspective-[900px] overflow-visible max-[768px]:translate-x-[25%] max-[768px]:translate-y-[25%] max-[768px]:scale-[0.75] max-[480px]:translate-x-[25%] max-[480px]:translate-y-[25%] max-[480px]:scale-[0.55]"
-      style={{ width, height }}>
+      className="absolute bottom-0 right-0 transform translate-x-[5%] translate-y-[20%] origin-bottom-right perspective-[900px] overflow-visible max-[768px]:translate-x-[25%] max-[768px]:translate-y-[25%] max-[768px]:scale-[0.75] max-[480px]:translate-x-[25%] max-[480px]:translate-y-[25%] max-[480px]:scale-[0.55]"
+      style={{ width, height }}
+    >
       {rendered}
     </div>
   );

@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/layout/navbar/navbar";
 import About from "@/components/views/About/about";
+import Cta from "@/components/views/Cta/cta";
 import Faq from "@/components/views/Faq/faq";
 import Beranda from "@/components/views/Home/home";
 import ProductHome from "@/components/views/ProductHome/ProductHome";
@@ -17,6 +18,7 @@ export default function Home() {
         <ProductHome />
         <Testimonial />
         <Faq />
+        <Cta/>
       </div>
     </>
   );

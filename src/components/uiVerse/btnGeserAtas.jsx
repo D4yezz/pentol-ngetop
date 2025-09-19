@@ -17,7 +17,7 @@ const BtnGeserAtas = ({
         className="relative w-full h-full overflow-hidden flex justify-center items-center gap-2"
         data-tooltip={textPopup}
       >
-        <div className="relative py-1 inset-0 flex items-center justify-center gap-2 transition-all duration-500 group-hover:-translate-y-full text-sm">
+        <div className="relative py-1 inset-0 flex items-center justify-center gap-2 transition-all duration-500 group-hover:-translate-y-full">
           {iconAtas}
           {text}
         </div>

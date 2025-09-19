@@ -10,7 +10,7 @@ import { Quote, Star } from "lucide-react";
 const dataTester = [
   {
     id: 1,
-    img: "/emot-tawa.png",
+    img: "/cust/emot-tawa.png",
     name: "Dayezz",
     desc: "Pentol pedasnya bener-bener bikin kaget. Pedasnya nendang tapi tetap enak dinikmati, pasti bakal sering order lagi.",
     work: "Pelajar",
@@ -19,7 +19,7 @@ const dataTester = [
   },
   {
     id: 2,
-    img: "/navanken.png",
+    img: "/cust/navanken.png",
     name: "NavanKen",
     desc: "Saya udah coba banyak makanan pedas, tapi pentol ini punya sensasi unik. Level pedas bisa dipilih sesuai selera, dan rasanya konsisten dari awal sampai habis.",
     work: "Odoo Engineer",
@@ -28,7 +28,7 @@ const dataTester = [
   },
   {
     id: 3,
-    img: "/mpus.webp",
+    img: "/cust/mpus.webp",
     name: "Dyou",
     desc: "Pentolnya terasa fresh dan bumbunya meresap sempurna. Saus pedasnya bukan cuma panas di lidah, tapi juga punya aroma khas yang bikin ketagihan.",
     work: "Buzzer",
@@ -37,7 +37,7 @@ const dataTester = [
   },
   {
     id: 4,
-    img: "/lewis.jpg",
+    img: "/cust/lewis.jpg",
     name: "Lewis Hamilton",
     desc: "Pentol pedas ini bikin pengalaman makan jadi lebih seru. Teksturnya lembut, pedasnya pas, dan kombinasi rasanya bikin susah berhenti ngemil.",
     work: "Supir Delman",
