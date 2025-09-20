@@ -69,7 +69,7 @@ export default function ProductHome() {
     },
     [
       Autoplay({
-        delay: 3000,
+        delay: 5000,
         stopOnMouseEnter: true,
         stopOnInteraction: false,
       }),

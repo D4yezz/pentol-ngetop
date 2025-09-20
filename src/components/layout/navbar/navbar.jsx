@@ -38,7 +38,7 @@ const navigasi = [
 export default function Navbar() {
   return (
     <>
-      <header className="flex gap-8 justify-between items-center w-[90vw]  h-fit mx-auto  rounded-full font-quicksand">
+      <header className="flex gap-8 justify-between items-center w-[90vw]  h-fit mx-auto  rounded-full font-urbanist">
         <Link
           href="/"
           className="flex rounded-b-full w-fit gradiasi-btn-merah p-1 pt-4 "

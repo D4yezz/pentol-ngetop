@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/navbar/navbar";
 import About from "@/components/views/About/about";
 import Cta from "@/components/views/Cta/cta";
 import Faq from "@/components/views/Faq/faq";
+import Footer from "@/components/views/Footer/footer";
 import Beranda from "@/components/views/Home/home";
 import ProductHome from "@/components/views/ProductHome/ProductHome";
 import Testimonial from "@/components/views/Testimonials/testimonials";
@@ -11,7 +12,7 @@ import Testimonial from "@/components/views/Testimonials/testimonials";
 export default function Home() {
   return (
     <>
-      <div className="bg-neutral-100">
+      <div className="bg-neutral-100 [&>*]:selection:bg-yellow-300/50">
         <Navbar />
         <Beranda />
         <About />
@@ -19,6 +20,7 @@ export default function Home() {
         <Testimonial />
         <Faq />
         <Cta/>
+        <Footer/>
       </div>
     </>
   );
