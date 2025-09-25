@@ -11,7 +11,7 @@ const BtnGeserAtas = ({
 }) => {
   return (
     <button
-      className={`relative w-44 h-fit px-4 py-2 cursor-pointer rounded-full transition-colors duration-300 group ${styleText}`}
+      className={`relative h-fit px-4 py-2 cursor-pointer transition-colors duration-300 group ${styleText}`}
     >
       <div
         className="relative w-full h-full overflow-hidden flex justify-center items-center gap-2"

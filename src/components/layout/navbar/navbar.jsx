@@ -85,15 +85,16 @@ export default function Navbar() {
   // }, []);
 
   return (
-    <header className="flex justify-between items-center w-full h-fit md:px-16 px-6 mx-auto font-urbanist overflow-x-hidden">
+    <header className="flex justify-between items-center w-full h-fit md:px-16 px-6 mx-auto font-urbanist overflow-x-hidden z-20">
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
+        className="z-20"
       >
         <Link
           href="/"
-          className="flex rounded-b-full md:w-fit md:h-fit w-14 gradiasi-btn-merah p-1 pt-4 "
+          className="flex rounded-b-full md:w-fit md:h-fit w-14 gradiasi-btn-merah p-1 pt-4"
         >
           <img
             src="/logos.png"
@@ -106,7 +107,7 @@ export default function Navbar() {
         initial={{ opacity: 0, x: 200 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
-        className="hidden md:flex items-center bg-red-800 rounded-full mt-4 md:visible invisible"
+        className="flex items-center bg-red-800 shadow-[0px_6px_10px] shadow-yellow-300/20 rounded-full mt-4 md:visible invisible z-50 fixed right-10 top-0 w-fit h-fit"
       >
         <nav className="w-[650px] h-fit pl-3 pr-6">
           <ul className="flex justify-between w-full h-full items-center py-2">
@@ -147,10 +148,12 @@ export default function Navbar() {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
-        className="md:hidden flex items-center text-red-800"
+        className={`fixed right-0 top-5 md:hidden flex items-center text-red-800 cursor-pointer z-20 bg-yellow-300 rounded-xl p-2 ${
+          Open ? "invisible" : "visible"
+        }`}
         onClick={() => setOpen(!Open)}
       >
-        {Open ? "" : <Menu size={32} />}
+        <Menu size={32} />
       </motion.button>
 
       <AnimatePresence>
