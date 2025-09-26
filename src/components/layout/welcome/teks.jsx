@@ -32,9 +32,7 @@ export default function TeksWelcome() {
           <span className="lg:flex hidden">Pedasnya Nendang,</span>
           <span className="flex lg:hidden">Teman Wajib Saat Lapar.</span>
           <span className="lg:flex hidden">
-            Hangatnya Bikin
-            <br />
-            Kenyang.
+            Hangatnya Bikin Kenyang.
           </span>
         </h1>
         <TextType
