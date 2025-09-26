@@ -11,8 +11,8 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView } from "motion/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const navigasi = [
@@ -46,6 +46,14 @@ export default function Navbar() {
   const [IsLogin, SetIsLogin] = useState(false);
   const [IsLoading, SetIsLoading] = useState(true);
   const [Open, setOpen] = useState(false);
+  useEffect(() => {
+    if (Open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [Open]);
+
 
   // const checkUserLogin = async () => {
   //   try {
@@ -84,22 +92,25 @@ export default function Navbar() {
   //   getUser();
   // }, []);
 
+  const ref = useRef(null);
+  const isInView = useInView(ref);
   return (
-    <header className="flex justify-between items-center w-full h-fit md:px-16 px-6 mx-auto font-urbanist overflow-x-hidden z-20">
+    <header className="flex justify-between items-center w-full h-fit lg:px-16 px-6 mx-auto font-urbanist overflow-x-hidden z-20">
       <motion.div
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
+      ref={ref}
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : -50 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
-        className="z-20"
+        className="z-20 fixed top-0"
       >
         <Link
           href="/"
-          className="flex rounded-b-full md:w-fit md:h-fit w-14 gradiasi-btn-merah p-1 pt-4"
+          className="flex rounded-b-full lg:w-fit lg:h-fit w-14 gradiasi-btn-merah p-1 pt-4"
         >
           <img
             src="/logos.png"
             alt=""
-            className="md:w-14 md:h-14 w-12 h-12 object-center"
+            className="lg:w-14 lg:h-14 w-12 h-12 object-center"
           />
         </Link>
       </motion.div>
@@ -107,7 +118,7 @@ export default function Navbar() {
         initial={{ opacity: 0, x: 200 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
-        className="flex items-center bg-red-800 shadow-[0px_6px_10px] shadow-yellow-300/20 rounded-full mt-4 md:visible invisible z-50 fixed right-10 top-0 w-fit h-fit"
+        className="flex items-center bg-red-800 shadow-[0px_6px_10px] shadow-yellow-300/20 rounded-full mt-4 lg:visible invisible z-50 fixed right-10 top-0 w-fit h-fit"
       >
         <nav className="w-[650px] h-fit pl-3 pr-6">
           <ul className="flex justify-between w-full h-full items-center py-2">
@@ -148,7 +159,7 @@ export default function Navbar() {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
-        className={`fixed right-0 top-5 md:hidden flex items-center text-red-800 cursor-pointer z-20 bg-yellow-300 rounded-xl p-2 ${
+        className={`fixed right-0 top-0 lg:hidden flex justify-end items-start text-red-800 cursor-pointer z-20 bg-yellow-300 border-[0px_0px_2px_2px] border-red-800 rounded-bl-full pt-2 pr-2 w-16 h-16 ${
           Open ? "invisible" : "visible"
         }`}
         onClick={() => setOpen(!Open)}
@@ -192,7 +203,7 @@ export default function Navbar() {
                   <AvatarFallback>PN</AvatarFallback>
                 </Avatar>
               </div>
-              <div className="flex flex-col px-4 py-6 h-[80vh] justify-between">
+              <div className="flex flex-col px-4 py-6 h-[85dvh] justify-between">
                 <ul className="flex flex-col gap-4">
                   {navigasi.map((item) => (
                     <li key={item.id}>

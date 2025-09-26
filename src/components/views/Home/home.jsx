@@ -4,8 +4,8 @@ import TeksWelcome from "@/components/layout/welcome/teks";
 export default function Beranda() {
   return (
     <>
-      <main className="font-quicksand w-full md:h-[90vh] h-fit flex flex-col justify-center items-center z-10 relative">
-        <div className="w-full flex md:flex-row flex-col justify-between items-center py-6 md:px-32 px-8 md:my-4 mt-4 mb-14 h-full md:gap-0 gap-12">
+      <main className="font-quicksand w-full lg:h-[100vh] md:h-fit h-dvh flex flex-col justify-center items-center z-10 relative">
+        <div className="w-full flex lg:flex-row flex-col justify-between items-center py-6 lg:px-32 px-8 md:my-4 mt-14 mb-14 h-full lg:gap-0 gap-18">
           <TeksWelcome />
           <ImageWelcome />
         </div>

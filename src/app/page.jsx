@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "@/components/layout/navbar/navbar";
-import { BackgroundBeams } from "@/components/ui/shadcn-io/background-beams";
+import { Particles } from "@/components/ui/shadcn-io/particles";
 import About from "@/components/views/About/about";
 import Cta from "@/components/views/Cta/cta";
 import Faq from "@/components/views/Faq/faq";
@@ -14,8 +14,18 @@ export default function Home() {
   return (
     <>
       <div className="bg-neutral-100 [&>*]:selection:bg-yellow-300/50 relative">
-        <div className="relative">
-          <BackgroundBeams className="scale-[300%] md:scale-100" />
+        <div className="relative overflow-hidden">
+          <Particles
+            className="absolute inset-0"
+            quantity={100}
+            size={1.1}
+            ease={80}
+            color="#9f0712"
+            refresh="true"
+            staticity={20}
+            vx={0.2}
+            vy={0.2}
+          />
           <Navbar />
           <Beranda />
         </div>

@@ -1,7 +1,7 @@
 export default function ImageAbout() {
   return (
     <>
-      <div className="flex flex-col w-[400px] h-full py-8 gap-2">
+      <div className="flex flex-col lg:w-[400px] w-fit lg:h-full h-fit py-8 gap-2">
         <div className="h-1/2 w-full flex items-end gap-2">
           <div className="w-2/3 h-[270px] rounded-[0px_40px_0px_50px] overflow-hidden border-3 border-yellow-300 ">
             <img

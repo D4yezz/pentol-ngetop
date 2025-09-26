@@ -140,7 +140,7 @@ export default function CarouselBites({
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-hidden py-0.5  ${
+      className={`relative overflow-hidden py-0.5 md:scale-100 scale-[85%]  ${
         round ? "rounded-full border border-white" : ""
       }`}
       style={{
@@ -149,7 +149,7 @@ export default function CarouselBites({
       }}
     >
       <motion.div
-        className="flex mx-auto h-24"
+        className="flex md:mx-auto bg-violet-500 h-24"
         drag="x"
         {...dragProps}
         style={{
