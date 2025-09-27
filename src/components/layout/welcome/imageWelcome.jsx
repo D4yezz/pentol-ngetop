@@ -13,9 +13,9 @@ export default function ImageWelcome() {
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 50 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
-        className="lg:w-[45%] w-full h-full flex items-center justify-end lg:px-18 px-8 relative"
+        className="lg:w-[35%] w-full h-full flex items-center justify-end lg:px-18 px-8 lg:py-30 relative"
       >
-        <div className="lg:w-78 lg:h-96 w-full h-fit lg:rounded-full rounded-4xl overflow-hidden border-8 lg:border-red-800 border-t-yellow-300 border-r-yellow-300 border-l-red-800 border-b-red-800 group shadow-[0px_6px_12px] shadow-red-800/60">
+        <div className="lg:w-full lg:h-full w-full h-fit lg:rounded-full rounded-4xl overflow-hidden border-8 lg:border-red-800 border-t-yellow-300 border-r-yellow-300 border-l-red-800 border-b-red-800 group shadow-[0px_6px_12px] shadow-red-800/60">
           <img
             src="/pentol.jpg"
             alt=""
