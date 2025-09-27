@@ -1,9 +1,18 @@
 import CarouselAbout from "./carousel";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { motion } from "framer-motion";
 
 export default function TextAbout() {
+  const ref = useRef(null);
+  const isInView = useInView(ref);
   return (
     <>
-      <div className="flex flex-col lg:w-1/2 w-full lg:h-[400px] h-fit justify-start items-start">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 50 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }} className="flex flex-col lg:w-1/2 w-full lg:h-[400px] h-fit justify-start items-start">
         <div className="bg-yellow-300 w-fit px-5 py-1 rounded-r-full">
           <h5 className="font-quicksand font-bold gradiasi-btn-merah text-transparent bg-clip-text ">
             Pentol<span>Ngetop</span>
@@ -21,7 +30,7 @@ export default function TextAbout() {
           bersahabat, bikin lidah puas dan perut kenyang!
         </p>
         <CarouselAbout />
-      </div>
+      </motion.div>
     </>
   );
 }

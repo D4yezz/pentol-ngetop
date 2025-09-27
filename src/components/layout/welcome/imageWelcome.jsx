@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 export default function ImageWelcome() {
   const ref = useRef(null);
   const isInView = useInView(ref);
-  console.log(isInView);
   return (
     <>
       <motion.section
@@ -16,7 +15,7 @@ export default function ImageWelcome() {
         transition={{ duration: 0.7, ease: "easeInOut" }}
         className="lg:w-[45%] w-full h-full flex items-center justify-end lg:px-18 px-8 relative"
       >
-        <div className="lg:w-78 lg:h-96 w-full h-full lg:rounded-full rounded-4xl overflow-hidden border-8 lg:border-red-800 border-t-yellow-300 border-r-yellow-300 border-l-red-800 border-b-red-800 group shadow-[0px_6px_12px] shadow-red-800/60">
+        <div className="lg:w-78 lg:h-96 w-full h-fit lg:rounded-full rounded-4xl overflow-hidden border-8 lg:border-red-800 border-t-yellow-300 border-r-yellow-300 border-l-red-800 border-b-red-800 group shadow-[0px_6px_12px] shadow-red-800/60">
           <img
             src="/pentol.jpg"
             alt=""
