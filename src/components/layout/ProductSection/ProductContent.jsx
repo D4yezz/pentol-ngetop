@@ -16,27 +16,25 @@ export default function ProductContent({
   return (
     <>
       <div
-        className={`w-full h-[100vh] min-w-full flex items-center justify-center px-18 ${
-          pedas ? "bg-transparent" : "bg-transparent"
-        }`}
+        className={`w-full h-[85vh] min-w-full flex items-center justify-center lg:px-18`}
       >
-        <div className="flex items-center justify-between w-full h-full">
+        <div className="flex lg:flex-row flex-col items-center justify-between w-full h-full px-8">
           <div
             key="item-1"
-            className="flex flex-col justify-center gap-4 px-4 h-[65%] w-[30%] "
+            className="flex flex-col justify-center gap-4 px-4 h-[65%] w-[30%]"
           >
             <h2
-              className={`text-6xl font-black text-transparent bg-clip-text pb-2 gradiasi-btn-merah`}
+              className={`text-6xl font-black text-transparent bg-clip-text pb-4 gradiasi-btn-merah`}
             >
               {title}
             </h2>
             <div className="flex items-end gap-2 mb-6">
-              <p className="font-semibold text-3xl ">{price[0]}</p>
-              <span className={`line-through ${pedas ? "text-red-800" : ""}`}>
+              <p className="font-semibold text-4xl ">{price[0]}</p>
+              <span className={`line-through text-red-800`}>
                 {price[1]}
               </span>
             </div>
-            <p className="text-[0.9rem]">{desc}</p>
+            <p className="text-lg">{desc}</p>
             <Button
               className={
                 "gradiasi-btn-merah text-yellow-300 rounded-full shadow-xl"
@@ -54,7 +52,7 @@ export default function ProductContent({
           </div>
           <div
             key="item-3"
-            className={`px-4 pb-12 flex flex-col h-[65%] w-[30%] ${
+            className={`px-4 pb-12 flex flex-col h-[75%] w-[30%] ${
               pedas ? "justify-between" : "justify-end"
             }`}
           >

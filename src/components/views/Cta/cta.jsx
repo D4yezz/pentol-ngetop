@@ -12,25 +12,25 @@ import {
 const dataCard = [
   {
     id: 1,
-    img: "/pentol.jpg",
+    img: "/pedas_ori/1.jpeg",
     title: "Pedas Juara",
     icon: <Flame size={22} />,
   },
   {
     id: 2,
-    img: "/pentol2.jpg",
+    img: "/pedas_ori/3.jpeg",
     title: "Fresh Tiap Gigitan",
     icon: <Beef size={22} />,
   },
   {
     id: 3,
-    img: "/pentol3.jpg",
+    img: "/pedas_manis/1.jpeg",
     title: "Dijamin Higienis",
     icon: <ChefHat size={22} />,
   },
   {
     id: 4,
-    img: "/pentol4.jpeg",
+    img: "/pedas_manis/9.jpeg",
     title: "Pasti Nagih",
     icon: <HeartHandshakeIcon size={22} />,
   },

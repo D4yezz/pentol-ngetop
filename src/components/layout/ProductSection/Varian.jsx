@@ -22,12 +22,12 @@ export function Varian({ item, pedas = true }) {
           >
             <AccordionTrigger
               className={
-                "text-red-800 cursor-pointer rounded-none border-b-red-800 border-b-[1.5px]  hover:no-underline pb-4 pr-2 text-sm [&[data-orientation=vertical]>svg]:text-red-800 "
+                "text-red-800 cursor-pointer rounded-none border-b-red-800 border-b-[2px] hover:no-underline pb-4 pr-2 text-xl [&[data-orientation=vertical]>svg]:text-red-800 "
               }
             >
               {item.judul}
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-4 text-balance mt-2 border-b-[1.5px] border-red-800 text-[0.8rem]">
+            <AccordionContent className="flex flex-col gap-4 text-balance mt-2 border-b-[1.5px] border-red-800 text-sm">
               <p>{item.deskripsi[0]}</p>
               <p>{item.deskripsi[1]}</p>
             </AccordionContent>

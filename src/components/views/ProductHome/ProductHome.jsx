@@ -9,7 +9,12 @@ const productKonten = [
     title: "Pentol Pedas Original",
     price: ["Rp. 15.000", "Rp. 20.000"],
     desc: "Rasakan sensasi adrenalin dari rasa pedas pentol yang menggigit dan penuh karakter, pilihan sempurna bagi pecinta pedas sejati yang tak mau kompromi!",
-    img: ["/pentol.jpg", "/pentol2.jpg", "/pentol3.jpg", "/pentol5.jpeg"],
+    img: [
+      "/pedas_ori/1.jpeg",
+      "/pedas_ori/5.jpeg",
+      "/pedas_ori/3.jpeg",
+      "/pedas_ori/6.jpeg",
+    ],
     recommendation: true,
     pedas: true,
     itemVarian: [
@@ -36,7 +41,12 @@ const productKonten = [
     title: "Pentol Pedas Manis",
     price: ["Rp. 17.000", "Rp. 22.000"],
     desc: "Kombinasi unik rasa pedas yang berpadu manis gurih. Pilihan tepat untuk pecinta kuliner yang suka sensasi pedas namun tetap lembut di lidah.",
-    img: ["/pentol-about.jpg", "/pentol6.jpg", "/pentol7.jpg", "/pentol4.jpeg"],
+    img: [
+      "/pedas_manis/4.jpeg",
+      "/pedas_manis/2.jpeg",
+      "/pedas_manis/3.jpeg",
+      "/pedas_manis/5.jpeg",
+    ],
     recommendation: false,
     pedas: false,
     itemVarian: [
@@ -90,16 +100,16 @@ export default function ProductHome() {
 
   return (
     <>
-      <section className="w-full h-fit bg-neutral-100 font-poppins flex flex-col justify-start items-center pt-8 px-0 mb-20">
-        <div className="flex flex-col items-center gap-4 mt-8">
-          <h1 className="font-semibold text-transparent bg-clip-text gradiasi-btn-merah">
+      <section className="w-full h-fit bg-neutral-100 font-poppins flex flex-col justify-start items-center pt-8 lg:px-0 px-4 mb-20">
+        <div className="flex flex-col items-center mt-8">
+          <h1 className="font-semibold text-transparent bg-clip-text gradiasi-btn-merah text-center lg:text-5xl text-3xl py-2 lg:mb-4 mb-0">
             Menu Pentol Ngetop, Siap Bikin Lidah Panas!
           </h1>
-          <p className="font-normal text-yellow-300 gradiasi-btn-merah rounded-full px-5 py-1">
+          <p className="font-normal text-yellow-300 gradiasi-btn-merah rounded-full px-5 py-1 lg:text-xl text-sm">
             Pesan sekarang, nikmati pedasnya tanpa ribet.
           </p>
         </div>
-        <div className="w-full ">
+        <div className="w-full">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {productKonten.map((item) => {

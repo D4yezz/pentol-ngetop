@@ -1,4 +1,4 @@
-  import BtnGeserAtas from "@/components/uiVerse/btnGeserAtas";
+import BtnGeserAtas from "@/components/uiVerse/btnGeserAtas";
 import ButtonMengkilap from "@/components/uiVerse/btnMengkilap";
 import { Link2, Phone, Send, ShoppingBasket } from "lucide-react";
 import Link from "next/link";
@@ -17,7 +17,7 @@ export default function TeksWelcome() {
         transition={{ duration: 0.7, ease: "easeInOut" }}
         className="flex flex-col lg:w-[65%] w-full lg:h-full h-fit lg:justify-center justify-start"
       >
-        <h1 className="w-full font-semibold gradiasi-btn-merah text-transparent bg-clip-text flex flex-col font-poppins text-6xl lg:pb-8 pb-4 lg:pt-0 pt-4">
+        <h1 className="w-full font-semibold gradiasi-btn-merah text-transparent bg-clip-text flex flex-col font-poppins lg:text-6xl text-5xl lg:pb-8 pb-4 lg:pt-0 pt-4">
           <Link
             href={"/"}
             className="group flex items-center gap-1 w-fit h-fit hover:text-red-600"
@@ -32,9 +32,9 @@ export default function TeksWelcome() {
           <span className="flex lg:hidden">Teman Wajib Saat Lapar.</span>
           <span className="lg:flex hidden">Hangatnya Bikin Kenyang.</span>
         </h1>
-        <p className="lg:text-[1.4rem] text-xl lg:font-medium font-normal text-neutral-800 lg:mb-6 mb-4 lg:mt-0 mt-4 font-poppins w-fit">
-          Website Pemesanan Pentol Pedas Terpercaya.<br />
-          Rasakan sensasi pedas nagih yang siap menggoyang lidahmu.
+        <p className="lg:text-[1.4rem] text-lg font-semibold text-neutral-800 lg:mb-6 mb-4 lg:mt-0 mt-4 pr-8 font-quicksand w-fit">
+          Website Pemesanan Pentol Pedas Terpercaya. Rasakan sensasi pedas nagih
+          yang siap menggoyang lidahmu.
         </p>
         <div className="flex gap-4">
           <ButtonMengkilap

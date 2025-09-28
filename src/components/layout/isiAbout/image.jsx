@@ -17,14 +17,14 @@ export default function ImageAbout() {
         <div className="h-1/2 w-full flex items-end gap-2">
           <div className="w-2/3 h-[270px] rounded-[0px_40px_0px_50px] overflow-hidden border-3 border-yellow-300 ">
             <img
-              src="/pentol2.jpg"
+              src="/pedas_ori/2.jpeg"
               alt="1"
               className="object-cover w-full h-full "
             />
           </div>
           <div className="w-[200px] h-[200px] rounded-[40px_0px_50px_0px] overflow-hidden border-3 border-yellow-300 ">
             <img
-              src="/pentol3.jpg"
+              src="/pedas_manis/9.jpeg"
               alt="2"
               className="object-cover w-full h-full "
             />
@@ -33,14 +33,14 @@ export default function ImageAbout() {
         <div className="h-1/2 w-full flex items-start gap-2">
           <div className="w-[200px] h-[200px] rounded-[40px_0px_50px_0px] overflow-hidden border-3 border-yellow-300 ">
             <img
-              src="/pentol4.jpeg"
+              src="/pedas_ori/5.jpeg"
               alt="2"
               className="object-cover w-full h-full "
             />
           </div>
           <div className="w-2/3 h-[270px] rounded-[0px_40px_0px_50px] overflow-hidden border-3 border-yellow-300 ">
             <img
-              src="/pentol5.jpeg"
+              src="/pedas_manis/3.jpeg"
               alt="1"
               className="object-cover w-full h-full "
             />

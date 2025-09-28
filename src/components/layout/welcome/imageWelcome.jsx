@@ -17,7 +17,7 @@ export default function ImageWelcome() {
       >
         <div className="lg:w-full lg:h-full w-full h-fit lg:rounded-full rounded-4xl overflow-hidden border-8 lg:border-red-800 border-t-yellow-300 border-r-yellow-300 border-l-red-800 border-b-red-800 group shadow-[0px_6px_12px] shadow-red-800/60">
           <img
-            src="/pentol.jpg"
+            src="/gabungan/1.jpeg"
             alt=""
             className="object-cover w-full h-full lg:border-4 border-yellow-300 lg:rounded-full group-hover:scale-105 duration-300 ease-in-out"
           />
