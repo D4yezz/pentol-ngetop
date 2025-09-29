@@ -28,7 +28,7 @@ const dataTester = [
   },
   {
     id: 3,
-    img: "/cust/mpus.webp",
+    img: "https://cdn.discordapp.com/avatars/648050495025315841/3f44a9c82cd8c9be07ec6ab332351abe.webp?size=160",
     name: "Dyou",
     desc: "Pentolnya terasa fresh dan bumbunya meresap sempurna. Saus pedasnya bukan cuma panas di lidah, tapi juga punya aroma khas yang bikin ketagihan.",
     work: "Buzzer",

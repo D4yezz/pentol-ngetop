@@ -55,7 +55,7 @@ const Magnet = ({
     <div
       ref={magnetRef}
       className={wrapperClassName}
-      style={{ position: 'relative', display: 'inline-block' }}
+      style={{ display: 'inline-block' }}
       {...props}>
       <div
         className={innerClassName}

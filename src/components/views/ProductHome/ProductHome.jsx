@@ -109,7 +109,7 @@ export default function ProductHome() {
             Pesan sekarang, nikmati pedasnya tanpa ribet.
           </p>
         </div>
-        <div className="w-full">
+        <div className="w-full lg:my-0 my-14">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {productKonten.map((item) => {
@@ -128,12 +128,12 @@ export default function ProductHome() {
               })}
             </div>
           </div>
-          <div className="flex justify-center gap-8 mx-30 my-6">
+          <div className="flex justify-center lg:gap-8 gap-6 lg:mx-30 mx-8 my-6">
             {productKonten.map((item, index) => (
               <button
                 key={item.id}
                 onClick={() => scrollTo(index)}
-                className={`px-3 py-1.5 w-full rounded-lg text-sm font-medium transition cursor-pointer ${
+                className={`px-3 lg:py-1.5 py-[7px] w-full rounded-lg text-sm font-medium transition cursor-pointer ${
                   selectedIndex === index
                     ? "gradiasi-btn-merah "
                     : "bg-yellow-300"

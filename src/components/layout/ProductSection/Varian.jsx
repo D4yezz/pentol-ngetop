@@ -10,7 +10,7 @@ export function Varian({ item, pedas = true }) {
     <Accordion
       type="single"
       collapsible
-      className="w-full"
+      className="w-full lg:h-fit h-full"
       defaultValue={item[0].itemId}
     >
       {item.map((item) => {
@@ -22,7 +22,7 @@ export function Varian({ item, pedas = true }) {
           >
             <AccordionTrigger
               className={
-                "text-red-800 cursor-pointer rounded-none border-b-red-800 border-b-[2px] hover:no-underline pb-4 pr-2 text-xl [&[data-orientation=vertical]>svg]:text-red-800 "
+                "text-red-800 cursor-pointer rounded-none border-b-red-800 border-b-[2px] hover:no-underline lg:pb-4 pb-2 pr-2 lg:text-xl text-lg [&[data-orientation=vertical]>svg]:text-red-800 "
               }
             >
               {item.judul}
