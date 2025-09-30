@@ -1,6 +1,7 @@
 import ContentTester from "@/components/layout/TestimonialContent/content";
 import LogoLoop from "@/components/ReactBites/LogoLoop";
 import { Particles } from "@/components/ui/shadcn-io/particles";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 const konten = [
   {
@@ -25,15 +26,16 @@ const konten = [
   },
 ];
 export default function Testimonial() {
+  const isDekstop = useMediaQuery("(min-width: 1024px)");
   return (
     <>
       <div className="relative h-fit overflow-hidden py-16 mb-20">
         <div className="relative z-10 overflow-hidden h-fit font-quicksand bg-transparent flex flex-col items-center justify-center gap-4">
-          <div className="flex flex-col items-center gap-4 font-instrument mb-10 w-full">
-            <h1 className=" font-semibold gradiasi-btn-merah text-transparent bg-clip-text">
+          <div className="flex flex-col items-center lg:gap-4 gap-2 font-instrument mb-10 w-full">
+            <h1 className="font-semibold gradiasi-btn-merah text-transparent bg-clip-text lg:text-5xl text-4xl py-2 lg:text-left text-center">
               Apa Kata Penggemar Pentol Pedas?
             </h1>
-            <p className="w-1/2 text-center text-gray-600  text-lg ">
+            <p className="lg:w-1/2 w-full px-4 text-center text-gray-600  text-lg">
               Lihat bagaimana Pentol Ngetop berhasil bikin banyak lidah jatuh
               cinta. Testimoni Panas dari Pecinta Pedas.
             </p>
@@ -43,7 +45,7 @@ export default function Testimonial() {
             speed={70}
             direction="left"
             logoHeight={50}
-            gap={90}
+            gap={isDekstop ? 90 : 40}
             pauseOnHover
             scaleOnHover
             fadeOut

@@ -51,11 +51,6 @@ export default function ProductContent({
             key="item-2"
             className="lg:h-[80%] h-fit lg:w-[30%] w-full lg:py-0 py-8 lg:order-2 order-1"
           >
-            {isDekstop ? (
-              <></>
-            ) : (
-              <Recomendation recommendation={recommendation} />
-            )}
             <MenuImage images={img} />
           </div>
           <div
@@ -87,7 +82,9 @@ function Recomendation({ recommendation }) {
           disabled={false}
           magnetStrength={4}
           wrapperClassName={`${
-            isDekstop ? "relative" : "absolute top-0 right-23 z-10 rotate-12"
+            isDekstop
+              ? "relative"
+              : "absolute -top-10 right-0 z-10 rotate-12 bg-green-300"
           }`}
         >
           <div className="flex gap-2 items-center bg-gradient-to-br from-yellow-400 to-orange-500 text-white w-fit lg:h-8 h-6 lg:pr-4 pr-0 rounded-full mt-12">

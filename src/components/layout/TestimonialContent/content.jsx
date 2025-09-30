@@ -52,7 +52,7 @@ export default function ContentTester({ index = null }) {
     return (
       <>
         <Card
-          className="bg-white w-[380px] h-[300px] rounded-3xl justify-between border-b-8"
+          className="bg-white lg:w-[380px] lg:h-[300px] w-[320px] h-[300px] rounded-3xl justify-between border-b-8"
           key={item.id}
         >
           <CardHeader className={"-mb-4"}>
