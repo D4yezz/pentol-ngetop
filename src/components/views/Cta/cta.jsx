@@ -1,6 +1,7 @@
 import CardSwap, { Card } from "@/components/ReactBites/CardSwap";
 import GlareHover from "@/components/ReactBites/GlareHover";
 import SqueezeBtn from "@/components/uiVerse/squezeBtn";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import {
   Beef,
   ChefHat,
@@ -37,10 +38,11 @@ const dataCard = [
 ];
 
 export default function Cta() {
+  const isDekstop = useMediaQuery("(min-width: 1024px)");
   return (
     <>
-      <div className="w-full h-fit mb-24 px-20 pt-6 pb-20 font-urbanist">
-        <div className="h-[450px] w-full relative overflow-hidden  rounded-4xl gradiasi-btn-merah text-yellow-300 inset-shadow-[0px_0px_12px] inset-shadow-black/40 hover:inset-shadow-[0px_0px_20px] hover:inset-shadow-black/60 ease-in-out duration-300 group">
+      <div className="w-full h-fit lg:mb-24 lg:px-20 px-8 lg:pt-6 pb-20 font-urbanist">
+        <div className="lg:h-[450px] h-fit w-full relative overflow-hidden rounded-4xl gradiasi-btn-merah text-yellow-300 inset-shadow-[0px_0px_12px] inset-shadow-black/40 hover:inset-shadow-[0px_0px_20px] hover:inset-shadow-black/60 ease-in-out duration-300 group">
           <GlareHover
             glareColor="#ffdf20"
             glareOpacity={0.3}
@@ -52,14 +54,18 @@ export default function Cta() {
             height="100%"
             background="#00000000"
           >
-            <div className="flex flex-col gap-4 w-1/2 h-full justify-center px-8">
-              <h1 className="font-semibold font-instrument text-5xl pr-4">
+            <div className="flex flex-col gap-4 lg:w-1/2 h-full justify-center lg:px-8 px-4 lg:py-0 py-4">
+              <h1 className="font-semibold font-instrument lg:text-5xl text-3xl pr-4">
                 Siap Panasin Hari Kamu dengan Pentol Ngetop?
               </h1>
-              <p className="text-xl mb-6 text-white pr-18 font-instrument font-normal">
-                Cuma beberapa klik, Pentol Ngetop dengan saus pedas atau manis
-                siap mendarat di meja makan kamu. Yuk, jangan tunggu lama!
-              </p>
+              {isDekstop ? (
+                <p className="text-xl mb-6 text-white pr-18 font-instrument font-normal">
+                  Cuma beberapa klik, Pentol Ngetop dengan saus pedas atau manis
+                  siap mendarat di meja makan kamu. Yuk, jangan tunggu lama!
+                </p>
+              ) : (
+                <></>
+              )}
               <SqueezeBtn
                 text={"Pesan Sekarang"}
                 icon={<ShoppingBasket />}
