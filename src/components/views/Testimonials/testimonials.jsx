@@ -2,6 +2,8 @@ import ContentTester from "@/components/layout/TestimonialContent/content";
 import LogoLoop from "@/components/ReactBites/LogoLoop";
 import { Particles } from "@/components/ui/shadcn-io/particles";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { motion, useInView } from "framer-motion";
+import React, { useRef } from "react";
 
 const konten = [
   {
@@ -27,11 +29,19 @@ const konten = [
 ];
 export default function Testimonial() {
   const isDekstop = useMediaQuery("(min-width: 1024px)");
+  const ref = useRef(null);
+  const isInView = useInView(ref);
   return (
     <>
       <div className="relative h-fit overflow-hidden py-16 mb-20">
         <div className="relative z-10 overflow-hidden h-fit font-quicksand bg-transparent flex flex-col items-center justify-center gap-4">
-          <div className="flex flex-col items-center lg:gap-4 gap-2 font-instrument mb-10 w-full">
+          <motion.div
+            ref={ref}
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : -50 }}
+            transition={{ duration: 0.7, ease: "easeInOut" }}
+            className="flex flex-col items-center lg:gap-4 gap-2 font-instrument mb-10 w-full"
+          >
             <h1 className="font-semibold gradiasi-btn-merah text-transparent bg-clip-text lg:text-5xl text-4xl py-2 lg:text-left text-center">
               Apa Kata Penggemar Pentol Pedas?
             </h1>
@@ -39,7 +49,7 @@ export default function Testimonial() {
               Lihat bagaimana Pentol Ngetop berhasil bikin banyak lidah jatuh
               cinta. Testimoni Panas dari Pecinta Pedas.
             </p>
-          </div>
+          </motion.div>
           <LogoLoop
             logos={konten}
             speed={70}

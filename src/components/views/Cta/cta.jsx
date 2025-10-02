@@ -42,7 +42,7 @@ export default function Cta() {
   return (
     <>
       <div className="w-full h-fit lg:mb-24 lg:px-20 px-8 lg:pt-6 pb-20 font-urbanist">
-        <div className="lg:h-[450px] h-fit w-full relative overflow-hidden rounded-4xl gradiasi-btn-merah text-yellow-300 inset-shadow-[0px_0px_12px] inset-shadow-black/40 hover:inset-shadow-[0px_0px_20px] hover:inset-shadow-black/60 ease-in-out duration-300 group">
+        <div className="lg:h-[450px] h-[30vh] w-full relative overflow-hidden rounded-4xl gradiasi-btn-merah text-yellow-300 inset-shadow-[0px_0px_12px] inset-shadow-black/40 hover:inset-shadow-[0px_0px_20px] hover:inset-shadow-black/60 ease-in-out duration-300 group">
           <GlareHover
             glareColor="#ffdf20"
             glareOpacity={0.3}
@@ -54,8 +54,8 @@ export default function Cta() {
             height="100%"
             background="#00000000"
           >
-            <div className="flex flex-col gap-4 lg:w-1/2 h-full justify-center lg:px-8 px-4 lg:py-0 py-4">
-              <h1 className="font-semibold font-instrument lg:text-5xl text-3xl pr-4">
+            <div className="flex flex-col gap-4 lg:w-1/2 w-[70%] h-full justify-center lg:px-8 px-4 lg:py-0 py-4">
+              <h1 className="font-semibold font-instrument lg:text-5xl text-2xl pr-4">
                 Siap Panasin Hari Kamu dengan Pentol Ngetop?
               </h1>
               {isDekstop ? (
@@ -70,7 +70,7 @@ export default function Cta() {
                 text={"Pesan Sekarang"}
                 icon={<ShoppingBasket />}
                 className={
-                  "px-8 py-2 font-bold text-lg border-yellow-300 text-red-800 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full"
+                  "lg:px-8 py-2 px-4 font-bold lg:text-lg border-yel4low-300 text-red-800 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full"
                 }
               />
             </div>

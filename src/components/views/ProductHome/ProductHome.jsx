@@ -1,7 +1,8 @@
 import ProductContent from "@/components/layout/ProductSection/ProductContent";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import React from "react";
+import { motion, useInView } from "framer-motion";
+import React, { useRef } from "react";
 
 const productKonten = [
   {
@@ -98,18 +99,33 @@ export default function ProductHome() {
     emblaApi.scrollTo(index);
   };
 
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+
   return (
     <>
       <section className="w-full h-fit bg-neutral-100 font-poppins flex flex-col justify-start items-center pt-8 lg:px-0 px-4 mb-20">
-        <div className="flex flex-col items-center mt-8">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : -50 }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+          className="flex flex-col items-center mt-8"
+        >
           <h1 className="font-semibold text-transparent bg-clip-text gradiasi-btn-merah text-center lg:text-5xl text-3xl py-2 lg:mb-4 mb-0">
             Menu Pentol Ngetop, Siap Bikin Lidah Panas!
           </h1>
           <p className="font-normal text-yellow-300 gradiasi-btn-merah rounded-full px-5 py-1 lg:text-xl text-sm">
             Pesan sekarang, nikmati pedasnya tanpa ribet.
           </p>
-        </div>
-        <div className="w-full lg:my-0 my-14">
+        </motion.div>
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+          className="w-full lg:my-0 my-14"
+        >
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {productKonten.map((item) => {
@@ -141,7 +157,7 @@ export default function ProductHome() {
               ></button>
             ))}
           </div>
-        </div>
+        </motion.div>
       </section>
     </>
   );
