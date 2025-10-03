@@ -24,22 +24,18 @@ export default function LoginView() {
     if (error) {
       setError(error.message);
     } else {
-      router.push("/home");
-      console.log("berhasil", data);
+      router.push("/");
     }
   };
   return (
     <>
-      <div>
-        <h1 className="text-2xl">Halaman Login</h1>
-      </div>
-      <div className="flex flex-col justify-center items-center mt-8 bg-neutral-900 text-white w-[50vw] mx-auto px-6 py-12 rounded-2xl">
+      <div className="flex flex-col justify-center items-center mt-20 gradiasi-btn-merah text-yellow-300 w-[50vw] mx-auto px-6 py-12 rounded-2xl font-inter">
         <form
           onSubmit={handleLogin}
           className="flex flex-col gap-10 w-[80%] items-center"
         >
           <h2 className="text-3xl font-semibold">Login</h2>
-          <div className="grid w-full  items-center gap-3">
+          <div className="grid w-full items-center gap-3 text-black">
             <InputVerse
               label={"Email"}
               id={"email"}
@@ -52,7 +48,7 @@ export default function LoginView() {
               required
             />
           </div>
-          <div className="grid w-full  items-center gap-3">
+          <div className="grid w-full items-center gap-3 text-black">
             <InputVerse
               label={"Password"}
               id={"password"}
@@ -72,7 +68,7 @@ export default function LoginView() {
               data-has-listeners="false"
             /> */}
           </div>
-          {error && <p className="text-red-500">{error}</p>}
+          {error && <p className="text-yellow-300">{error}</p>}
           <p>
             Belum Punya Akun?{" "}
             <Link href={"/auth/register"} className="text-blue-400">
@@ -81,8 +77,9 @@ export default function LoginView() {
           </p>
           <Button
             className={
-              "border-2 cursor-pointer hover:bg-neutral-100 hover:text-black"
+              "border-2 cursor-pointer gradiasi-btn-merah hover:bg-yellow-300 hover:text-yellow-300 hover:border-yellow-300 px-8"
             }
+
           >
             Masuk
           </Button>

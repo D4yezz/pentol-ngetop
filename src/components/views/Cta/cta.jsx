@@ -9,6 +9,8 @@ import {
   HeartHandshakeIcon,
   ShoppingBasket,
 } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import React, { useRef } from "react";
 
 const dataCard = [
   {
@@ -39,10 +41,18 @@ const dataCard = [
 
 export default function Cta() {
   const isDekstop = useMediaQuery("(min-width: 1024px)");
+  const ref = useRef(null);
+  const isInView = useInView(ref);
   return (
     <>
-      <div className="w-full h-fit lg:mb-24 lg:px-20 px-8 lg:pt-6 pb-20 font-urbanist">
-        <div className="lg:h-[450px] h-[30vh] w-full relative overflow-hidden rounded-4xl gradiasi-btn-merah text-yellow-300 inset-shadow-[0px_0px_12px] inset-shadow-black/40 hover:inset-shadow-[0px_0px_20px] hover:inset-shadow-black/60 ease-in-out duration-300 group">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
+        className="w-full h-fit lg:mb-24 lg:px-20 px-8 lg:pt-6 pb-20 font-urbanist"
+      >
+        <div className="lg:h-[450px] h-[25vh] w-full relative overflow-hidden rounded-4xl gradiasi-btn-merah text-yellow-300 inset-shadow-[0px_0px_12px] inset-shadow-black/40 hover:inset-shadow-[0px_0px_20px] hover:inset-shadow-black/60 ease-in-out duration-300 group">
           <GlareHover
             glareColor="#ffdf20"
             glareOpacity={0.3}
@@ -68,19 +78,19 @@ export default function Cta() {
               )}
               <SqueezeBtn
                 text={"Pesan Sekarang"}
-                icon={<ShoppingBasket />}
+                icon={<ShoppingBasket size={isDekstop ? 22 : 20} />}
                 className={
-                  "lg:px-8 py-2 px-4 font-bold lg:text-lg border-yel4low-300 text-red-800 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full"
+                  "lg:px-8 py-2 px-4 font-bold lg:text-lg text-sm text-red-800 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full"
                 }
               />
             </div>
             <CardSwap
               cardDistance={50}
-              verticalDistance={50}
+              verticalDistance={isDekstop ? 50 : 70}
               delay={5000}
               pauseOnHover={false}
               width={600}
-              height={400}
+              height={isDekstop ? 400 : 500}
             >
               {dataCard.map((card) => (
                 <Card
@@ -105,7 +115,7 @@ export default function Cta() {
             </CardSwap>
           </GlareHover>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }

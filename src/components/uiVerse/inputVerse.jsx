@@ -1,4 +1,3 @@
-import { CircleUserRound } from "lucide-react";
 import React from "react";
 
 const InputVerse = ({
@@ -14,7 +13,7 @@ const InputVerse = ({
 }) => {
   return (
     <>
-      <div className="[--clr:#1f1f1f] dark:[--clr:#999999] relative flex flex-row items-center">
+      <div className="relative flex flex-row items-center">
         <input
           name={name}
           value={value}
@@ -26,7 +25,7 @@ const InputVerse = ({
           // autocomplete="off"
           id={id}
           type={type}
-          className="peer  pl-2 h-[40px] min-h-[40px] pr-[40px] leading-normal appearance-none resize-none box-border text-base w-full text-inherit block text-left border border-solid bg-neutral-800  rounded-[10px] m-0 p-0 outline-0 focus-visible:outline-0 focus-visible:border-blue-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#71717a2e] dark:focus-visible:ring-[#14b8a61a]"
+          className="peer bg-yellow-300 pl-2 h-[40px] min-h-[40px] pr-[40px] leading-normal appearance-none resize-none box-border text-base w-full text-inherit block text-left border border-solid rounded-[10px] m-0 p-0 outline-0 focus-visible:outline-0 focus-visible:border-blue-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#71717a2e] dark:focus-visible:ring-[#14b8a61a]"
         />
         <label
           className="cursor-text text-[--clr]  z-0 text-sm mb-px ml-2 font-normal text-start  select-none absolute duration-300 transform origin-[0] translate-x-[32px] peer-focus-visible:text-blue-400 peer-focus-visible:translate-x-[8px] peer-[:not(:placeholder-shown)]:translate-x-[8px] peer-focus-visible:translate-y-[-36px] peer-[:not(:placeholder-shown)]:translate-y-[-36px] peer-[:not(:placeholder-shown)]:text-[-36px]"
@@ -35,21 +34,6 @@ const InputVerse = ({
           {label}
         </label>
         <span className="pointer-events-none absolute z-[+1] left-1 top-0 bottom-0 flex items-center justify-center size-[40px] text-[--clr] peer-focus-visible:hidden peer-[:not(:placeholder-shown)]:hidden">
-          {/* <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1rem"
-            height="1rem"
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            fill="none"
-            stroke="currentColor"
-          >
-            <path fill="none" d="M0 0h24v24H0z" stroke="none"></path>
-            <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"></path>
-            <path d="M16 12v1.5a2.5 2.5 0 0 0 5 0v-1.5a9 9 0 1 0 -5.5 8.28"></path>
-          </svg> */}
           {icon}
         </span>
         <div className="group w-[40px] absolute top-0 bottom-0 right-0 flex items-center justify-center text-[--clr] peer-focus-visible:text-teal-600 peer-focus-visible:[&amp;_span]:border-teal-600">

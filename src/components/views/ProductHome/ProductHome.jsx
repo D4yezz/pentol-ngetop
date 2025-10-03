@@ -7,7 +7,7 @@ import React, { useRef } from "react";
 const productKonten = [
   {
     id: 1,
-    title: "Pentol Pedas Original",
+    title: "Pentol Pedas Mercon",
     price: ["Rp. 15.000", "Rp. 20.000"],
     desc: "Rasakan sensasi adrenalin dari rasa pedas pentol yang menggigit dan penuh karakter, pilihan sempurna bagi pecinta pedas sejati yang tak mau kompromi!",
     img: [
@@ -21,7 +21,7 @@ const productKonten = [
     itemVarian: [
       {
         itemId: 1,
-        judul: "Pedas Original",
+        judul: "Pedas Mercon",
         deskripsi: [
           "Saus cabainya dirancang untuk meledakkan rasa pedas yang kuat, langsung terasa begitu mengenai lidah. Rasa pedasnya murni, tajam, dan meninggalkan kesan berani di setiap suapan.",
           "Varian ini cocok untuk mereka yang mencari sensasi pedas sejati yang memacu adrenalin.",
@@ -31,7 +31,7 @@ const productKonten = [
         itemId: 2,
         judul: "Detail",
         deskripsi: [
-          "Pentol Pedas Original adalah varian klasik yang paling dicari pecinta pedas sejati. Dibuat dari daging pilihan berkualitas dengan bumbu pedas khas yang meresap sempurna hingga ke dalam.",
+          "Pentol Pedas Mercon adalah varian klasik yang paling dicari pecinta pedas sejati. Dibuat dari daging pilihan berkualitas dengan bumbu pedas khas yang meresap sempurna hingga ke dalam.",
           "Tingkat kepedasannya pas, bikin sensasi makan jadi lebih seru dan menantang. Cocok banget buat kamu yang suka rasa autentik tanpa tambahan rasa lain.",
         ],
       },

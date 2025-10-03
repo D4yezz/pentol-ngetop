@@ -14,6 +14,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Logo from "../logo/logo";
+import { useRouter } from "next/navigation";
 
 const navigasi = [
   {
@@ -54,66 +56,64 @@ export default function Navbar() {
     }
   }, [Open]);
 
+  const checkUserLogin = async () => {
+    try {
+      const { data: UserAuth, error } = await supabase.auth.getUser();
 
-  // const checkUserLogin = async () => {
-  //   try {
-  //     const { data, error } = await supabase.auth.getUser();
+      if (error || !UserAuth?.user) {
+        SetIsLogin(false);
+        return;
+      }
 
-  //     if (error || !data.id) {
-  //       SetIsLogin(false);
-  //       return null;
-  //     }
 
-  //     SetIsLogin(true);
+      SetIsLogin(true);
 
-  //     const { data: UserRole, error: ProfileError } = await supabase
-  //       .from("profile_pengguna")
-  //       .select("role")
-  //       .eq("id", data.id)
-  //       .single();
+      const { data: UserRole, error: ProfileError } = await supabase
+        .from("profil_pengguna")
+        .select("*")
+        .eq("id", UserAuth.user.id)
+        .single();
 
-  //     if (ProfileError) throw error;
 
-  //     return UserRole;
-  //   } catch (error) {
-  //     toast.error(
-  //       error?.message || "Terjadi Kesealahan Saat Mendapatakan User"
-  //     );
-  //   }
-  // };
+      if (ProfileError) throw error;
 
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     await checkUserLogin();
+      return UserRole;
+    } catch (error) {
+      // alert(error?.message);
+      console.log("error :", error?.message);
+    }
+  };
 
-  //     SetIsLoading(false);
-  //   };
+  console.log(IsLogin);
 
-  //   getUser();
-  // }, []);
+  useEffect(() => {
+    const getUser = async () => {
+      await checkUserLogin();
+
+      SetIsLoading(false);
+    };
+
+    getUser();
+  }, []);
+
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+
+      if (error) throw error;
+      SetIsLogin(false);
+      router.push("/auth/login");
+    } catch (error) {
+      console.log("error :", error);
+    }
+  };
 
   const ref = useRef(null);
   const isInView = useInView(ref);
   return (
     <header className="flex justify-between items-center w-full h-fit lg:px-16 px-6 mx-auto font-urbanist overflow-x-hidden z-20">
-      <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : -50 }}
-        transition={{ duration: 0.7, ease: "easeInOut" }}
-        className="z-20 fixed top-0"
-      >
-        <Link
-          href="/"
-          className="flex rounded-b-full lg:w-fit lg:h-fit w-14 gradiasi-btn-merah p-1 pt-4"
-        >
-          <img
-            src="/logos.png"
-            alt=""
-            className="lg:w-14 lg:h-14 w-12 h-12 object-center"
-          />
-        </Link>
-      </motion.div>
+      <Logo />
       <motion.div
         initial={{ opacity: 0, x: 200 }}
         animate={{ opacity: 1, x: 0 }}
@@ -142,13 +142,15 @@ export default function Navbar() {
           {IsLogin ? (
             <Link
               href={"/"}
+              onClick={handleLogout}
               className="gradiasi-btn-merah text-yellow-300 p-2 rounded-full"
             >
-              <Settings size={24} />
+              Logout
+              {/* <Settings size={24} /> */}
               {/* <CircleUserRound size={24} /> */}
             </Link>
           ) : (
-            <Link href={"/"}>
+            <Link href={"/auth/login"}>
               <ButtonShine />
             </Link>
           )}
@@ -232,7 +234,7 @@ export default function Navbar() {
                     </Link>
                   ) : (
                     <Link
-                      href="/"
+                      href="/auth/login"
                       className="flex gap-2 items-center justify-center gradiasi-btn-merah text-yellow-300 w-full px-4 py-2 rounded-full"
                       onClick={() => setOpen(false)}
                     >

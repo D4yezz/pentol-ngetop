@@ -5,8 +5,8 @@ import React from "react";
 
 const dataCarousel = [
   {
-    title: "Pedas Level Sesuai Selera",
-    description: "Bisa pilih dari pedas santai sampai pedas sadis.",
+    title: "Pedasnya Nagih",
+    description: "Pedas maksimal tetapi masih bisa dinikmati",
     id: 1,
     icon: <Flame size={30} />,
   },

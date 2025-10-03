@@ -8,9 +8,9 @@ import {
 const dataFaq = [
   {
     id: 1,
-    question: "Apakah bisa pilih level pedas?",
+    question: "Bagaimana cara memesan?",
     answer:
-      "Bisa banget! Tersedia dari pedas ringan, sedang, sampai pedas ekstrem. Tinggal pilih level favorit kamu saat memesan.",
+      "Klik tombol Pesan Sekarang, pilih varian dan level pedas, masukkan alamat, lalu konfirmasi pembayaran. Gampang banget!",
   },
   {
     id: 2,
@@ -20,9 +20,9 @@ const dataFaq = [
   },
   {
     id: 3,
-    question: "Bagaimana cara memesan?",
+    question: "Apakah bisa request tambahan topping atau saus?",
     answer:
-      "Klik tombol Pesan Sekarang, pilih varian dan level pedas, masukkan alamat, lalu konfirmasi pembayaran. Gampang banget!",
+      "Bisa banget! Kamu tinggal pilih tambahan topping atau saus favorit saat checkout.",
   },
   {
     id: 4,
@@ -48,24 +48,24 @@ export default function FaqSection() {
         defaultValue="1"
       >
         {dataFaq.map((item) => (
-            <AccordionItem
-              key={item.id}
-              value={item.id}
+          <AccordionItem
+            key={item.id}
+            value={item.id}
+            className={
+              "my-4 text-neutral-100 border-[1px] border-yellow-300 px-4 rounded-2xl last:border-b-[1px] shadow-[0px_3px_9px] shadow-yellow-300/30"
+            }
+          >
+            <AccordionTrigger
               className={
-                "my-4 text-neutral-100 border-[1px] border-yellow-300 px-4 rounded-2xl last:border-b-[1px] shadow-[0px_3px_9px] shadow-yellow-300/30"
+                "cursor-pointer text-yellow-300 rounded-none text-lg font-medium hover:no-underline [&[data-orientation=vertical]>svg]:text-yellow-300 flex items-center"
               }
             >
-              <AccordionTrigger
-                className={
-                  "cursor-pointer text-yellow-300 rounded-none text-lg font-medium hover:no-underline [&[data-orientation=vertical]>svg]:text-yellow-300 flex items-center"
-                }
-              >
-                {item.question}
-              </AccordionTrigger>
-              <AccordionContent className="flex flex-col gap-4 w-xl mt-2 ">
-                <p>{item.answer}</p>
-              </AccordionContent>
-            </AccordionItem>
+              {item.question}
+            </AccordionTrigger>
+            <AccordionContent className="flex flex-col gap-4 w-xl mt-2 ">
+              <p>{item.answer}</p>
+            </AccordionContent>
+          </AccordionItem>
         ))}
       </Accordion>
     </>
