@@ -36,7 +36,7 @@ const menu = [
 export default function Footer() {
   return (
     <>
-      <footer className="flex flex-col gradiasi-btn-merah w-full h-fit px-16 pb-8 text-white font-quicksand relative overflow-hidden">
+      <footer className="flex flex-col gradiasi-btn-merah w-full lg:h-fit h-[30vh] lg:px-16 px-8 pb-8 text-white font-quicksand relative overflow-hidden">
         <WaveComponent />
         <div className="flex w-full h-fit">
           <div className="w-[60%] h-fit flex flex-col gap-4 mt-28">
@@ -94,7 +94,6 @@ export default function Footer() {
                     >
                       {item.icon}
                     </span>
-
                     <a href={item.href}>{item.title}</a>
                   </li>
                 ))}
@@ -102,7 +101,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <BottomFooter/>
+        <BottomFooter />
       </footer>
     </>
   );

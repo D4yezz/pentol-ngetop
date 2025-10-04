@@ -4,13 +4,16 @@ import Navbar from "@/components/layout/navbar/navbar";
 import { Particles } from "@/components/ui/shadcn-io/particles";
 import About from "@/components/views/About/about";
 import Cta from "@/components/views/Cta/cta";
+import CtaMobile from "@/components/views/Cta/ctaMobile";
 import Faq from "@/components/views/Faq/faq";
 import Footer from "@/components/views/Footer/footer";
 import Beranda from "@/components/views/Home/home";
 import ProductHome from "@/components/views/ProductHome/ProductHome";
 import Testimonial from "@/components/views/Testimonials/testimonials";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 export default function Home() {
+  const isDekstop = useMediaQuery("(min-width: 1024px)");
   return (
     <>
       <div className="bg-neutral-100 [&>*]:selection:bg-yellow-300/50 relative">
@@ -33,7 +36,8 @@ export default function Home() {
         <ProductHome />
         <Testimonial />
         <Faq />
-        <Cta />
+        {isDekstop ? <Cta /> : <CtaMobile />}
+
         <Footer />
       </div>
     </>

@@ -7,7 +7,7 @@ export default function Faq() {
   const isInView = useInView(ref);
   return (
     <>
-      <section className="w-full h-fit gradiasi-btn-merah flex lg:flex-row flex-col items-start lg:gap-10 lg:px-16 px-8 lg:py-36 py-44 mb-20 font-poppins relative overflow-hidden z-10">
+      <section className="w-full h-fit gradiasi-btn-merah flex lg:flex-row flex-col items-start lg:gap-10 lg:px-16 px-8 lg:py-36 py-44 lg:mb-20 font-poppins relative overflow-hidden z-10">
         <div className="w-full lg:scale-105 scale-150 h-48 bg-neutral-100 absolute z-10 -top-30 left-0 right-0 mx-auto lg:rounded-[70%] rounded-[50%]"></div>
         <motion.div
           ref={ref}

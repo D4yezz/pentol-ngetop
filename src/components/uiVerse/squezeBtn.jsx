@@ -2,7 +2,7 @@ import React from "react";
 
 const SqueezeBtn = ({ className, text, icon }) => {
   return (
-    <div>
+    <div className="w-full h-fit">
       <style jsx>{`
         @keyframes jello-horizontal {
           0% {
@@ -61,7 +61,7 @@ const SqueezeBtn = ({ className, text, icon }) => {
         }
       `}</style>
       <button
-        className={`squeeze-button w-fit h-fit flex items-center justify-center gap-2 cursor-pointer outline-none transition-colors duration-200 ${className}`}
+        className={`squeeze-button flex items-center justify-center gap-2 cursor-pointer outline-none transition-colors duration-200 ${className}`}
       >
         {icon}
         {text}

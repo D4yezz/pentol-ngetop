@@ -4,10 +4,12 @@ import { Link2, Phone, Send, ShoppingBasket } from "lucide-react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 export default function TeksWelcome() {
   const ref = useRef(null);
   const isInView = useInView(ref);
+  const isDekstop= useMediaQuery("(min-width: 1024px)");
   return (
     <>
       <motion.section
@@ -38,17 +40,17 @@ export default function TeksWelcome() {
         </p>
         <div className="flex gap-4">
           <ButtonMengkilap
-            text={"Beli Pentol"}
+            text={isDekstop?"Beli Pentol":"Beli"}
             icon={<ShoppingBasket size={20} />}
             textColor={"yellow-300"}
             className={
-              "text-lg gradiasi-btn-merah lg:rounded-full rounded-lg font-semibold w-54 lg:px-4 px-2 py-3 hover:ring-2 hover:ring-red-800 hover:ring-offset-2"
+              "text-lg gradiasi-btn-merah rounded-full font-semibold lg:w-54 w-[35vw] lg:px-4 p-2 hover:ring-2 hover:ring-red-800 hover:ring-offset-2"
             }
           />
           <BtnGeserAtas
-            text={"Hubungi Kami"}
+            text={isDekstop?"Hubungi Kami":"Hubungi"}
             styleText={
-              "gradiasi-btn-merah text-yellow-300 font-semibold text-lg lg:rounded-full rounded-lg w-54 lg:px-4 px-2 py-3"
+              "gradiasi-btn-merah text-yellow-300 font-semibold text-lg rounded-full lg:w-54 w-[35vw] lg:px-4 p-2"
             }
             iconAtas={<Phone size={20} />}
             iconBawah={<Send size={20} />}
