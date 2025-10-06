@@ -5,7 +5,7 @@ const WaveComponent = () => {
     <>
       <svg
         viewBox="0 0 1413 133"
-        className="w-full text-yellow-300 -top-8 left-0 right-0 mx-auto absolute"
+        className="w-full text-yellow-300 lg:-top-8 top-1 left-0 right-0 mx-auto absolute"
       >
         <path
           fill="currentColor"
@@ -20,7 +20,7 @@ const WaveComponent = () => {
       </svg>
       <svg
         viewBox="0 0 1413 133"
-        className="w-full text-neutral-100 -top-9 left-0 right-0 mx-auto absolute"
+        className="w-full text-neutral-100 lg:-top-9 left-0 right-0 mx-auto absolute"
       >
         <path
           fill="currentColor"

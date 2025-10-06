@@ -5,6 +5,8 @@ import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import WaveComponent from "@/components/layout/FooterChild/svgFooter";
 import { Mail, MapPin, Phone } from "lucide-react";
 import BottomFooter from "@/components/layout/FooterChild/bottomFooter";
+import { motion, useInView } from "framer-motion";
+import React, { useRef } from "react";
 
 const menu = [
   {
@@ -34,12 +36,20 @@ const menu = [
 ];
 
 export default function Footer() {
+  const ref = useRef(null);
+  const isInView = useInView(ref);
   return (
     <>
-      <footer className="flex flex-col gradiasi-btn-merah w-full lg:h-fit h-[30vh] lg:px-16 px-8 pb-8 text-white font-quicksand relative overflow-hidden">
+      <motion.footer
+        ref={ref}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
+        transition={{ duration: 0.7, ease: "easeInOut" }}
+        className="flex flex-col gradiasi-btn-merah w-full h-fit lg:px-16 px-8 pb-8 text-white font-quicksand relative overflow-hidden"
+      >
         <WaveComponent />
-        <div className="flex w-full h-fit">
-          <div className="w-[60%] h-fit flex flex-col gap-4 mt-28">
+        <div className="flex lg:flex-row flex-col lg:gap-0 gap-4 w-full h-fit">
+          <div className="lg:w-[60%] w-full h-fit flex flex-col gap-4 lg:mt-28 mt-18">
             <div className="flex items-center gap-2">
               <Avatar className={"w-12 h-12"}>
                 <AvatarImage src="/logos.png" />
@@ -51,7 +61,7 @@ export default function Footer() {
                 Pentol <span className="text-yellow-300">Ngetop</span>
               </p>
             </div>
-            <p className="text-balance font-semibold w-[80%]">
+            <p className="lg:text-balance text-wrap font-semibold lg:w-[80%] w-full">
               Pentol Ngetop - Lorem ipsum, dolor sit amet consectetur
               adipisicing elit. Animi ab commodi magnam.
             </p>
@@ -67,7 +77,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
-          <div className="w-[40%] flex items-start justify-between font-quicksand mt-32 pr-4">
+          <div className="lg:w-[40%] w-full flex lg:flex-row flex-col items-start justify-between font-quicksand lg:mt-32 mt-0 gap-6 lg:gap-0 lg:pr-4">
             <div className="flex flex-col gap-3">
               <h5 className="text-xl font-bold text-yellow-300">Menu Cepat</h5>
               <ul className="flex flex-col gap-2 [&>*]:hover:text-yellow-300 [&>*]:text-[0.95rem]">
@@ -102,7 +112,7 @@ export default function Footer() {
           </div>
         </div>
         <BottomFooter />
-      </footer>
+      </motion.footer>
     </>
   );
 }
