@@ -4,6 +4,7 @@ import {
   ChefHat,
   LayoutGrid,
   LogIn,
+  LogOut,
   Menu,
   Phone,
   Settings,
@@ -16,6 +17,7 @@ import { AnimatePresence, motion, useInView } from "motion/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Logo from "../logo/logo";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const navigasi = [
   {
@@ -65,7 +67,6 @@ export default function Navbar() {
         return;
       }
 
-
       SetIsLogin(true);
 
       const { data: UserRole, error: ProfileError } = await supabase
@@ -73,7 +74,6 @@ export default function Navbar() {
         .select("*")
         .eq("id", UserAuth.user.id)
         .single();
-
 
       if (ProfileError) throw error;
 
@@ -161,7 +161,7 @@ export default function Navbar() {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeInOut" }}
-        className={`fixed right-0 top-0 lg:hidden flex justify-end items-start text-red-800 cursor-pointer z-20 bg-yellow-300 border-[0px_0px_2px_2px] border-red-800 rounded-bl-full pt-2 pr-2 w-16 h-16 ${
+        className={`fixed right-0 top-0 lg:hidden flex justify-end items-start text-red-800 cursor-pointer z-20 bg-yellow-300 rounded-bl-full pt-2 pr-2 w-16 h-16 ${
           Open ? "invisible" : "visible"
         }`}
         onClick={() => setOpen(!Open)}
@@ -199,13 +199,14 @@ export default function Navbar() {
                   <X />
                 </motion.button>
               </div>
-              <div className="flex justify-center items-center">
-                <Avatar className={"w-18 h-18 border-4 border-red-800"}>
+              <div className="flex gap-2 justify-start items-center py-4 border-b-2 border-red-800 mb-2 mx-4">
+                <Avatar className={"w-12 h-12 border-4 border-red-800"}>
                   <AvatarImage src="/logos.png" alt="Pentol Ngetop" />
                   <AvatarFallback>PN</AvatarFallback>
                 </Avatar>
+                <h3 className="text-xl text-red-800 font-semibold">Nickname</h3>
               </div>
-              <div className="flex flex-col px-4 py-6 h-[85dvh] justify-between">
+              <div className="flex flex-col px-4 py-6 h-[80dvh] justify-between">
                 <ul className="flex flex-col gap-4">
                   {navigasi.map((item) => (
                     <li key={item.id}>
@@ -223,19 +224,28 @@ export default function Navbar() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-4 flex justify-center">
+                <div className="mt-4 flex gap-2 items-center justify-center">
                   {IsLogin ? (
-                    <Link
-                      href="/"
-                      className="gradiasi-btn-merah text-yellow-300 p-2 rounded-full"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Settings size={24} />
-                    </Link>
+                    <>
+                      <Link
+                        href="/"
+                        className="gradiasi-btn-merah text-yellow-300 p-2 rounded-full w-fit"
+                        onClick={() => setOpen(false)}
+                      >
+                        <Settings size={24} />
+                      </Link>
+                      <Button
+                        className="flex gap-2 items-center justify-center gradiasi-btn-merah text-yellow-300 w-fit h-full px-16 py-2 rounded-xl"
+                        onClick={handleLogout}
+                      >
+                        <LogOut size={18} />
+                        Logout
+                      </Button>
+                    </>
                   ) : (
                     <Link
                       href="/auth/login"
-                      className="flex gap-2 items-center justify-center gradiasi-btn-merah text-yellow-300 w-full px-4 py-2 rounded-full"
+                      className="flex gap-2 items-center justify-center gradiasi-btn-merah text-yellow-300 w-full px-4 py-2 rounded-xl"
                       onClick={() => setOpen(false)}
                     >
                       <LogIn size={18} />

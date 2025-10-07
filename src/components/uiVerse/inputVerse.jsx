@@ -13,22 +13,22 @@ const InputVerse = ({
 }) => {
   return (
     <>
-      <div className="relative flex flex-row items-center">
+      <div className="relative flex flex-row items-center bg-green-200 h-fit">
         <input
           name={name}
           value={value}
           onChange={onChange}
-          required={required}
+          required={required} 
           aria-invalid="false"
           placeholder={placeholder}
           // spellcheck="false"
           // autocomplete="off"
           id={id}
           type={type}
-          className="peer bg-yellow-300 pl-2 h-[40px] min-h-[40px] pr-[40px] leading-normal appearance-none resize-none box-border text-base w-full text-inherit block text-left border border-solid rounded-[10px] m-0 p-0 outline-0 focus-visible:outline-0 focus-visible:border-blue-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#71717a2e] dark:focus-visible:ring-[#14b8a61a]"
+          className="peer pl-2 h-fit pr-[40px] py- leading-normal appearance-none resize-none box-border text-base w-full text-inherit block text-left border border-red-800 rounded-[10px] m-0 p-0 outline-0 focus-visible:outline-0 focus-visible:border-blue-400 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#71717a2e] dark:focus-visible:ring-[#14b8a61a]"
         />
         <label
-          className="cursor-text text-[--clr]  z-0 text-sm mb-px ml-2 font-normal text-start  select-none absolute duration-300 transform origin-[0] translate-x-[32px] peer-focus-visible:text-blue-400 peer-focus-visible:translate-x-[8px] peer-[:not(:placeholder-shown)]:translate-x-[8px] peer-focus-visible:translate-y-[-36px] peer-[:not(:placeholder-shown)]:translate-y-[-36px] peer-[:not(:placeholder-shown)]:text-[-36px]"
+          className="cursor-text z-0 text-sm ml-2 font-normal text-start select-none absolute duration-300 transform origin-[0] translate-x-[32px] peer-focus-visible:text-blue-400 peer-focus-visible:translate-x-[8px] peer-[:not(:placeholder-shown)]:translate-x-[8px] peer-focus-visible:translate-y-[-36px] peer-[:not(:placeholder-shown)]:translate-y-[-36px] peer-[:not(:placeholder-shown)]:text-[-36px]"
           htmlFor={id}
         >
           {label}
