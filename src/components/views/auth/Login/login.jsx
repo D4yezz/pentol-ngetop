@@ -1,18 +1,23 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import InputFocus from "@/components/uiVerse/inputFocus";
 import InputVerse from "@/components/uiVerse/inputVerse";
 import supabase from "@/lib/db";
-import { Mail, RectangleEllipsis } from "lucide-react";
+import { Eye, EyeOff, Mail, RectangleEllipsis } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import CarouselFade from "./carouselFade";
+import { motion, useInView } from "framer-motion";
 
 export default function LoginView() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState(null);
 
   const handleLogin = async (e) => {
@@ -28,70 +33,86 @@ export default function LoginView() {
       router.push("/");
     }
   };
+  const ref = useRef(null);
+  const isInView = useInView(ref);
   return (
     <>
-      <section className="flex w-full h-full mt-20 py-12 rounded-2xl bg-neutral-100 shadow-lg border border-red-800">
-        <div className="flex flex-col justify-center items-center w-1/2 h-full px-6 py-12 rounded-2xl font-inter">
+      <section className="flex items-center w-full h-dvh bg-neutral-100 overflow-hidden">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -50 }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+          className="flex flex-col justify-center items-center w-1/2 h-full px-6 rounded-2xl font-inter"
+        >
           <form
             onSubmit={handleLogin}
-            className="flex flex-col gap-10 w-[80%] items-center"
+            className="flex flex-col gap-10 w-[80%] items-center px-14"
           >
             <h2 className="text-3xl font-semibold text-left w-full gradiasi-btn-merah text-transparent bg-clip-text">
               Login
             </h2>
-            {/* <div className="grid w-full items-center gap-3 text-red-800">
-              <InputVerse
-                label={"Email"}
-                id={"email"}
-                name={"email"}
+            <div className="grid w-full items-center gap-3">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                type="email"
+                id="email"
+                placeholder="example@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder={""}
-                type={"email"}
-                icon={<Mail size={20} />}
-                required
               />
-            </div> */}
-            <InputFocus
-              label={"Email"}
-              id={"email"}
-              name={"email"}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={""}
-              type={"email"}
-              icon={<Mail size={18} />}
-              required
-            />
-            {/* <div className="grid w-full items-center gap-3 text-red-800">
-              <InputVerse
-                label={"Password"}
-                id={"password"}
-                name={"password"}
+            </div>
+            <div className="grid w-full items-center gap-3 relative">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                type={showPw ? "text" : "password"}
+                id="password"
+                placeholder="*****"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder={""}
-                type={"password"}
-                icon={<RectangleEllipsis size={20} />}
-                required
               />
-            </div> */}
-            {error && <p className="text-yellow-300">{error}</p>}
-            <p>
-              Belum Punya Akun?{" "}
-              <Link href={"/auth/register"} className="text-blue-400">
-                Register
-              </Link>{" "}
-            </p>
+              <button
+                className="absolute  right-2 top-8 text-lg text-neutral-500 hover:cursor-pointer"
+                type="button"
+                onClick={() => setShowPw(!showPw)}
+              >
+                {showPw ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
+            {error && <p className="text-red-800">{error}</p>}
             <Button
               className={
-                "border-2 cursor-pointer gradiasi-btn-merah hover:bg-yellow-300 hover:text-yellow-300 hover:border-yellow-300 px-8"
+                "w-full h-12 text-md border-2 rounded-full cursor-pointer gradiasi-btn-merah hover:bg-yellow-300 hover:text-yellow-300 hover:border-yellow-300 px-8"
               }
+              type="submit"
             >
-              Masuk
+              Login
             </Button>
+            <div className="flex flex-col gap-2 justify-center items-center">
+              <p>
+                Belum Punya Akun?{" "}
+                <Link href={"/auth/register"} className="text-blue-400">
+                  Register
+                </Link>
+              </p>
+              <Link
+                href={"/"}
+                className="gradiasi-btn-merah text-transparent bg-clip-text font-medium"
+              >
+                Lupa Password?
+              </Link>
+            </div>
           </form>
-        </div>
+        </motion.div>
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 50 }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+          className="w-1/2 h-dvh p-2"
+        >
+          <CarouselFade />
+        </motion.div>
       </section>
     </>
   );

@@ -79,7 +79,6 @@ export default function Navbar() {
 
       return UserRole;
     } catch (error) {
-      // alert(error?.message);
       console.log("error :", error?.message);
     }
   };
@@ -89,7 +88,6 @@ export default function Navbar() {
   useEffect(() => {
     const getUser = async () => {
       await checkUserLogin();
-
       SetIsLoading(false);
     };
 
@@ -100,7 +98,6 @@ export default function Navbar() {
   const handleLogout = async () => {
     try {
       const { error } = await supabase.auth.signOut();
-
       if (error) throw error;
       SetIsLogin(false);
       router.push("/auth/login");
@@ -111,6 +108,7 @@ export default function Navbar() {
 
   const ref = useRef(null);
   const isInView = useInView(ref);
+  
   return (
     <header className="flex justify-between items-center w-full h-fit lg:px-16 px-6 mx-auto font-urbanist overflow-x-hidden z-20">
       <Logo />
