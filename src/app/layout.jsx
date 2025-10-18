@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${urbanist.variable} ${poppins.variable} ${quicksand.variable} ${inter.variable} ${gabarito.variable} ${instrumentSans.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${urbanist.variable} ${poppins.variable} ${quicksand.variable} ${inter.variable} ${gabarito.variable} ${instrumentSans.variable} antialiased [&>*]:selection:bg-yellow-300/50`}
       >
         {children}
         <Toaster position="top-right" richColors expand={false} />

@@ -111,7 +111,12 @@ export default function LoginView() {
           transition={{ duration: 0.7, ease: "easeInOut" }}
           className="lg:w-1/2 w-full lg:order-2 order-1 h-dvh p-2"
         >
-          <CarouselFade />
+          <CarouselFade
+            welcome={"Selamat Datang di"}
+            desc={
+              "Masuk sekarang dan rasakan sensasi pentol pedas paling nagih. Sekali coba, kamu bakal balik lagi!"
+            }
+          />
         </motion.div>
       </section>
     </>

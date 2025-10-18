@@ -13,7 +13,7 @@ const InputVerse = ({
 }) => {
   return (
     <>
-      <div className="relative flex flex-row items-center bg-green-200 h-fit">
+      <div className="relative flex flex-row items-center h-fit">
         <input
           name={name}
           value={value}
