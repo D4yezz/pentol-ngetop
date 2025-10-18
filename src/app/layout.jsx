@@ -9,6 +9,7 @@ import {
   Urbanist,
 } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,6 +56,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} ${urbanist.variable} ${poppins.variable} ${quicksand.variable} ${inter.variable} ${gabarito.variable} ${instrumentSans.variable} antialiased`}
       >
         {children}
+        <Toaster position="top-right" richColors expand={false} />
       </body>
     </html>
   );

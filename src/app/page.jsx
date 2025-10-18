@@ -37,7 +37,6 @@ export default function Home() {
         <Testimonial />
         <Faq />
         {isDekstop ? <Cta /> : <CtaMobile />}
-
         <Footer />
       </div>
     </>

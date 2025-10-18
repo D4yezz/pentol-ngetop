@@ -32,7 +32,7 @@ export default function CarouselFade() {
   return (
     <>
       <div
-        className="overflow-hidden relative rounded-bl-[60px] rounded-xl h-full font-poppins"
+        className="overflow-hidden relative lg:rounded-bl-[60px] rounded-xl h-full font-poppins"
         ref={emblaRef}
       >
         <div className="flex gap-16 relative z-0 brightness-[90%]">
@@ -45,15 +45,14 @@ export default function CarouselFade() {
             </div>
           ))}
         </div>
-        <div className="absolute z-10 left-0 right-0 bottom-0 mx-auto w-full h-full flex flex-col justify-end p-6">
-          <div className="w-[70%] bg-white/35 inset-shadow-[0px_0px_10px] inset-shadow-white text-white rounded-bl-[40px] rounded-3xl backdrop-blur-sm border shadow-xl flex flex-col justify-center py-16 px-8">
-            <span className="absolute -top-5 -right-5 rotate-[20deg] gradiasi-btn-merah p-3 rounded-full border-2 border-white shadow-lg hover:scale-105 hover:rotate-0 duration-300 ease-in-out">
+        <div className="lg:visible invisible absolute z-10 left-0 right-0 bottom-0 mx-auto w-full h-full flex flex-col justify-end lg:p-6 p-4">
+          <div className="lg:w-[70%] w-full bg-white/35 inset-shadow-[0px_0px_10px] inset-shadow-white text-white lg:rounded-bl-[40px] lg:rounded-3xl rounded-xl backdrop-blur-sm border shadow-xl flex flex-col justify-center lg:py-16 py-4 lg:px-8 px-4">
+            <span className="lg:visible invisible absolute -top-5 -right-5 rotate-[20deg] gradiasi-btn-merah p-3 rounded-full border-2 border-white shadow-lg hover:scale-105 hover:rotate-0 duration-300 ease-in-out">
               <CookingPot />
             </span>
-            <h1 className="text-4xl font-medium mb-2 flex flex-col">
+            <h1 className="lg:text-4xl text-2xl font-medium mb-2 flex flex-col">
               Selamat Datang di
               <span className="gradiasi-btn-merah text-transparent bg-clip-text pb-2 font-semibold">
-                {" "}
                 Pentol Ngetop
               </span>
             </h1>

@@ -12,23 +12,22 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import CarouselFade from "./carouselFade";
 import { motion, useInView } from "framer-motion";
+import { toast } from "sonner";
 
 export default function LoginView() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
-  const [error, setError] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(null);
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
     if (error) {
-      setError(error.message);
+      toast.error(error.message);
     } else {
       router.push("/");
     }
@@ -37,17 +36,17 @@ export default function LoginView() {
   const isInView = useInView(ref);
   return (
     <>
-      <section className="flex items-center w-full h-dvh bg-neutral-100 overflow-hidden">
+      <section className="flex lg:flex-row flex-col justify-center items-center w-full h-dvh bg-neutral-100 overflow-hidden">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -50 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
-          className="flex flex-col justify-center items-center w-1/2 h-full px-6 rounded-2xl font-inter"
+          className="lg:order-1 order-2 lg:static absolute z-10 flex flex-col justify-center items-center lg:w-1/2 w-fit h-fit lg:px-6 px-4 lg:py-0 py-8 rounded-2xl lg:bg-transparent bg-white/75 backdrop-blur-md lg:border-0 border-2 border-white lg:shadow-none shadow-xl inset-shadow-[0px_0px_12px] inset-shadow-white/45 font-inter"
         >
           <form
             onSubmit={handleLogin}
-            className="flex flex-col gap-10 w-[80%] items-center px-14"
+            className="flex flex-col lg:gap-10 gap-6 lg:w-[80%] w-full items-center px-4 lg:px-14"
           >
             <h2 className="text-3xl font-semibold text-left w-full gradiasi-btn-merah text-transparent bg-clip-text">
               Login
@@ -60,6 +59,7 @@ export default function LoginView() {
                 placeholder="example@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className={"lg:border-neutral-300 border-red-800"}
               />
             </div>
             <div className="grid w-full items-center gap-3 relative">
@@ -67,22 +67,22 @@ export default function LoginView() {
               <Input
                 type={showPw ? "text" : "password"}
                 id="password"
-                placeholder="*****"
+                placeholder="*******"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className={"lg:border-neutral-300 border-red-800"}
               />
               <button
-                className="absolute  right-2 top-8 text-lg text-neutral-500 hover:cursor-pointer"
+                className="absolute right-2 top-8 text-lg text-neutral-500 hover:cursor-pointer"
                 type="button"
                 onClick={() => setShowPw(!showPw)}
               >
                 {showPw ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
-            {error && <p className="text-red-800">{error}</p>}
             <Button
               className={
-                "w-full h-12 text-md border-2 rounded-full cursor-pointer gradiasi-btn-merah hover:bg-yellow-300 hover:text-yellow-300 hover:border-yellow-300 px-8"
+                "w-full h-12 text-md rounded-full cursor-pointer gradiasi-btn-merah hover:bg-yellow-300 hover:text-yellow-300 hover:border-yellow-300 px-8"
               }
               type="submit"
             >
@@ -109,7 +109,7 @@ export default function LoginView() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 50 }}
           transition={{ duration: 0.7, ease: "easeInOut" }}
-          className="w-1/2 h-dvh p-2"
+          className="lg:w-1/2 w-full lg:order-2 order-1 h-dvh p-2"
         >
           <CarouselFade />
         </motion.div>
