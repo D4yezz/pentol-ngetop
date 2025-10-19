@@ -27,7 +27,15 @@ export default function Faq() {
             kamu tidak ragu beli Pentol Ngetop.
           </p>
         </motion.div>
-        <FaqSection />
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : 50 }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
+          className="w-full"
+        >
+          <FaqSection />
+        </motion.div>
         <div className="w-full lg:scale-105 scale-150 h-48 bg-neutral-100 absolute z-20 -bottom-30 left-0 right-0 mx-auto lg:rounded-[70%] rounded-[50%]"></div>
       </section>
     </>

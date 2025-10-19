@@ -62,7 +62,7 @@ export default function FaqSection() {
             >
               {item.question}
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-4 w-xl mt-2 ">
+            <AccordionContent className="flex flex-col gap-4 lg:w-xl mt-2 ">
               <p>{item.answer}</p>
             </AccordionContent>
           </AccordionItem>

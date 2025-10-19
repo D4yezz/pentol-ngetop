@@ -1,3 +1,4 @@
+"use client";
 import ButtonShine from "@/components/uiVerse/btnShine";
 import supabase from "@/lib/db";
 import {
