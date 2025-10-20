@@ -1,16 +1,11 @@
+import React, { useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import React, { useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
-const image = ["/pedas_ori/1.jpeg", "/pedas_ori/2.jpeg", "/pedas_ori/3.jpeg"];
-
-export default function ThumbCarousel() {
+export default function ThumbCarousel({ images }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    {
-      loop: false,
-      watchDrag: false,
-    },
-  );
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
+
   useEffect(() => {
     if (!emblaApi) return;
     const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
@@ -18,40 +13,43 @@ export default function ThumbCarousel() {
     onSelect();
   }, [emblaApi]);
 
-  const scrollTo = (index) => {
-    if (!emblaApi) return;
-    emblaApi.scrollTo(index);
-  };
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+
   return (
-    <>
-      <div className="overflow-hidden w-1/2" ref={emblaRef}>
-        <div className="flex">
-          {image.map((imageUrl, index) => (
-            <div
-              className="w-full flex flex-none items-center"
-              key={index}
-              onClick={() => scrollTo(index)}
-            >
-              <img
-                src={imageUrl}
-                alt={`Image ${index}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-center mt-4">
-          {image.map((_, index) => (
-            <button
-              key={index}
-              className={`w-3 h-3 rounded-full mx-2 ${
-                index === selectedIndex ? "bg-red-500" : "bg-gray-300"
-              }`}
-              onClick={() => scrollTo(index)}
-            ></button>
-          ))}
-        </div>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: isInView ? 1 : 0, x: isInView ? 0 : -50 }}
+      transition={{ duration: 0.7, ease: "easeInOut" }}
+      className="flex lg:flex-row flex-col items-center lg:w-2/3 w-full lg:gap-4 gap-2"
+    >
+      <div className="lg:order-1 order-2 flex lg:flex-col flex-row justify-center lg:gap-4 gap-2 lg:w-1/4 w-full">
+        {images.map((img, index) => (
+          <button
+            key={index}
+            onClick={() => setSelectedIndex(index)}
+            className={`w-full lg:h-40 h-20 lg:rounded-3xl rounded-2xl overflow-hidden transition-all duration-200 ${
+              selectedIndex === index
+                ? ""
+                : "border-transparent opacity-70 hover:opacity-100"
+            }`}
+          >
+            <img
+              src={img}
+              alt={`Thumbnail ${index}`}
+              className="w-full h-full object-cover"
+            />
+          </button>
+        ))}
       </div>
-    </>
+      <div className="lg:order-2 order-1 lg:w-3/4 w-full h-full overflow-hidden lg:rounded-3xl rounded-2xl">
+        <img
+          src={images[selectedIndex]}
+          alt={`Main Image ${selectedIndex}`}
+          className="w-full h-full object-cover transition-all duration-300"
+        />
+      </div>
+    </motion.div>
   );
 }
