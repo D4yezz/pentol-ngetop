@@ -19,6 +19,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Logo from "../logo/logo";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { getProfileUser } from "@/service/auth.service";
 
 const navigasi = [
   {
@@ -60,29 +61,37 @@ export default function Navbar() {
   }, [Open]);
 
   const checkUserLogin = async () => {
-    try {
-      const { data: UserAuth, error } = await supabase.auth.getUser();
+    const user = await getProfileUser();
 
-      if (error || !UserAuth?.user) {
-        SetIsLogin(false);
-        return;
-      }
-
+    if (user.status) {
       SetIsLogin(true);
-
-      const { data: UserRole, error: ProfileError } = await supabase
-        .from("profil_pengguna")
-        .select("*")
-        .eq("id", UserAuth.user.id)
-        .single();
-
-      if (ProfileError) throw error;
-
-      return UserRole;
-    } catch (error) {
-      console.log("error :", error?.message);
     }
   };
+
+  // const checkUserLogin = async () => {
+  //   try {
+  //     const { data: UserAuth, error } = await supabase.auth.getUser();
+
+  //     if (error || !UserAuth?.user) {
+  //       SetIsLogin(false);
+  //       return;
+  //     }
+
+  //     SetIsLogin(true);
+
+  //     const { data: UserRole, error: ProfileError } = await supabase
+  //       .from("profil_pengguna")
+  //       .select("*")
+  //       .eq("id", UserAuth.user.id)
+  //       .single();
+
+  //     if (ProfileError) throw error;
+
+  //     return UserRole;
+  //   } catch (error) {
+  //     console.log("error :", error?.message);
+  //   }
+  // };
 
   console.log(IsLogin);
 
@@ -109,7 +118,7 @@ export default function Navbar() {
 
   const ref = useRef(null);
   const isInView = useInView(ref);
-  
+
   return (
     <header className="flex justify-between items-center w-full h-fit lg:px-16 px-6 mx-auto font-urbanist overflow-x-hidden z-20">
       <Logo />

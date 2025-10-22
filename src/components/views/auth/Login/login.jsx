@@ -5,33 +5,70 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import InputFocus from "@/components/uiVerse/inputFocus";
 import InputVerse from "@/components/uiVerse/inputVerse";
-import supabase from "@/lib/db";
+// import supabase from "@/lib/db";
 import { Eye, EyeOff, Mail, RectangleEllipsis } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
 import CarouselFade from "./carouselFade";
 import { motion, useInView } from "framer-motion";
 import { toast } from "sonner";
+import { getProfileUser, login } from "@/service/auth.service";
 
 export default function LoginView() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [showPw, setShowPw] = useState(false);
+
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   const { data, error } = await supabase.auth.signInWithPassword({
+  //     email,
+  //     password,
+  //   });
+  //   if (error) {
+  //     toast.error(error.message);
+  //   } else {
+  //     router.push("/");
+  //   }
+  // };
+
+   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) {
-      toast.error(error.message);
-    } else {
-      router.push("/");
+    if (!email || !password) {
+      toast.error("Harap Isi Field yang Kosong");
+      return;
+    }
+    setIsLoading(true);
+    const response = await login({ email, password });
+    if (!response.status || response.status === null) {
+      setIsLoading(false);
+      toast.error(response.pesan || "Gagal untuk login");
+      return;
+    }
+    toast.success("Berhasil Login");
+    const user = await getProfileUser();
+    const role = user.data?.profile.role;
+    if (callbackUrl) {
+      router.push(callbackUrl);
+      return;
+    }
+    switch (role) {
+      case "admin":
+        router.push("/admin");
+        break;
+      default:
+        router.push("/");
+        break;
     }
   };
+
   const ref = useRef(null);
   const isInView = useInView(ref);
   return (
@@ -85,8 +122,9 @@ export default function LoginView() {
                 "w-full h-12 text-md rounded-full cursor-pointer gradiasi-btn-merah hover:bg-yellow-300 hover:text-yellow-300 hover:border-yellow-300 px-8"
               }
               type="submit"
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? "Loading..." : "Login"}
             </Button>
             <div className="flex flex-col gap-2 justify-center items-center">
               <p>

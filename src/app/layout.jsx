@@ -53,6 +53,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} ${urbanist.variable} ${poppins.variable} ${quicksand.variable} ${inter.variable} ${gabarito.variable} ${instrumentSans.variable} antialiased [&>*]:selection:bg-yellow-300/50`}
       >
         {children}
