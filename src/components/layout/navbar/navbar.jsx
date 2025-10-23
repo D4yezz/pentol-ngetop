@@ -19,7 +19,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Logo from "../logo/logo";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { getProfileUser } from "@/service/auth.service";
+import { getProfileUser, logout } from "@/service/auth.service";
+import { toast } from "sonner";
 
 const navigasi = [
   {
@@ -106,14 +107,18 @@ export default function Navbar() {
 
   const router = useRouter();
   const handleLogout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) throw error;
-      SetIsLogin(false);
-      router.push("/auth/login");
-    } catch (error) {
-      console.log("error :", error);
+    SetIsLoading(true);
+    const res = await logout();
+
+    if (!res.status) {
+      toast.error("Gagal untuk Keluar");
+      SetIsLoading(false);
+      return;
     }
+
+    toast.success("Berhasil Keluar");
+    SetIsLoading(false);
+    window.location.href = "/auth/login";
   };
 
   const ref = useRef(null);

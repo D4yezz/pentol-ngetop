@@ -1,85 +1,70 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import supabase from "@/lib/db";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import CarouselFade from "../Login/carouselFade";
 import useMediaQuery from "@/hooks/useMediaQuery";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { register } from "@/service/auth.service";
 
 export default function RegisterView() {
   const router = useRouter();
   const [showPw, setShowPw] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [formData, setFormData] = useState({
+  const [credential, setCredential] = useState({
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirm_password: "",
   });
   const [loading, setLoading] = useState(false);
   const isDekstop = useMediaQuery("(min-width: 1024px)");
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setCredential({
+      ...credential,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+ const handleRegister = async (e) => {
+  e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Password dan konfirmasi password tidak cocok.");
-      setLoading(false);
-      return;
-    }
+  if (!credential.email || !credential.password || !credential.confirm_password) {
+    toast.error("Harap isi semua field");
+    return;
+  }
 
-    if (formData.password.length < 8) {
-      toast.error("Password minimal 8 karakter.");
-      setLoading(false);
-      return;
-    }
+  if (credential.password !== credential.confirm_password) {
+    toast.error("Password dan konfirmasi tidak sesuai");
+    return;
+  }
 
-    try {
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-      });
+  setLoading(true);
 
-      if (authError) throw authError;
+  const response = await register({
+    email: credential.email,
+    password: credential.password,
+    confirm_password: credential.confirm_password,
+  });
 
-      const userId = authData?.user?.id;
-      if (!userId) throw new Error("User tidak ditemukan setelah registrasi.");
+  setLoading(false);
 
-      const { error: profileError } = await supabase
-        .from("profil_pengguna")
-        .insert([
-          {
-            id: userId,
-            username: formData.username,
-            role: "user",
-          },
-        ]);
+  if (!response.status) {
+    toast.error(response.pesan || "Gagal register");
+    return;
+  }
 
-      if (profileError) throw profileError;
+  router.push("/auth/register/success");
+};
 
-      toast.success("Registrasi berhasil! Silahkan cek email anda.");
-      router.push("/auth/login");
-    } catch (err) {
-      toast.error(err.message || "Terjadi kesalahan saat registrasi.");
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   return (
     <>
@@ -128,7 +113,7 @@ export default function RegisterView() {
                 id="username"
                 name="username"
                 placeholder="John Doe"
-                value={formData.username}
+                value={credential.username}
                 onChange={handleChange}
                 className={"placeholder:text-neutral-700 border-red-800"}
               />
@@ -142,7 +127,7 @@ export default function RegisterView() {
                 id="email"
                 placeholder="example@gmail.com"
                 name="email"
-                value={formData.email}
+                value={credential.email}
                 onChange={handleChange}
                 className={"placeholder:text-neutral-700 border-red-800"}
               />
@@ -156,7 +141,7 @@ export default function RegisterView() {
                 id="password"
                 name="password"
                 placeholder="Minimal 8 karakter"
-                value={formData.password}
+                value={credential.password}
                 onChange={handleChange}
                 className={"placeholder:text-neutral-700 border-red-800"}
               />
@@ -175,9 +160,9 @@ export default function RegisterView() {
               <Input
                 type={showConfirm ? "text" : "password"}
                 id="confirm"
-                name="confirmPassword"
+                name="confirm_password"
                 placeholder="********"
-                value={formData.confirmPassword}
+                value={credential.confirm_password}
                 onChange={handleChange}
                 className={"placeholder:text-neutral-700 border-red-800"}
               />
@@ -190,23 +175,21 @@ export default function RegisterView() {
               </button>
             </div>
           </div>
-
-          <p>
-            Sudah Punya Akun?{" "}
-            <Link href="/auth/login" className="text-blue-400">
-              Login
-            </Link>
-          </p>
-
           <Button
             className={
-              "w-[70%] h-12 text-md rounded-full cursor-pointer gradiasi-btn-merah hover:bg-yellow-300 hover:text-yellow-300 hover:border-yellow-300 px-8"
+              "w-[70%] h-12 text-md rounded-full cursor-pointer gradiasi-btn-merah hover:bg-yellow-300 hover:text-yellow-300 hover:border-yellow-300 px-8 mt-8"
             }
             type="submit"
             disabled={loading}
           >
             {loading ? "Loading..." : "Daftar"}
           </Button>
+          <p>
+            Sudah Punya Akun?{" "}
+            <Link href="/auth/login" className="text-blue-400">
+              Login
+            </Link>
+          </p>
         </motion.form>
       </div>
     </>

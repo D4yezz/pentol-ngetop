@@ -3,10 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import InputFocus from "@/components/uiVerse/inputFocus";
-import InputVerse from "@/components/uiVerse/inputVerse";
 // import supabase from "@/lib/db";
-import { Eye, EyeOff, Mail, RectangleEllipsis } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useRef, useState } from "react";
@@ -19,24 +17,11 @@ export default function LoginView() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  // const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPw, setShowPw] = useState(false);
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   const { data, error } = await supabase.auth.signInWithPassword({
-  //     email,
-  //     password,
-  //   });
-  //   if (error) {
-  //     toast.error(error.message);
-  //   } else {
-  //     router.push("/");
-  //   }
-  // };
-
-   const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
 
   const handleLogin = async (e) => {
