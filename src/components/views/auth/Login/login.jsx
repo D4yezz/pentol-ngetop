@@ -46,7 +46,7 @@ export default function LoginView() {
     }
     switch (role) {
       case "admin":
-        router.push("/admin");
+        router.push("/admin/dashboard");
         break;
       default:
         router.push("/");

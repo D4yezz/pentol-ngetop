@@ -4,6 +4,7 @@ import supabase from "@/lib/db";
 import {
   ChefHat,
   LayoutGrid,
+  Loader2,
   LogIn,
   LogOut,
   Menu,
@@ -21,36 +22,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { getProfileUser, logout } from "@/service/auth.service";
 import { toast } from "sonner";
-
-const navigasi = [
-  {
-    id: 1,
-    text: "Beranda",
-    href: "/",
-    icon: <LayoutGrid size={20} />,
-  },
-  {
-    id: 2,
-    text: "Tentang Kami",
-    href: "/about",
-    icon: <ChefHat size={20} />,
-  },
-  {
-    id: 3,
-    text: "Menu",
-    href: "/menu",
-    icon: <Store size={20} />,
-  },
-  {
-    id: 4,
-    text: "Kontak",
-    href: "/contact",
-    icon: <Phone size={20} />,
-  },
-];
+import navigasi from "./navigasi";
 
 export default function Navbar() {
-  const [IsLogin, SetIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const [role, setRole] = useState(null);
   const [IsLoading, SetIsLoading] = useState(true);
   const [Open, setOpen] = useState(false);
   useEffect(() => {
@@ -62,39 +38,23 @@ export default function Navbar() {
   }, [Open]);
 
   const checkUserLogin = async () => {
-    const user = await getProfileUser();
+    try {
+      const user = await getProfileUser();
 
-    if (user.status) {
-      SetIsLogin(true);
+      if (user.status && user.data) {
+        setIsLogin(true);
+        setRole(user.data.profile.role); // ambil role dari supabase
+      } else {
+        setIsLogin(false);
+        setRole(null);
+      }
+    } catch (error) {
+      console.error("Error checking user login:", error);
     }
   };
 
-  // const checkUserLogin = async () => {
-  //   try {
-  //     const { data: UserAuth, error } = await supabase.auth.getUser();
 
-  //     if (error || !UserAuth?.user) {
-  //       SetIsLogin(false);
-  //       return;
-  //     }
-
-  //     SetIsLogin(true);
-
-  //     const { data: UserRole, error: ProfileError } = await supabase
-  //       .from("profil_pengguna")
-  //       .select("*")
-  //       .eq("id", UserAuth.user.id)
-  //       .single();
-
-  //     if (ProfileError) throw error;
-
-  //     return UserRole;
-  //   } catch (error) {
-  //     console.log("error :", error?.message);
-  //   }
-  // };
-
-  console.log(IsLogin);
+  console.log(isLogin);
 
   useEffect(() => {
     const getUser = async () => {
@@ -152,16 +112,27 @@ export default function Navbar() {
           </ul>
         </nav>
         <div className="flex justify-around items-center gap-2 px-2 font-semibold rounded-full h-14 w-fit bg-yellow-300">
-          {IsLogin ? (
-            <Link
-              href={"/"}
-              onClick={handleLogout}
-              className="gradiasi-btn-merah text-yellow-300 p-2 rounded-full"
-            >
-              Logout
-              {/* <Settings size={24} /> */}
-              {/* <CircleUserRound size={24} /> */}
-            </Link>
+          {isLogin ? (
+            role === "admin" ? (
+              <Link
+                href={"/admin/dashboard"}
+                className="gradiasi-btn-merah text-yellow-300 p-2 rounded-full"
+              >
+                Dashboard
+                {/* <Settings size={24} /> */}
+                {/* <CircleUserRound size={24} /> */}
+              </Link>
+            ) : (
+              <Link
+                href={"/"}
+                onClick={handleLogout}
+                className="gradiasi-btn-merah text-yellow-300 p-2 rounded-full"
+              >
+                Logout
+                {/* <Settings size={24} /> */}
+                {/* <CircleUserRound size={24} /> */}
+              </Link>
+            )
           ) : (
             <Link href={"/auth/login"}>
               <ButtonShine />
@@ -170,6 +141,7 @@ export default function Navbar() {
         </div>
       </motion.div>
 
+      {/* Navbar Mobile */}
       <motion.button
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -238,7 +210,46 @@ export default function Navbar() {
                   ))}
                 </ul>
                 <div className="mt-4 flex gap-2 items-center justify-center">
-                  {IsLogin ? (
+                  {isLogin ? (
+                    role === "admin" ? (
+                      <Link
+                        href={"/admin/dashboard"}
+                        className="flex gap-2 items-center justify-center gradiasi-btn-merah text-yellow-300 w-full px-4 py-2 rounded-xl"
+                      >
+                        Dashboard
+                        {/* <Settings size={24} /> */}
+                        {/* <CircleUserRound size={24} /> */}
+                      </Link>
+                    ) : (
+                      <>
+                        <Link
+                          href="/"
+                          className="gradiasi-btn-merah text-yellow-300 p-2 rounded-full w-fit"
+                          onClick={() => setOpen(false)}
+                        >
+                          <Settings size={24} />
+                        </Link>
+                        <Button
+                          className="flex gap-2 items-center justify-center gradiasi-btn-merah text-yellow-300 w-fit h-full px-16 py-2 rounded-xl"
+                          onClick={handleLogout}
+                        >
+                          {IsLoading && <Loader2 className="animate-spin" />}
+                          <LogOut size={18} />
+                          Logout
+                        </Button>
+                      </>
+                    )
+                  ) : (
+                    <Link
+                      href="/auth/login"
+                      className="flex gap-2 items-center justify-center gradiasi-btn-merah text-yellow-300 w-full px-4 py-2 rounded-xl"
+                      onClick={() => setOpen(false)}
+                    >
+                      <LogIn size={18} />
+                      Sign In
+                    </Link>
+                  )}
+                  {/* {IsLogin ? (
                     <>
                       <Link
                         href="/"
@@ -251,6 +262,7 @@ export default function Navbar() {
                         className="flex gap-2 items-center justify-center gradiasi-btn-merah text-yellow-300 w-fit h-full px-16 py-2 rounded-xl"
                         onClick={handleLogout}
                       >
+                        {IsLoading && <Loader2 className="animate-spin" />}
                         <LogOut size={18} />
                         Logout
                       </Button>
@@ -264,7 +276,7 @@ export default function Navbar() {
                       <LogIn size={18} />
                       Sign In
                     </Link>
-                  )}
+                  )} */}
                 </div>
               </div>
             </motion.aside>

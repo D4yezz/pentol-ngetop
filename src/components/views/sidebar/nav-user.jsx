@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   BadgeCheck,
@@ -7,13 +7,9 @@ import {
   CreditCard,
   LogOut,
   Sparkles,
-} from "lucide-react"
+} from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,18 +18,34 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import { logout } from "@/service/auth.service";
+import { toast } from "sonner";
+import { useState } from "react";
 
-export function NavUser({
-  user
-}) {
-  const { isMobile } = useSidebar()
+export function NavUser({ user }) {
+  const [IsLoading, SetIsLoading] = useState(false);
+  const { isMobile } = useSidebar();
+  const handleLogout = async () => {
+    SetIsLoading(true);
+    const res = await logout();
+
+    if (!res.status) {
+      toast.error("Gagal untuk Keluar");
+      SetIsLoading(false);
+      return;
+    }
+
+    toast.success("Berhasil Keluar");
+    SetIsLoading(false);
+    window.location.href = "/auth/login";
+  };
 
   return (
     <SidebarMenu>
@@ -42,7 +54,8 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">PN</AvatarFallback>
@@ -58,7 +71,8 @@ export function NavUser({
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
             align="end"
-            sideOffset={4}>
+            sideOffset={4}
+          >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
@@ -94,7 +108,10 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              className={"cursor-pointer"}
+              onClick={handleLogout}
+            >
               <LogOut />
               Log out
             </DropdownMenuItem>

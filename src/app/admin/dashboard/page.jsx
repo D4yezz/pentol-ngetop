@@ -16,7 +16,7 @@ import {
 
 export default function Page() {
   return (
-    <SidebarProvider>
+    <SidebarProvider className={"font-instrument"}>
       <AppSidebar />
       <SidebarInset>
         <header

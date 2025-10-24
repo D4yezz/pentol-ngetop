@@ -18,6 +18,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
+import Logo from "@/components/layout/logo/logo"
+import { useRouter } from "next/navigation"
 
 export function TeamSwitcher({
   teams
@@ -28,6 +30,7 @@ export function TeamSwitcher({
   if (!activeTeam) {
     return null
   }
+  const link = useRouter()
 
   return (
     <SidebarMenu>
@@ -36,14 +39,20 @@ export function TeamSwitcher({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
-              <div
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground my-2">
+                <div className="w-10 h-10 rounded-full border-2 border-red-800 overflow-hidden">
+                  <img src="/logos.png" alt="" className="object-cover w-full h-full" />
+                </div>
+                <p className="font-bold font-quicksand text-[1rem] text-red-800">
+                Pentol Ngetop</p>
+              {/* <div
                 className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                 <activeTeam.logo className="size-4" />
-              </div>
+                <img src="/logos.png" alt="" />
+              </div> */}
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{activeTeam.name}</span>
-                <span className="truncate text-xs">{activeTeam.plan}</span>
+                <span className="truncate font-medium">{teams.name}</span>
+                <span className="truncate text-xs">{teams.name}</span>
               </div>
               <ChevronsUpDown className="ml-auto" />
             </SidebarMenuButton>
@@ -54,14 +63,15 @@ export function TeamSwitcher({
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}>
             <DropdownMenuLabel className="text-muted-foreground text-xs">
-              Teams
+              Menu Pentol Ngetop
             </DropdownMenuLabel>
             {teams.map((team, index) => (
-              <DropdownMenuItem key={team.name} onClick={() => setActiveTeam(team)} className="gap-2 p-2">
+              <DropdownMenuItem key={team.id} onClick={() => link.push(team.href)} className="gap-2 p-2">
                 <div className="flex size-6 items-center justify-center rounded-md border">
-                  <team.logo className="size-3.5 shrink-0" />
+                  {/* <team.icon className="size-3.5 shrink-0" /> */}
+                {team.icon}
                 </div>
-                {team.name}
+                {team.text}
                 <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
               </DropdownMenuItem>
             ))}

@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/sidebar"
 import { useEffect, useState } from "react"
 import { getProfileUser } from "@/service/auth.service"
+import navigasi from "@/components/layout/navbar/navigasi"
 
 // This is sample data.
 const data = {
@@ -189,7 +190,7 @@ export function AppSidebar({
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher teams={navigasi} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

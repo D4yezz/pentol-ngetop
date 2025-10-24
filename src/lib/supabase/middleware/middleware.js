@@ -65,7 +65,7 @@ export async function updateSession(request) {
       url.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(url);
     }
-    // if (pathname === "/admin") redirectUrl = "/admin/dashboard";
+    if (pathname === "/admin") redirectUrl = "/admin/dashboard";
   }
 
   if (redirectUrl) {

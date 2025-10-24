@@ -6,6 +6,7 @@ import LoginView from "@/components/views/auth/Login/login";
 import { CircleChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Suspense } from "react";
 
 export default function RegisterPage() {
   return (
@@ -15,7 +16,9 @@ export default function RegisterPage() {
           <Logo />
         </div>
         <div className="mx-auto flex flex-col relative">
-          <LoginView />
+          <Suspense fallback={null}>
+            <LoginView />
+          </Suspense>
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
