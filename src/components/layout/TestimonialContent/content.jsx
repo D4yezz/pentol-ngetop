@@ -19,7 +19,7 @@ const dataTester = [
   },
   {
     id: 2,
-    img: "/cust/navanken.png",
+    img: "https://cdn.discordapp.com/avatars/711079595314511912/fa346ee2f2a93568b274451a89ccd60f.webp?size=160",
     name: "NavanKen",
     desc: "Saya udah coba banyak makanan pedas, tapi pentol ini punya sensasi unik. Level pedas bisa dipilih sesuai selera, dan rasanya konsisten dari awal sampai habis.",
     work: "Odoo Engineer",
@@ -28,7 +28,7 @@ const dataTester = [
   },
   {
     id: 3,
-    img: "https://cdn.discordapp.com/avatars/648050495025315841/3f44a9c82cd8c9be07ec6ab332351abe.webp?size=160",
+    img: "https://cdn.discordapp.com/avatars/648050495025315841/b7b79116031670b0c5f9e322ab92152a.webp?size=160",
     name: "Dyou",
     desc: "Pentolnya terasa fresh dan bumbunya meresap sempurna. Saus pedasnya bukan cuma panas di lidah, tapi juga punya aroma khas yang bikin ketagihan.",
     work: "Buzzer",

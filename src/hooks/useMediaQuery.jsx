@@ -8,7 +8,7 @@ export default function useMediaQuery(query) {
     const media = window.matchMedia(query);
     const listener = () => setMatches(media.matches);
 
-    listener(); // cek awal
+    listener(); 
     media.addEventListener("change", listener);
 
     return () => media.removeEventListener("change", listener);

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   AudioWaveform,
   BookOpen,
@@ -10,22 +10,22 @@ import {
   PieChart,
   Settings2,
   SquareTerminal,
-} from "lucide-react"
+} from "lucide-react";
 
-import { NavMain } from "./nav-main"
-import { NavProjects } from "./nav-projects"
-import { NavUser } from "./nav-user"
-import { TeamSwitcher } from "./team-switcher"
+import { NavMain } from "./nav-main";
+import { NavProjects } from "./nav-projects";
+import { NavUser } from "./nav-user";
+import { TeamSwitcher } from "./team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { useEffect, useState } from "react"
-import { getProfileUser } from "@/service/auth.service"
-import navigasi from "@/components/layout/navbar/navigasi"
+} from "@/components/ui/sidebar";
+import { useEffect, useState } from "react";
+import { getProfileUser } from "@/service/auth.service";
+import navigasi from "@/components/layout/navbar/navigasi";
 
 // This is sample data.
 const data = {
@@ -155,13 +155,10 @@ const data = {
       icon: Map,
     },
   ],
-}
+};
 
-export function AppSidebar({
-  ...props
-}) {
-
-    const [userData, setUserData] = useState({
+export function AppSidebar({ ...props }) {
+  const [userData, setUserData] = useState({
     userId: "",
     name: "",
     email: "",
@@ -187,6 +184,7 @@ export function AppSidebar({
 
     getUserData();
   }, []);
+  
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

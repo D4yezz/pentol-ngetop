@@ -46,7 +46,7 @@ const ButtonShine = () => {
           100% { transform: translate3d(0, 0, 0) translateZ(0); }
         }
       `}</style>
-      <button className="btn-shine relative m-0 text-yellow-300 px-4 py-2 rounded-full outline-none no-underline flex justify-center items-center cursor-pointer gradiasi-btn-merah z-0 overflow-hidden transition-all duration-300 ease-out hover:ease-in-out">
+      <button className="btn-shine relative m-0 text-yellow-300 px-4 py-2 rounded-full outline-none no-underline flex justify-center items-center cursor-pointer gradiasi-btn-merah z-0 overflow-hidden transition-all duration-300 ease-out hover:ease-in-out h-full">
         <span className="z-20">
           Pesan Sekarang
         </span>

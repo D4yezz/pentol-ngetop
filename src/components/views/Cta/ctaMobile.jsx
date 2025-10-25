@@ -6,7 +6,6 @@ import React, { useRef } from "react";
 export default function CtaMobile() {
   const ref = useRef(null);
   const isInView = useInView(ref);
-  console.log(isInView, "iniview");
   return (
     <>
       <section className="px-4 w-full h-full mb-12 py-12">
