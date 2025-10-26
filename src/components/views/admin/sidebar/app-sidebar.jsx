@@ -1,15 +1,13 @@
 "use client";
 import {
   AudioWaveform,
-  BookOpen,
-  Bot,
   Command,
-  Frame,
   GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
+  LayoutPanelLeftIcon,
+  MessagesSquare,
+  Package2,
+  ShoppingCart,
+  Users,
 } from "lucide-react";
 
 import { NavMain } from "./nav-main";
@@ -27,132 +25,125 @@ import { useEffect, useState } from "react";
 import { getProfileUser } from "@/service/auth.service";
 import navigasi from "@/components/layout/navbar/navigasi";
 
-// This is sample data.
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
+      label: "Beranda",
+      data: [
         {
-          title: "History",
-          url: "#",
+          title: "Dashboard",
+          url: "/admin/dashboard",
+          icon: LayoutPanelLeftIcon,
+          isActive: true,
+          subItem: false,
+          items: [
+            {
+              title: "Penjualan",
+              url: "/admin/dashboard",
+            },
+          ],
         },
         {
-          title: "Starred",
-          url: "#",
+          title: "Pesanan",
+          url: "/admin/order",
+          icon: ShoppingCart,
+          subItem: false,
+          // items: [
+          //   {
+          //     title: "Genesis",
+          //     url: "#",
+          //   },
+          //   {
+          //     title: "Explorer",
+          //     url: "#",
+          //   },
+          //   {
+          //     title: "Quantum",
+          //     url: "#",
+          //   },
+          // ],
         },
         {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          title: "Kritik & Saran",
+          url: "/admin/kritik-saran",
+          icon: MessagesSquare,
+          subItem: false,
         },
       ],
     },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
+    // {
+    //   title: "Documentation",
+    //   url: "#",
+    //   icon: BookOpen,
+    //   subItem: true,
+    //   items: [
+    //     {
+    //       title: "Introduction",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Get Started",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Tutorials",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Changelog",
+    //       url: "#",
+    //     },
+    //   ],
+    // },
+    // {
+    //   title: "Settings",
+    //   url: "#",
+    //   icon: Settings2,
+    //   subItem: true,
+    //   items: [
+    //     {
+    //       title: "General",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Team",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Billing",
+    //       url: "#",
+    //     },
+    //     {
+    //       title: "Limits",
+    //       url: "#",
+    //     },
+    //   ],
+    // },
   ],
-  projects: [
+  navDua: [
     {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      label: "Manajemen Data",
+      data: [
+        {
+          title: "Produk",
+          url: "/admin/product",
+          icon: Package2,
+          isActive: true,
+          subItem: false,
+          items: [
+            {
+              title: "Penjualan",
+              url: "/admin/dashboard",
+            },
+          ],
+        },
+        {
+          title: "Pelanggan",
+          url: "/admin/order",
+          icon: Users,
+          subItem: false,
+        },
+      ],
     },
   ],
 };
@@ -184,15 +175,15 @@ export function AppSidebar({ ...props }) {
 
     getUserData();
   }, []);
-  
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={navigasi} />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className={"gradiasi-btn-merah text-white"}>
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMain items={data.navDua} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={userData} />
