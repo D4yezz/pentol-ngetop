@@ -37,7 +37,10 @@ export function NavMain({ items }) {
               >
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip={item.title} className={"text-md"}>
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      className={"text-md"}
+                    >
                       {item.icon && <item.icon className="scale-110" />}
                       {item.subItem ? (
                         <span>{item.title}</span>

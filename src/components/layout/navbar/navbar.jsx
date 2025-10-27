@@ -21,7 +21,8 @@ import { Button } from "@/components/ui/button";
 import { getProfileUser, logout } from "@/service/auth.service";
 import { toast } from "sonner";
 import navigasi from "./navigasi";
-import Profile from "./profile";
+import Profile, { menuProfile } from "./profile";
+import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 
 export default function Navbar() {
   const [isLogin, setIsLogin] = useState(false);
@@ -236,9 +237,25 @@ export default function Navbar() {
                       </Link>
                     </li>
                   ))}
+                  <DropdownMenuSeparator />
                   {isLogin && userData.role === "user" && (
                     <>
-                      <li>
+                      {menuProfile.map((item) => (
+                        <li key={item.id}>
+                          <Link
+                            href={item.href}
+                            className={`flex gap-2 items-center text-red-800 font-semibold p-2 rounded hover:outline-2 outline-red-800 ${
+                              item.href === window.location.pathname
+                                ? " outline-2 outline-red-800"
+                                : ""
+                            }`}
+                            onClick={() => setOpen(false)}
+                          >
+                            {item.icon} {item.text}
+                          </Link>
+                        </li>
+                      ))}
+                      {/* <li>
                         <Link
                           href="/order"
                           className={`flex gap-2 items-center text-red-800 font-semibold p-2 rounded hover:outline-2 outline-red-800 ${
@@ -263,7 +280,7 @@ export default function Navbar() {
                         >
                           <UserPen size={20} /> Edit Profil
                         </Link>
-                      </li>
+                      </li> */}
                     </>
                   )}
                 </ul>

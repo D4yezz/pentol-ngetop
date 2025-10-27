@@ -2,8 +2,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft,
+  KeyRound,
   Loader2,
   LogOut,
+  MessagesSquare,
   ShoppingBasket,
   UserPen,
   X,
@@ -14,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { getProfileUser, logout } from "@/service/auth.service";
 
-const menuProfile = [
+export const menuProfile = [
   {
     id: 1,
     text: "Edit Profil",
@@ -23,9 +25,21 @@ const menuProfile = [
   },
   {
     id: 2,
+    text: "Ubah Password",
+    href: "/profile/password",
+    icon: <KeyRound size={20} />,
+  },
+  {
+    id: 3,
     text: "Pesanan Saya",
     href: "/order",
     icon: <ShoppingBasket size={20} />,
+  },
+  {
+    id: 4,
+    text: "Kritik & Saran",
+    href: "/kritik-saran",
+    icon: <MessagesSquare size={20} />,
   },
 ];
 
