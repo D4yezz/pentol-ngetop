@@ -237,9 +237,9 @@ export default function Navbar() {
                       </Link>
                     </li>
                   ))}
-                  <DropdownMenuSeparator />
                   {isLogin && userData.role === "user" && (
                     <>
+                    <DropdownMenuSeparator /> 
                       {menuProfile.map((item) => (
                         <li key={item.id}>
                           <Link

@@ -18,8 +18,10 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export function NavMain({ items }) {
+  const pathname = usePathname();
   return (
     <>
       {items.map((all, index) => (
@@ -39,7 +41,9 @@ export function NavMain({ items }) {
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton
                       tooltip={item.title}
-                      className={"text-md"}
+                      className={`text-md ${
+                        item.url === pathname ? "border border-yellow-300" : ""
+                      }`}
                     >
                       {item.icon && <item.icon className="scale-110" />}
                       {item.subItem ? (
