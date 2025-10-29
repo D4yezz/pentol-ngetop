@@ -14,11 +14,10 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { ChartAreaInteractive } from "@/components/views/admin/dashboard/chartDashboard";
-import Content from "@/components/views/admin/dashboard/content";
 import HeaderDashboard from "@/components/layout/adminComponents/headerAdmin";
+import TableProduct from "@/components/views/admin/productTable/tableProduct";
 
-export default function DashboardPage() {
+export default function ProductsPage() {
   return (
     <SidebarProvider className={"font-instrument"}>
       <AppSidebar />
@@ -37,19 +36,18 @@ export default function DashboardPage() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Dashboard</BreadcrumbPage>
+                  <BreadcrumbPage>Produk</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
         </header>
         <HeaderDashboard
-          title={"Ringkasan Penjualan"}
-          desc={"Pantau website pentol ngetop dengan praktis"}
+          title={"Kelola Produk"}
+          desc={"Tambah atau edit produk dari Pentol Ngetop dengan praktis"}
         />
         <div className="flex flex-col px-8 mt-8 mb-20 gap-4">
-          <Content />
-          <ChartAreaInteractive />
+          <TableProduct />
         </div>
       </SidebarInset>
     </SidebarProvider>

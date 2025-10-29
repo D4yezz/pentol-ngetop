@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
-import { Inbox, Package, UsersRound } from "lucide-react";
+import { Inbox, Package, ShoppingBag, UsersRound } from "lucide-react";
 
 export default function Content() {
   const data = [
@@ -8,6 +8,12 @@ export default function Content() {
       title: "Total produk terjual",
       value: "100",
       desc: "Dalam 30 hari terakhir",
+    },
+    {
+      icon: <ShoppingBag size={20} />,
+      title: "Stok Produk",
+      value: "130",
+      desc: "Produk tersedia",
     },
     {
       icon: <UsersRound size={20} />,
@@ -21,11 +27,6 @@ export default function Content() {
       value: "14",
       desc:"Pesan masuk",
     },
-    // {
-    //   icon: <Package size={20} />,
-    //   title: "Total produk terjual",
-    //   value: "100",
-    // },
   ];
   return (
     <div className="flex items-center gap-4 font-inter">

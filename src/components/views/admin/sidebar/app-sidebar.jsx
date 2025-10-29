@@ -126,7 +126,7 @@ const data = {
       data: [
         {
           title: "Produk",
-          url: "/admin/product",
+          url: "/admin/products",
           icon: Package2,
           isActive: true,
           subItem: false,
