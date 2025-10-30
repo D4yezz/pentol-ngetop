@@ -42,7 +42,11 @@ export function NavMain({ items }) {
                     <SidebarMenuButton
                       tooltip={item.title}
                       className={`text-md ${
-                        item.url === pathname ? "border border-yellow-300" : ""
+                        item.subItem
+                          ? ""
+                          : item.url === pathname
+                          ? "border border-yellow-300"
+                          : ""
                       }`}
                     >
                       {item.icon && <item.icon className="scale-110" />}
@@ -65,11 +69,15 @@ export function NavMain({ items }) {
                   {item.subItem && (
                     <CollapsibleContent>
                       <SidebarMenuSub>
-                        {item.items.data?.map((subItem) => (
+                        {item.items?.map((subItem) => (
                           <SidebarMenuSubItem key={subItem.title}>
                             <SidebarMenuSubButton
                               asChild
-                              className="hover:bg-yellow-300 text-yellow-300 hover:text-red-800"
+                              className={`hover:bg-yellow-300 text-yellow-300 hover:text-red-800 ${
+                                subItem.url === pathname
+                                  ? "border border-yellow-300"
+                                  : ""
+                              }`}
                             >
                               <Link href={subItem.url}>
                                 <span>{subItem.title}</span>

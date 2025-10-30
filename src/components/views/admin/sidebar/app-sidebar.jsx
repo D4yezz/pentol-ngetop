@@ -129,11 +129,15 @@ const data = {
           url: "/admin/products",
           icon: Package2,
           isActive: true,
-          subItem: false,
+          subItem: true,
           items: [
             {
-              title: "Penjualan",
-              url: "/admin/dashboard",
+              title: "Semua Produk",
+              url: "/admin/products",
+            },
+            {
+              title: "Gambar",
+              url: "/admin/products/images",
             },
           ],
         },

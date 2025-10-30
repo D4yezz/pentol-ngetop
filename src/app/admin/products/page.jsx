@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import HeaderDashboard from "@/components/layout/adminComponents/headerAdmin";
 import TableProduct from "@/components/views/admin/productTable/tableProduct";
+import { CirclePlus } from "lucide-react";
 
 export default function ProductsPage() {
   return (
@@ -45,6 +46,12 @@ export default function ProductsPage() {
         <HeaderDashboard
           title={"Kelola Produk"}
           desc={"Tambah atau edit produk dari Pentol Ngetop dengan praktis"}
+          action={
+            <button className="gradiasi-btn-merah rounded-full flex items-center gap-2 py-2 px-4 text-white cursor-pointer hover:text-yellow-300 duration-200 ease-in-out">
+              <CirclePlus size={20} />
+              Tambah Produk
+            </button>
+          }
         />
         <div className="flex flex-col px-8 mt-8 mb-20 gap-4">
           <TableProduct />
