@@ -143,7 +143,7 @@ const data = {
         },
         {
           title: "Pelanggan",
-          url: "/admin/order",
+          url: "/admin/customer",
           icon: Users,
           subItem: false,
         },

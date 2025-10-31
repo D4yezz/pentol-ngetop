@@ -1,4 +1,3 @@
-
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, NextRequest } from "next/server";
 
@@ -37,9 +36,7 @@ export async function updateSession(request) {
   const { pathname } = request.nextUrl;
 
   if (!user) {
-    if (
-      pathname.startsWith("/admin")
-    ) {
+    if (pathname.startsWith("/admin") || pathname.startsWith("/order")) {
       const url = request.nextUrl.clone();
       url.pathname = "/auth/login";
       url.searchParams.set("callbackUrl", pathname);
@@ -56,7 +53,7 @@ export async function updateSession(request) {
 
   const role = userProfile?.role;
 
-  let redirectUrl= null;
+  let redirectUrl = null;
 
   if (pathname.startsWith("/admin")) {
     if (role !== "admin") {

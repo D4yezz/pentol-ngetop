@@ -4,6 +4,7 @@ import { Varian } from "./Varian";
 import { ShoppingCart, ThumbsUp } from "lucide-react";
 import Magnet from "@/components/ReactBites/Magnet";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import Link from "next/link";
 
 export default function ProductContent({
   title,
@@ -38,14 +39,15 @@ export default function ProductContent({
             <p className="lg:text-lg lg:mb-0 mb-4 lg:text-left text-center text-balance w-full">
               {desc}
             </p>
-            <Button
+            <Link
+              href="/menu"
               className={
-                "gradiasi-btn-merah text-yellow-300 rounded-full shadow-xl lg:text-sm text-lg lg:w-full w-[90%] lg:py-2 py-6"
+                "gradiasi-btn-merah text-yellow-300 flex items-center gap-2 justify-center rounded-full shadow-xl lg:text-sm text-lg lg:w-full w-[90%] lg:py-2 py-6"
               }
             >
               <span>Beli Sekarang</span>
-              <ShoppingCart size={20} />
-            </Button>
+              <ShoppingCart size={18} />
+            </Link>
           </div>
           <div
             key="item-2"

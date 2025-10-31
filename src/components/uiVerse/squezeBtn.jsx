@@ -1,6 +1,6 @@
 import React from "react";
 
-const SqueezeBtn = ({ className, text, icon }) => {
+const SqueezeBtn = ({ className, text, icon, onClick }) => {
   return (
     <div className="w-full h-fit">
       <style jsx>{`
@@ -61,6 +61,7 @@ const SqueezeBtn = ({ className, text, icon }) => {
         }
       `}</style>
       <button
+        onClick={onClick}
         className={`squeeze-button flex items-center justify-center gap-2 cursor-pointer outline-none transition-colors duration-200 ${className}`}
       >
         {icon}

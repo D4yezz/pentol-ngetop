@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import React, { useRef } from "react";
+import { useRouter } from "next/navigation";
 
 const dataCard = [
   {
@@ -43,6 +44,7 @@ export default function Cta() {
   const isDekstop = useMediaQuery("(min-width: 1024px)");
   const ref = useRef(null);
   const isInView = useInView(ref);
+  const route = useRouter();
   return (
     <>
       <motion.div
@@ -77,6 +79,7 @@ export default function Cta() {
                 <></>
               )}
               <SqueezeBtn
+                onClick={() => route.push("/menu")}
                 text={"Pesan Sekarang"}
                 icon={<ShoppingBasket size={isDekstop ? 22 : 20} />}
                 className={

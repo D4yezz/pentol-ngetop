@@ -6,10 +6,10 @@ import Menu from "@/components/views/Menu/menu";
 export default function MenuPage() {
   return (
     <>
-      <section className="w-full bg-neutral-100">
-        <Navbar/>
-        <Menu/>
-      </section>
+      <main className="w-full bg-neutral-100">
+        <Navbar />
+        <Menu />
+      </main>
     </>
   );
 }

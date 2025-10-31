@@ -1,16 +1,7 @@
 "use client";
 import ButtonShine from "@/components/uiVerse/btnShine";
 import supabase from "@/lib/db";
-import {
-  LayoutPanelLeft,
-  Loader2,
-  LogIn,
-  LogOut,
-  Menu,
-  ShoppingBasket,
-  UserPen,
-  X,
-} from "lucide-react";
+import { LayoutPanelLeft, Loader2, LogIn, LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
@@ -69,8 +60,6 @@ export default function Navbar() {
     }
   };
 
-  console.log(isLogin);
-
   useEffect(() => {
     const getUser = async () => {
       await checkUserLogin();
@@ -95,7 +84,6 @@ export default function Navbar() {
     SetIsLoading(false);
     window.location.href = "/auth/login";
   };
-  console.log("ini role :", userData.role);
 
   const ref = useRef(null);
   const isInView = useInView(ref);
@@ -114,7 +102,7 @@ export default function Navbar() {
             {navigasi.map((item) => (
               <li
                 key={item.id}
-                className="group flex items-center px-2 py-2 rounded-full cursor-pointer hover:scale-105 duration-300 ease-in-out text-yellow-300 hover:bg-yellow-300 hover:text-red-800 h-full"
+                className="group flex items-center px-4 py-2 rounded-full cursor-pointer hover:scale-105 duration-300 ease-in-out text-yellow-300 hover:bg-yellow-300 hover:text-red-800 h-full"
               >
                 <Link
                   href={item.href}
@@ -239,7 +227,7 @@ export default function Navbar() {
                   ))}
                   {isLogin && userData.role === "user" && (
                     <>
-                    <DropdownMenuSeparator /> 
+                      <DropdownMenuSeparator />
                       {menuProfile.map((item) => (
                         <li key={item.id}>
                           <Link

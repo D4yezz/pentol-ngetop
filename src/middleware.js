@@ -1,4 +1,3 @@
-
 import { updateSession } from "./lib/supabase/middleware/middleware";
 
 export async function middleware(request) {
@@ -6,7 +5,5 @@ export async function middleware(request) {
 }
 
 export const config = {
-  matcher: [
-    "/admin/:path*",
-  ],
+  matcher: ["/admin/:path*", "/order"],
 };

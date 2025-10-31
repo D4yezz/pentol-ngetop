@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import supabase from "@/lib/db";
 import { motion, useInView } from "framer-motion";
 import { ShoppingBag } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function Menu() {
@@ -97,13 +98,14 @@ function ProductItem({ item }) {
           <p className="text-3xl mt-4 font-inter gradiasi-btn-merah text-transparent bg-clip-text font-bold">
             Rp. {item.harga.toLocaleString("id-ID")}
           </p>
-          <Button
-            className="gradiasi-btn-merah rounded-full text-yellow-300 w-full py-6 text-lg"
+          <Link
+            href={"/order"}
+            className="gradiasi-btn-merah rounded-full text-yellow-300 w-full h-fit py-3 text-lg flex gap-2 items-center justify-center"
             size="sm"
           >
             <ShoppingBag size={20} />
             Pesan Sekarang
-          </Button>
+          </Link>
         </div>
       </motion.div>
     </div>
