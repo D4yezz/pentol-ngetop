@@ -147,9 +147,9 @@
   --font-urbanist: "Urbanist";
   --font-quicksand: "Quicksand";
   --font-poppins: "Poppins";
-  --font-inter:"Inter";
-  --font-gabarito:"Gabarito";
-  --font-instrument:"Instrument Sans"
+  --font-inter: "Inter";
+  --font-gabarito: "Gabarito";
+  --font-instrument: "Instrument Sans";
 }
 
 @layer base {

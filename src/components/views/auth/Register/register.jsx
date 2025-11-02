@@ -33,38 +33,40 @@ export default function RegisterView() {
     });
   };
 
- const handleRegister = async (e) => {
-  e.preventDefault();
+  const handleRegister = async (e) => {
+    e.preventDefault();
 
-  if (!credential.email || !credential.password || !credential.confirm_password) {
-    toast.error("Harap isi semua field");
-    return;
-  }
+    if (
+      !credential.email ||
+      !credential.password ||
+      !credential.confirm_password
+    ) {
+      toast.error("Harap isi semua field");
+      return;
+    }
 
-  if (credential.password !== credential.confirm_password) {
-    toast.error("Password dan konfirmasi tidak sesuai");
-    return;
-  }
+    if (credential.password !== credential.confirm_password) {
+      toast.error("Password dan konfirmasi tidak sesuai");
+      return;
+    }
 
-  setLoading(true);
+    setLoading(true);
 
-  const response = await register({
-    email: credential.email,
-    password: credential.password,
-    confirm_password: credential.confirm_password,
-  });
+    const response = await register({
+      email: credential.email,
+      password: credential.password,
+      confirm_password: credential.confirm_password,
+    });
 
-  setLoading(false);
+    setLoading(false);
 
-  if (!response.status) {
-    toast.error(response.pesan || "Gagal register");
-    return;
-  }
+    if (!response.status) {
+      toast.error(response.pesan || "Gagal register");
+      return;
+    }
 
-  router.push("/auth/register/success");
-};
-
-
+    router.push("/auth/register/success");
+  };
 
   return (
     <>
@@ -106,7 +108,7 @@ export default function RegisterView() {
           <div className="w-full h-full flex flex-col gap-5 items-center justify-center rounded-4xl">
             <div className="grid w-full items-center gap-2">
               <Label htmlFor="username" className={"text-md font-semibold"}>
-                Username
+                Nama Lengkap
               </Label>
               <Input
                 type="text"

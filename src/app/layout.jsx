@@ -10,6 +10,8 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import "leaflet/dist/leaflet.css";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,7 +53,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning={false}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${urbanist.variable} ${poppins.variable} ${quicksand.variable} ${inter.variable} ${gabarito.variable} ${instrumentSans.variable} antialiased [&>*]:selection:bg-yellow-300/50`}
       >

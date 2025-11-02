@@ -16,7 +16,7 @@ export default function Home() {
   const isDekstop = useMediaQuery("(min-width: 1024px)");
   return (
     <>
-      <div className="bg-neutral-100 relative">
+      <main className="bg-neutral-100 relative">
         <div className="relative overflow-hidden">
           <Particles
             className="absolute inset-0"
@@ -38,7 +38,7 @@ export default function Home() {
         <Faq />
         {isDekstop ? <Cta /> : <CtaMobile />}
         <Footer />
-      </div>
+      </main>
     </>
   );
 }
