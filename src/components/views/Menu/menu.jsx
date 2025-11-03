@@ -1,15 +1,17 @@
 import ThumbCarousel from "@/components/layout/menuPage/thumbCarousel";
 import { Button } from "@/components/ui/button";
 import supabase from "@/lib/db";
-import { motion, useInView } from "framer-motion";
-import { ShoppingBag } from "lucide-react";
-import Link from "next/link";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { ShoppingBag, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import FormCheckout from "@/components/layout/formCheckout/Checkout";
 
 export default function Menu() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showCheckout, setShowCheckout] = useState(false);
 
   const getProduct = async () => {
     try {
@@ -32,6 +34,11 @@ export default function Menu() {
   useEffect(() => {
     getProduct();
   }, []);
+
+  const handleOrder = (product) => {
+    setSelectedProduct(product);
+    setShowCheckout(true);
+  };
 
   if (isLoading)
     return (
@@ -59,16 +66,50 @@ export default function Menu() {
         </p>
       </motion.div>
 
-      <div className="w-full flex flex-col items-center gap-4">
-        {product.map((item, index) => (
-          <ProductItem key={index} item={item} />
-        ))}
-      </div>
+      {showCheckout ? (
+        ""
+      ) : (
+        <div className="w-full flex flex-col items-center gap-4">
+          {product.map((item, index) => (
+            <ProductItem
+              key={index}
+              item={item}
+              onOrder={() => handleOrder(item)}
+            />
+          ))}
+        </div>
+      )}
+
+      <AnimatePresence>
+        {showCheckout && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-50 flex flex-col bg-white overflow-y-auto"
+          >
+            <div className="flex items-center justify-between p-8 border-b sticky top-0 bg-white z-10">
+              <h1 className="text-4xl font-semibold gradiasi-btn-merah text-transparent bg-clip-text">
+                Konfirmasi Pemesanan
+              </h1>
+              <button
+                onClick={() => setShowCheckout(false)}
+                className="text-gray-600 hover:text-red-800 transition cursor-pointer"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <FormCheckout selectedProduct={selectedProduct} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
-function ProductItem({ item }) {
+function ProductItem({ item, onOrder }) {
   const refRight = useRef(null);
   const isInViewRight = useInView(refRight, { once: false });
 
@@ -98,14 +139,13 @@ function ProductItem({ item }) {
           <p className="text-3xl mt-4 font-inter gradiasi-btn-merah text-transparent bg-clip-text font-bold">
             Rp. {item.harga.toLocaleString("id-ID")}
           </p>
-          <Link
-            href={"/order"}
+          <Button
+            onClick={onOrder}
             className="gradiasi-btn-merah rounded-full text-yellow-300 w-full h-fit py-3 text-lg flex gap-2 items-center justify-center"
-            size="sm"
           >
             <ShoppingBag size={20} />
             Pesan Sekarang
-          </Link>
+          </Button>
         </div>
       </motion.div>
     </div>
