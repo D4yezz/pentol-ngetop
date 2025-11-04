@@ -7,17 +7,53 @@ import { Label } from "@/components/ui/label";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Minus, Phone, Plus, User2 } from "lucide-react";
+import { Mail, Minus, Phone, Plus, User2, X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const MapPicker = dynamic(() => import("@/components/mapLocation/mapPicker"), {
   ssr: false,
 });
 
-export default function FormCheckout({ selectedProduct }) {
+export default function FormCheckout({ selectedProduct, allProducts = [] }) {
   const [location, setLocation] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [quantity, setQuantity] = useState(1);
+  const [selectedItems, setSelectedItems] = useState(
+    selectedProduct ? [{ ...selectedProduct, quantity: 1 }] : []
+  );
+
+  const handleAddItem = (product) => {
+    const exist = selectedItems.find((item) => item.nama === product.nama);
+    if (exist) return; // Biar gak dobel
+    setSelectedItems([...selectedItems, { ...product, quantity: 1 }]);
+  };
+
+  const handleChangeQuantity = (nama, delta) => {
+    setSelectedItems((prev) =>
+      prev.map((item) =>
+        item.nama === nama
+          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+          : item
+      )
+    );
+  };
+
+  const handleRemoveItem = (nama) => {
+    setSelectedItems((prev) => prev.filter((item) => item.nama !== nama));
+  };
+
+  const totalPrice = selectedItems.reduce(
+    (sum, item) => sum + item.harga * item.quantity,
+    0
+  );
 
   return (
     <section className="flex flex-col w-full">
@@ -151,54 +187,99 @@ export default function FormCheckout({ selectedProduct }) {
             <h3 className="text-3xl font-medium gradiasi-btn-merah text-transparent bg-clip-text">
               Rincian Pesanan
             </h3>
-            {selectedProduct ? (
+
+            <Select
+              onValueChange={(val) => {
+                const product = allProducts.find((p) => p.nama === val);
+                if (product) handleAddItem(product);
+              }}
+            >
+              <SelectTrigger className="w-full border border-red-800">
+                <SelectValue placeholder="Pilih produk tambahan" />
+              </SelectTrigger>
+              <SelectContent>
+                {allProducts.map((p) => (
+                  <SelectItem key={p.nama} value={p.nama}>
+                    {p.nama}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {selectedItems.length > 0 ? (
               <>
-                <div className="flex items-center justify-between gap-4 w-full h-20 bg-neutral-100 shadow p-2 rounded">
-                  <div className="flex items-center gap-4">
-                    <div className="w-20 h-full rounded overflow-hidden">
-                      <img
-                        src="/gabungan/1.jpeg"
-                        alt=""
-                        className="w-full h-full object-cover"
-                      />
+                {selectedItems.map((item) => (
+                  <div
+                    key={item.nama}
+                    className="flex items-center justify-between gap-4 w-full h-26 bg-neutral-100 shadow p-2 rounded relative"
+                  >
+                    <div className="flex items-center gap-4 h-full">
+                      <div className="w-20 h-full rounded overflow-hidden">
+                        <img
+                          src={item.product_images?.[0]?.image_url}
+                          alt={item.nama}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1">
+                        <h5 className="text-md">{item.nama}</h5>
+                        <p className="text-sm">{item.quantity} porsi</p>
+                      </div>
                     </div>
-                    <div className="flex flex-col gap-1">
-                      <h5 className="text-md">{selectedProduct.nama}</h5>
-                      <p className="text-sm">2 porsi</p>
+
+                    <div className="flex flex-col items-end gap-2">
+                      <span className="text-lg font-semibold text-red-800">
+                        Rp.{" "}
+                        {(item.harga * item.quantity).toLocaleString("id-ID")}
+                      </span>
+                      <div className="w-fit h-8 flex items-center justify-between gap-2 rounded-full overflow-hidden border border-red-800">
+                        <button
+                          type="button"
+                          className="gradiasi-btn-merah p-2 text-yellow-300"
+                          onClick={() => handleChangeQuantity(item.nama, -1)}
+                        >
+                          <Minus size={14} />
+                        </button>
+                        <span className="px-2">{item.quantity}</span>
+                        <button
+                          type="button"
+                          className="gradiasi-btn-merah p-2 text-yellow-300"
+                          onClick={() => handleChangeQuantity(item.nama, 1)}
+                        >
+                          <Plus size={14} />
+                        </button>
+                      </div>
                     </div>
+                    <button
+                      type="button"
+                      className="gradiasi-btn-merah p-0.5 rounded-full text-yellow-300 absolute -top-1.5 -right-1.5 cursor-pointer"
+                      onClick={() => handleRemoveItem(item.nama)}
+                    >
+                      <X size={14} />
+                    </button>
                   </div>
-                  <span className="text-xl font-semibold font-inter text-red-800">
-                    Rp. {selectedProduct.harga.toLocaleString("id-ID")}
-                  </span>
-                </div>
-                <div className="w-fit h-10 flex items-center justify-between gap-2 rounded-full overflow-hidden border border-red-800">
-                  <button
-                    type="button"
-                    className="gradiasi-btn-merah p-3 flex items-center text-yellow-300"
-                    onClick={() => {
-                      setQuantity((prev) => prev + 1);
-                    }}
-                  >
-                    <Plus />
-                  </button>
-                  <Input
-                    className={"border-0 focus-visible:ring-0 w-8 flex items-center"}
-                    value={quantity}
-                  />
-                  <button
-                    type="button"
-                    className="gradiasi-btn-merah p-3 flex items-center text-yellow-300"
-                    onClick={() => {
-                      setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
-                    }}
-                  >
-                    <Minus />
-                  </button>
+                ))}
+
+                <div className="w-full border-t pt-4 flex justify-between font-semibold text-xl">
+                  <p>Total</p>
+                  <p>Rp. {totalPrice.toLocaleString("id-ID")}</p>
                 </div>
               </>
             ) : (
               <p>Tidak Ada Produk yang Dipilih</p>
             )}
+          </div>
+          <div className="flex flex-col w-full gap-4">
+            <div className="flex gap-2 items-center">
+              <Checkbox className="data-[state=checked]:border-red-800 data-[state=checked]:bg-red-600 data-[state=checked]:text-white" />
+              <p>Menyetujui Syarat dan Ketentuan</p>
+            </div>
+            <Button
+              type="button"
+              className={"w-full rounded-xl gradiasi-btn-merah text-yellow-300"}
+            >
+              Checkout
+            </Button>
           </div>
         </div>
       </form>

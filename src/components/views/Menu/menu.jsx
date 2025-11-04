@@ -2,9 +2,11 @@ import ThumbCarousel from "@/components/layout/menuPage/thumbCarousel";
 import { Button } from "@/components/ui/button";
 import supabase from "@/lib/db";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ShoppingBag, X } from "lucide-react";
+import { Loader2, ShoppingBag, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import FormCheckout from "@/components/layout/formCheckout/Checkout";
+import { useRouter } from "next/navigation";
+import { getProfileUser } from "@/service/auth.service";
 
 export default function Menu() {
   const [error, setError] = useState(null);
@@ -101,7 +103,7 @@ export default function Menu() {
               </button>
             </div>
 
-            <FormCheckout selectedProduct={selectedProduct} />
+            <FormCheckout selectedProduct={selectedProduct} allProducts={product} />
           </motion.div>
         )}
       </AnimatePresence>
@@ -112,6 +114,33 @@ export default function Menu() {
 function ProductItem({ item, onOrder }) {
   const refRight = useRef(null);
   const isInViewRight = useInView(refRight, { once: false });
+  const [isLogin, setIsLogin] = useState(false);
+  const [IsLoading, SetIsLoading] = useState(true);
+  const router = useRouter();
+
+  const checkUserLogin = async () => {
+    try {
+      const user = await getProfileUser();
+
+      if (user && user.status && user.data) {
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
+    } catch (error) {
+      console.error("Error checking user login:", error);
+      setIsLogin(false);
+    }
+  };
+
+  useEffect(() => {
+    const getUser = async () => {
+      await checkUserLogin();
+      SetIsLoading(false);
+    };
+
+    getUser();
+  }, []);
 
   return (
     <div className="w-full flex lg:flex-row flex-col mt-14 lg:pr-16 pr-0 lg:gap-8 gap-8">
@@ -140,11 +169,18 @@ function ProductItem({ item, onOrder }) {
             Rp. {item.harga.toLocaleString("id-ID")}
           </p>
           <Button
-            onClick={onOrder}
+            disabled={IsLoading}
+            onClick={isLogin ? onOrder : () => router.push("/auth/login")}
             className="gradiasi-btn-merah rounded-full text-yellow-300 w-full h-fit py-3 text-lg flex gap-2 items-center justify-center"
           >
-            <ShoppingBag size={20} />
-            Pesan Sekarang
+            {IsLoading ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <>
+                <ShoppingBag size={20} />
+                Pesan Sekarang
+              </>
+            )}
           </Button>
         </div>
       </motion.div>

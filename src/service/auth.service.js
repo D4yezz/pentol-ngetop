@@ -44,18 +44,25 @@ export const getProfileUser = async () => {
     const response = await api.get("/profile");
     return response.data;
   } catch (error) {
-    console.error("Get profile service error:", error);
-
-    if (axios.isAxiosError(error) && error.response) {
-      return error.response.data;
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 401) {
+        return {
+          status: false,
+          data: null,
+          pesan: "Unauthorized",
+        };
+      }
+      return error.response?.data;
     }
 
     return {
-      status: null,
+      status: false,
+      data: null,
       pesan: "Network error",
     };
   }
 };
+
 
 export const logout = async () => {
   try {

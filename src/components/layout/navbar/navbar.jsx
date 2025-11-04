@@ -1,7 +1,15 @@
 "use client";
 import ButtonShine from "@/components/uiVerse/btnShine";
 import supabase from "@/lib/db";
-import { LayoutPanelLeft, Loader2, LogIn, LogOut, Menu, X } from "lucide-react";
+import {
+  LayoutPanelLeft,
+  Loader,
+  Loader2,
+  LogIn,
+  LogOut,
+  Menu,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
@@ -115,7 +123,11 @@ export default function Navbar() {
             ))}
           </ul>
         </nav>
-        {isLogin ? (
+        {IsLoading ? (
+          <div className="w-fit h-full rounded-full gradiasi-btn-merah px-4 border-4 border-yellow-300 flex items-center text-yellow-300">
+            <Loader2 className="animate-spin" size={20} />
+          </div>
+        ) : isLogin ? (
           userData.role === "admin" ? (
             <Link
               href={"/admin/dashboard"}
