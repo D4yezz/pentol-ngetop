@@ -20,7 +20,7 @@ export default function Menu() {
       const { data, error } = await supabase
         .from("product")
         .select(
-          "nama, deskripsi, varian, harga, stok, product_images (image_url)"
+          "id, nama, deskripsi, varian, harga, stok, product_images (image_url)"
         );
       if (error) {
         setError(error.message);
@@ -91,7 +91,7 @@ export default function Menu() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-50 flex flex-col bg-white overflow-y-auto"
           >
-            <div className="flex items-center justify-between p-8 border-b sticky top-0 bg-white z-10">
+            <div className="flex items-center justify-between p-8 border-b sticky top-0 bg-white z-20">
               <h1 className="text-4xl font-semibold gradiasi-btn-merah text-transparent bg-clip-text">
                 Konfirmasi Pemesanan
               </h1>
@@ -103,7 +103,10 @@ export default function Menu() {
               </button>
             </div>
 
-            <FormCheckout selectedProduct={selectedProduct} allProducts={product} />
+            <FormCheckout
+              selectedProduct={selectedProduct}
+              allProducts={product}
+            />
           </motion.div>
         )}
       </AnimatePresence>

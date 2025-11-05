@@ -14,11 +14,10 @@ import {
   faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Store, Wallet } from "lucide-react";
 import { useState } from "react";
 
 export function PaymentChoose({ onChange }) {
-  const [selected, setSelected] = useState("cod");
+  const [selected, setSelected] = useState("wallet");
 
   const handleChange = (value) => {
     setSelected(value);
@@ -38,7 +37,7 @@ export function PaymentChoose({ onChange }) {
             Pastikan metode pembayaran yang kamu pilih sesuai dengan kebutuhan
           </FieldDescription>
           <RadioGroup value={selected} onValueChange={handleChange}>
-            <FieldLabel
+            {/* <FieldLabel
               htmlFor="cod"
               className={"has-data-[state=checked]:border-red-800"}
             >
@@ -55,6 +54,26 @@ export function PaymentChoose({ onChange }) {
                   </FieldDescription>
                 </FieldContent>
                 <RadioGroupItem value="cod" id="cod" />
+              </Field>
+            </FieldLabel> */}
+            <FieldLabel
+              htmlFor="wallet"
+              className={"has-data-[state=checked]:border-red-800"}
+            >
+              <Field orientation="horizontal">
+                <FontAwesomeIcon
+                  icon={faWallet}
+                  className="text-red-800 text-xl"
+                />
+                <FieldContent>
+                  <FieldTitle>E-Wallet / Transfer Manual</FieldTitle>
+                  <FieldDescription>
+                    Bayar melalui transfer ke admin. Setelah checkout, kamu akan
+                    dihubungi oleh admin melalui WhatsApp untuk menerima nomor
+                    rekening atau e-wallet (DANA, OVO, GoPay, dll).
+                  </FieldDescription>
+                </FieldContent>
+                <RadioGroupItem value="wallet" id="wallet" />
               </Field>
             </FieldLabel>
             <FieldLabel
@@ -74,26 +93,6 @@ export function PaymentChoose({ onChange }) {
                   </FieldDescription>
                 </FieldContent>
                 <RadioGroupItem value="toko" id="toko" />
-              </Field>
-            </FieldLabel>
-            <FieldLabel
-              htmlFor="wallet"
-              className={"has-data-[state=checked]:border-red-800"}
-            >
-              <Field orientation="horizontal">
-                <FontAwesomeIcon
-                  icon={faWallet}
-                  className="text-red-800 text-xl"
-                />
-                <FieldContent>
-                  <FieldTitle>E-Wallet / Transfer Manual</FieldTitle>
-                  <FieldDescription>
-                    Bayar melalui transfer ke admin. Setelah checkout, kamu akan
-                    dihubungi oleh admin melalui WhatsApp untuk menerima nomor
-                    rekening atau e-wallet (DANA, OVO, GoPay, dll).
-                  </FieldDescription>
-                </FieldContent>
-                <RadioGroupItem value="wallet" id="wallet" />
               </Field>
             </FieldLabel>
           </RadioGroup>

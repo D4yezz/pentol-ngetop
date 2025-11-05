@@ -32,9 +32,7 @@ export default function MapPicker({ onLocationSelect }) {
 
   const getAddressFromCoords = async (lat, lng) => {
     try {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
-      );
+      const res = await fetch(`/api/reverse?lat=${lat}&lon=${lng}`);
       const data = await res.json();
       return data.display_name || "Alamat tidak ditemukan";
     } catch (err) {
@@ -78,7 +76,7 @@ export default function MapPicker({ onLocationSelect }) {
         center={currentPos}
         zoom={15}
         scrollWheelZoom={true}
-        className="h-full w-full"
+        className="h-full w-full z-0"
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
