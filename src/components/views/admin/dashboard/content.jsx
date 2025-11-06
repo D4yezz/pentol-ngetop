@@ -1,4 +1,9 @@
-import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+} from "@/components/ui/card";
 import { Inbox, Package, ShoppingBag, UsersRound } from "lucide-react";
 
 export default function Content() {
@@ -19,13 +24,13 @@ export default function Content() {
       icon: <UsersRound size={20} />,
       title: "Pengguna Terdaftar",
       value: "20",
-      desc:"Bergabung 30 hari terakhir",
+      desc: "Bergabung 30 hari terakhir",
     },
     {
       icon: <Inbox size={20} />,
       title: "Kritik dan saran",
       value: "14",
-      desc:"Pesan masuk",
+      desc: "Pesan masuk",
     },
   ];
   return (

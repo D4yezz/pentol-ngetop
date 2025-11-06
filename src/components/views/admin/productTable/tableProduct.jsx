@@ -40,11 +40,7 @@ export default function TableProduct() {
   }, []);
 
   if (isLoading) {
-    return (
-      <>
-        <Skeleton className="h-[250px] w-full rounded-xl" />
-      </>
-    );
+    return <Skeleton className="h-[250px] w-full rounded-xl" />;
   }
 
   return (
@@ -112,7 +108,6 @@ export default function TableProduct() {
                     size="sm"
                     className="bg-gray-800 hover:bg-gray-700 text-white px-3 py-2 h-auto"
                     title="Detail"
-                    //   onClick={() => navigasi("/detail/" + item.id)}
                   >
                     <Eye className="w-4 h-4" />
                   </Button>
@@ -120,7 +115,6 @@ export default function TableProduct() {
                     size="sm"
                     className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 h-auto"
                     title="Edit"
-                    //   onClick={() => navigasi("/edit-wisata/" + item.id)}
                   >
                     <Pencil className="w-4 h-4" />
                   </Button>
@@ -129,7 +123,6 @@ export default function TableProduct() {
                     variant="destructive"
                     className="px-3 py-2 h-auto"
                     title="Hapus"
-                    //   onClick={() => handleDelete(item.id)}
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>

@@ -82,7 +82,6 @@ export default function MapPicker({ onLocationSelect }) {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>'
         />
-        <Marker position={currentPos} icon={customIcon}></Marker>
         <LocationMarker onChange={handleMapClick} />
       </MapContainer>
     </div>

@@ -302,7 +302,9 @@ export default function FormCheckout({ selectedProduct, allProducts = [] }) {
                     <Input
                       readOnly
                       value={location.address}
-                      className={"ring-0 border-0 w-full text-center"}
+                      className={
+                        "ring-0 border-0 focus-visible:ring-0 w-full text-center"
+                      }
                     />
                   </div>
                 )}
@@ -416,7 +418,7 @@ export default function FormCheckout({ selectedProduct, allProducts = [] }) {
             {IsLoading ? (
               <>
                 <Loader2 className="mr-2 animate-spin" />
-                "Memproses..."
+                Memproses...
               </>
             ) : (
               <>

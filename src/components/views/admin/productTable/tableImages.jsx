@@ -55,11 +55,7 @@ export default function TableImages() {
   }, []);
 
   if (isLoading) {
-    return (
-      <>
-        <Skeleton className="h-[250px] w-full rounded-xl" />
-      </>
-    );
+    return <Skeleton className="h-[250px] w-full rounded-xl" />;
   }
 
   return (

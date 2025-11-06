@@ -18,7 +18,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import Logo from "@/components/layout/logo/logo";
 import { useRouter } from "next/navigation";
 
 export function TeamSwitcher({ teams }) {
