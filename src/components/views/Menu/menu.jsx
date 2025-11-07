@@ -102,7 +102,6 @@ export default function Menu() {
                 <X size={24} />
               </button>
             </div>
-
             <FormCheckout
               selectedProduct={selectedProduct}
               allProducts={product}

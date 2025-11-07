@@ -5,11 +5,13 @@ import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { useRouter } from "next/navigation";
 
 export default function TeksWelcome() {
   const ref = useRef(null);
   const isInView = useInView(ref);
-  const isDekstop= useMediaQuery("(min-width: 1024px)");
+  const isDekstop = useMediaQuery("(min-width: 1024px)");
+  const router = useRouter();
   return (
     <>
       <motion.section
@@ -40,7 +42,8 @@ export default function TeksWelcome() {
         </p>
         <div className="flex gap-4">
           <ButtonMengkilap
-            text={isDekstop?"Beli Pentol":"Beli"}
+            onClick={() => router.push("/menu")}
+            text={isDekstop ? "Beli Pentol" : "Beli"}
             icon={<ShoppingBasket size={20} />}
             textColor={"yellow-300"}
             className={
@@ -48,7 +51,7 @@ export default function TeksWelcome() {
             }
           />
           <BtnGeserAtas
-            text={isDekstop?"Hubungi Kami":"Hubungi"}
+            text={isDekstop ? "Hubungi Kami" : "Hubungi"}
             styleText={
               "gradiasi-btn-merah text-yellow-300 font-semibold text-lg rounded-full lg:w-54 w-[35vw] lg:px-4 p-2"
             }

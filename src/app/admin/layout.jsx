@@ -7,7 +7,9 @@ export default function AdminLayout({ children }) {
   return (
     <SidebarProvider className="font-instrument">
       <AppSidebar />
-      <SidebarInset className="flex flex-col w-full">{children}</SidebarInset>
+      <SidebarInset className="flex flex-col w-full overflow-x-hidden">
+        {children}
+      </SidebarInset>
     </SidebarProvider>
   );
 }
