@@ -1,5 +1,4 @@
 "use client";
-import { AppSidebar } from "@/components/views/admin/sidebar/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,11 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import HeaderDashboard from "@/components/layout/adminComponents/headerAdmin";
 import TableOrder from "@/components/views/admin/orderTable/tableOrder";
 

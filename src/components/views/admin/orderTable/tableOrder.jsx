@@ -1,3 +1,4 @@
+import IframeMaps from "@/components/mapLocation/IFrameMaps";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -15,13 +16,11 @@ import { Textarea } from "@/components/ui/textarea";
 import supabase from "@/lib/db";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { motion, AnimatePresence, easeIn } from "framer-motion";
+import { motion, AnimatePresence} from "framer-motion";
 import {
   CircleCheckBig,
-  Eye,
   HandPlatter,
   Pencil,
-  Send,
   SendHorizonal,
   Soup,
   Trash2,
@@ -244,8 +243,8 @@ export default function TableOrder() {
             transition={{ duration: 0.5, ease: "easeInOut" }}
             className="absolute top-0 right-0 z-10 flex flex-col bg-white overflow-y-auto w-full h-dvh"
           >
-            <div className="flex items-center justify-between py-6 pl-6 pr-12 sticky top-0 bg-transparent z-20">
-              <h1 className="text-3xl font-bold bg-yellow-300 text-red-800 px-6 py-2 rounded-full font-quicksand">
+            <div className="flex items-center justify-between lg:py-6 lg:pl-6 lg:pr-12 py-4 px-3 sticky top-0 bg-white border-b z-20">
+              <h1 className="text-3xl font-bold lg:bg-yellow-300 lg:text-red-800 lg:px-6 lg:py-2 text-red-800 rounded-full font-quicksand">
                 Detail Pesanan OID-00{selectedOrder.id}
               </h1>
               <button
@@ -289,10 +288,31 @@ export default function TableOrder() {
                       </TableRow>
                     </TableBody>
                   </Table>
+                  <div className="flex flex-col gap-2 border-t pt-4 mx-2">
+                    <h3 className="text-xl font-semibold">Lokasi Pengiriman</h3>
+
+                    {selectedOrder.address ? (
+                      <>
+                        <div className="text-gray-700">
+                          {selectedOrder.address.address}
+                        </div>
+                        <div className="w-full h-74 rounded-xl overflow-hidden shadow-md">
+                          <IframeMaps
+                            customLat={selectedOrder.address.lat}
+                            customLng={selectedOrder.address.lng}
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="text-red-500 text-sm">
+                        Lokasi tidak tersedia atau gagal diproses
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <form
                   onSubmit={handleAdminMessage}
-                  className="grid w-full gap-3 px-8"
+                  className="grid w-full gap-3 px-8 mb-8"
                 >
                   <Label
                     htmlFor="message"
@@ -305,7 +325,7 @@ export default function TableOrder() {
                   <Textarea
                     name="message"
                     onChange={(e) => setMessage(e.target.value)}
-                    className={"h-30"}
+                    className={"h-30 max-h-42 overflow-y-auto"}
                     placeholder="kirim pesan ke pelanggan..."
                     id="message"
                   />

@@ -142,7 +142,7 @@ export default function FormCheckout({ selectedProduct, allProducts = [] }) {
           {
             user_id: userData.userId,
             payment_method: paymentMethod,
-            address: location.address ? location.address : null,
+            address: location,
             note: checkout.note,
             total_price: totalPrice,
             status: "pending",
@@ -186,16 +186,20 @@ export default function FormCheckout({ selectedProduct, allProducts = [] }) {
     }
   };
 
+  console.log("location:", location);
+
   return (
     <section className="flex flex-col w-full">
       <form
         action=""
         onSubmit={handleSubmit}
-        className="flex justify-between gap-6 w-full p-8"
+        className="flex lg:flex-row flex-col lg:justify-between justify-start gap-6 w-full lg:p-8 px-4 py-6"
       >
-        <div className="flex flex-col gap-12 w-2/3 rounded-2xl shadow-xl p-8 border border-red-800">
+        <div className="flex flex-col lg:gap-12 gap-16 lg:w-2/3 w-full rounded-2xl lg:shadow-xl shadow-none lg:p-8 p-2 lg:border border-0 border-red-800">
           <div className="flex flex-col w-full gap-4">
-            <h3 className="text-2xl font-medium">Informasi Pribadi</h3>
+            <h3 className="text-2xl font-medium lg:mb-0 mb-4">
+              Informasi Pribadi
+            </h3>
             <div className="flex flex-col gap-4 w-full ">
               <div className="flex items-center gap-4 h-fit">
                 <span className="border-r-2 border-red-800 text-red-800 py-4 pr-4">
@@ -212,7 +216,7 @@ export default function FormCheckout({ selectedProduct, allProducts = [] }) {
                   />
                 </div>
               </div>
-              <div className="flex w-full gap-4">
+              <div className="flex lg:flex-row flex-col w-full gap-4">
                 <div className="flex items-center gap-4 h-fit w-full">
                   <span className="border-r-2 border-red-800 text-red-800 py-4 pr-4">
                     <Phone />
@@ -234,7 +238,7 @@ export default function FormCheckout({ selectedProduct, allProducts = [] }) {
                   </div>
                 </div>
                 <div className="flex items-center gap-4 h-fit w-full">
-                  <span className="border-r-2 border-red-800 text-red-800 p-4">
+                  <span className="border-r-2 border-red-800 text-red-800 lg:p-4 py-4 pr-4">
                     <Mail />
                   </span>
                   <div className="grid w-full items-center gap-3">
@@ -304,7 +308,9 @@ export default function FormCheckout({ selectedProduct, allProducts = [] }) {
                 >
                   Nomor Admin di WhatsApp
                 </Button>
-                <h3 className="text-2xl font-medium">Alamat Pengiriman</h3>
+                <h3 className="text-2xl font-medium lg:mt-0 mt-6">
+                  Alamat Pengiriman
+                </h3>
                 <MapPicker onLocationSelect={setLocation} />
                 {location && (
                   <div className="mt-3 gradiasi-btn-merah text-yellow-300 font-semibold p-4 rounded-lg shadow w-full text-center">
@@ -337,7 +343,7 @@ export default function FormCheckout({ selectedProduct, allProducts = [] }) {
             />
           </div>
         </div>
-        <div className="flex flex-col w-1/3 h-fit rounded-2xl px-4 py-6 border border-red-800 gap-12">
+        <div className="flex flex-col lg:w-1/3 w-full h-fit rounded-2xl px-4 py-6 lg:mb-0 mb-12 border border-red-800 gap-12 shadow-lg">
           <div className="flex flex-col w-full gap-4">
             <h3 className="text-3xl font-medium gradiasi-btn-merah text-transparent bg-clip-text">
               Rincian Pesanan

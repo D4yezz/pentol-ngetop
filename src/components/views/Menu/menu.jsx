@@ -91,8 +91,8 @@ export default function Menu() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-50 flex flex-col bg-white overflow-y-auto"
           >
-            <div className="flex items-center justify-between p-8 border-b sticky top-0 bg-white z-20">
-              <h1 className="text-4xl font-semibold gradiasi-btn-merah text-transparent bg-clip-text">
+            <div className="flex items-center justify-between lg:p-8 px-4 py-6 lg:border-b border-b-2 lg:border-neutral-200 border-red-800 sticky top-0 lg:bg-white bg-yellow-300 z-20">
+              <h1 className="lg:text-4xl text-3xl font-semibold gradiasi-btn-merah text-transparent bg-clip-text">
                 Konfirmasi Pemesanan
               </h1>
               <button
