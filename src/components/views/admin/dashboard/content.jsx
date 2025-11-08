@@ -34,7 +34,7 @@ export default function Content() {
     },
   ];
   return (
-    <div className="flex items-center gap-4 font-inter">
+    <div className="flex lg:flex-row flex-col items-center gap-4 font-inter">
       {data.map((item, index) => {
         return (
           <Card key={index} className="w-full border-red-800 shadow-md">

@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -10,9 +11,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
 import supabase from "@/lib/db";
+import { faBan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion, AnimatePresence, easeIn } from "framer-motion";
-import { Eye, Pencil, Trash2, X } from "lucide-react";
+import {
+  CircleCheckBig,
+  Eye,
+  HandPlatter,
+  Pencil,
+  Send,
+  SendHorizonal,
+  Soup,
+  Trash2,
+  X,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -21,6 +35,7 @@ export default function TableOrder() {
   const [showDetail, setShowDetail] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderItems, setOrderItems] = useState([]);
+  const [message, setMessage] = useState("");
 
   const [isLoading, setIsLoading] = useState(true);
   const getOrder = async () => {
@@ -123,6 +138,26 @@ export default function TableOrder() {
     }
   };
 
+  const handleAdminMessage = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { error } = await supabase
+        .from("orders")
+        .update({ admin_message: message })
+        .eq("id", selectedOrder.id);
+
+      if (error) throw error;
+
+      toast.success("Pesan berhasil dikirim ke pelanggan!");
+      setMessage("");
+      setShowDetail(false);
+    } catch (err) {
+      console.error("Pesan gagal terkirim:", err);
+      toast.error("Terjadi kesalahan saat mengirim pesan");
+    }
+  };
+
   if (isLoading) {
     return <Skeleton className="h-[280px] w-full rounded-xl" />;
   }
@@ -209,8 +244,8 @@ export default function TableOrder() {
             transition={{ duration: 0.5, ease: "easeInOut" }}
             className="absolute top-0 right-0 z-10 flex flex-col bg-white overflow-y-auto w-full h-dvh"
           >
-            <div className="flex items-center justify-between p-6 border-b sticky top-0 bg-yellow-300 z-20">
-              <h1 className="text-3xl font-bold gradiasi-btn-merah text-transparent bg-clip-text font-quicksand">
+            <div className="flex items-center justify-between py-6 pl-6 pr-12 sticky top-0 bg-transparent z-20">
+              <h1 className="text-3xl font-bold bg-yellow-300 text-red-800 px-6 py-2 rounded-full font-quicksand">
                 Detail Pesanan OID-00{selectedOrder.id}
               </h1>
               <button
@@ -224,37 +259,68 @@ export default function TableOrder() {
               </button>
             </div>
 
-            <div className="flex gap-2 w-full font-inter">
-              <div className="p-8 flex flex-col gap-4 w-2/3">
-                <h2 className="text-2xl font-semibold">Informasi Pelanggan</h2>
-                <Table>
-                  <TableBody className={"text-lg font-medium"}>
-                    <TableRow>
-                      <TableCell>Nama :</TableCell>
-                      <TableCell>{selectedOrder.user_id.username}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Nomor HP :</TableCell>
-                      <TableCell>{selectedOrder.user_id.handphone}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Metode Pembayaran :</TableCell>
-                      <TableCell>
-                        {selectedOrder.payment_method === "wallet"
-                          ? "E-Wallet / Transfer"
-                          : "Ambil di Toko"}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Status :</TableCell>
-                      <TableCell>{status(selectedOrder.status)}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
+            <div className="flex lg:flex-row flex-col gap-2 w-full font-inter">
+              <div className="flex flex-col justify-between lg:w-2/3 w-full">
+                <div className="p-8 flex flex-col gap-4">
+                  <h2 className="text-2xl font-semibold">
+                    Informasi Pelanggan
+                  </h2>
+                  <Table>
+                    <TableBody className={"text-lg font-medium"}>
+                      <TableRow>
+                        <TableCell>Nama :</TableCell>
+                        <TableCell>{selectedOrder.user_id.username}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Nomor HP :</TableCell>
+                        <TableCell>{selectedOrder.user_id.handphone}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Metode Pembayaran :</TableCell>
+                        <TableCell>
+                          {selectedOrder.payment_method === "wallet"
+                            ? "E-Wallet / Transfer"
+                            : "Ambil di Toko"}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Status :</TableCell>
+                        <TableCell>{status(selectedOrder.status)}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
+                <form
+                  onSubmit={handleAdminMessage}
+                  className="grid w-full gap-3 px-8"
+                >
+                  <Label
+                    htmlFor="message"
+                    className={
+                      "text-xl gradiasi-btn-merah text-transparent bg-clip-text font-semibold"
+                    }
+                  >
+                    Pesan Admin
+                  </Label>
+                  <Textarea
+                    name="message"
+                    onChange={(e) => setMessage(e.target.value)}
+                    className={"h-30"}
+                    placeholder="kirim pesan ke pelanggan..."
+                    id="message"
+                  />
+                  <Button
+                    disabled={!message.trim()}
+                    type="submit"
+                    className="w-fit gradiasi-btn-merah text-yellow-300 px-6 py-2 rounded-md mx-auto"
+                  >
+                    Kirim Pesan <SendHorizonal size={18} />
+                  </Button>
+                </form>
               </div>
 
-              <div className="flex flex-col gap-2 w-1/3">
-                <div className="p-8 flex flex-col gap-4 border-t">
+              <div className="flex flex-col gap-2 lg:w-1/3 w-full">
+                <div className="p-8 flex flex-col gap-4">
                   <h2 className="text-2xl font-semibold">Produk Dipesan</h2>
                   {orderItems.map((item) => (
                     <div
@@ -293,31 +359,43 @@ export default function TableOrder() {
                   <h2 className="text-2xl font-semibold">
                     Ubah Status Pesanan
                   </h2>
-                  <div className="flex gap-4">
-                    <Button
-                      onClick={() => updateStatus("proses")}
-                      className="bg-blue-500 text-white hover:bg-blue-600"
-                    >
-                      Proses
-                    </Button>
-                    <Button
-                      onClick={() => updateStatus("ready")}
-                      className="bg-green-500 text-white hover:bg-green-600"
-                    >
-                      Siap Diambil
-                    </Button>
-                    <Button
-                      onClick={() => updateStatus("done")}
-                      className="bg-gray-500 text-white hover:bg-gray-600"
-                    >
-                      Selesai
-                    </Button>
-                    <Button
-                      onClick={() => updateStatus("cancel")}
-                      className="bg-red-700 text-white hover:bg-red-800"
-                    >
-                      Batalkan
-                    </Button>
+                  <div className="flex flex-col gap-4 w-full pr-4">
+                    <div className="flex items-center gap-4 w-full">
+                      <Button
+                        disabled={selectedOrder.status === "proses"}
+                        onClick={() => updateStatus("proses")}
+                        className="w-1/2 bg-transparent text-blue-500 hover:bg-blue-500 hover:text-white border-blue-500 border-2 hover:border-transparent"
+                      >
+                        <HandPlatter size={18} />
+                        Proses
+                      </Button>
+                      <Button
+                        disabled={selectedOrder.status === "ready"}
+                        onClick={() => updateStatus("ready")}
+                        className="w-1/2 bg-transparent text-green-500 hover:bg-green-500 hover:text-white border-green-500 border-2 hover:border-transparent"
+                      >
+                        <Soup size={18} />
+                        Siap Diambil
+                      </Button>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <Button
+                        disabled={selectedOrder.status === "done"}
+                        onClick={() => updateStatus("done")}
+                        className="w-1/2 bg-transparent text-gray-700 hover:bg-gray-700 hover:text-white border-gray-700 border-2 hover:border-transparent"
+                      >
+                        <CircleCheckBig size={18} />
+                        Selesai
+                      </Button>
+                      <Button
+                        disabled={selectedOrder.status === "cancel"}
+                        onClick={() => updateStatus("cancel")}
+                        className="w-1/2 bg-transparent text-red-800 hover:bg-red-800 hover:text-white border-red-800 border-2 hover:border-transparent"
+                      >
+                        <FontAwesomeIcon icon={faBan} className="text-lg" />
+                        Batalkan
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

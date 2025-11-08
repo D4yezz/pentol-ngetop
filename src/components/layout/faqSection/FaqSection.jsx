@@ -10,7 +10,7 @@ const dataFaq = [
     id: 1,
     question: "Bagaimana cara memesan?",
     answer:
-      "Klik tombol Pesan Sekarang, pilih varian dan level pedas, masukkan alamat, lalu konfirmasi pembayaran. Gampang banget!",
+      "Klik tombol Pesan Sekarang, pilih varian pentol, isi form pemesanan, dan selesai. Gampang banget!",
   },
   {
     id: 2,
@@ -20,9 +20,9 @@ const dataFaq = [
   },
   {
     id: 3,
-    question: "Apakah bisa request tambahan topping atau saus?",
+    question: "Apakah Pentol Ngetop hanya berjualan online saja?",
     answer:
-      "Bisa banget! Kamu tinggal pilih tambahan topping atau saus favorit saat checkout.",
+      "Tidak, kami juga memiliki beberapa gerai fisik di kota-kota besar. Cek halaman Lokasi untuk info lebih lanjut.",
   },
   {
     id: 4,
@@ -62,7 +62,7 @@ export default function FaqSection() {
             >
               {item.question}
             </AccordionTrigger>
-            <AccordionContent className="flex flex-col gap-4 lg:w-xl mt-2 ">
+            <AccordionContent className="flex flex-col gap-4 lg:w-full mt-2 ">
               <p>{item.answer}</p>
             </AccordionContent>
           </AccordionItem>
