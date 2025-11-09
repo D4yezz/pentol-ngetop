@@ -6,7 +6,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -16,12 +15,14 @@ import { Textarea } from "@/components/ui/textarea";
 import supabase from "@/lib/db";
 import { faBan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { motion, AnimatePresence} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
+  ChevronLeft,
+  ChevronRight,
   CircleCheckBig,
   HandPlatter,
-  Pencil,
   SendHorizonal,
+  SlidersHorizontal,
   Soup,
   Trash2,
   X,
@@ -35,13 +36,30 @@ export default function TableOrder() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderItems, setOrderItems] = useState([]);
   const [message, setMessage] = useState("");
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
   const [isLoading, setIsLoading] = useState(true);
-  const getOrder = async () => {
+
+  const getTotalOrders = async () => {
+    const { count, error } = await supabase
+      .from("orders")
+      .select("*", { count: "exact", head: true });
+    if (error) {
+      console.log("Error fetching total orders:", error);
+    } else {
+      setTotal(count || 0);
+    }
+  };
+  const getOrder = async (currentPage = 1) => {
+    const from = (currentPage - 1) * 10;
+    const to = from + 10 - 1;
     try {
       const { data, error } = await supabase
         .from("orders")
-        .select("id,user_id (id,username),created_at,status,payment_method");
+        .select("id,user_id (id,username),created_at,status,payment_method")
+        .order("created_at", { ascending: false })
+        .range(from, to);
       if (error) {
         setError(error.message);
       } else {
@@ -54,8 +72,11 @@ export default function TableOrder() {
   };
 
   useEffect(() => {
-    getOrder();
-  }, []);
+    getOrder(page);
+    getTotalOrders();
+  }, [page]);
+
+  const totalPages = Math.ceil(total / 10);
 
   const getOrderDetail = async (orderId) => {
     try {
@@ -107,6 +128,26 @@ export default function TableOrder() {
     } catch (err) {
       console.error("Gagal update status:", err);
       toast.error("Terjadi kesalahan saat update status");
+    }
+  };
+
+  const deleteOrder = async (orderId) => {
+    try {
+      const { error: itemError } = await supabase
+        .from("order_items")
+        .delete()
+        .eq("order_id", orderId);
+      if (itemError) throw error;
+      const { error: orderError } = await supabase
+        .from("orders")
+        .delete()
+        .eq("id", orderId);
+      if (orderError) throw error;
+      getOrder();
+      toast.success("Pesanan berhasil dihapus!");
+    } catch (err) {
+      console.error("Gagal menghapus pesanan:", err);
+      toast.error("Terjadi kesalahan saat menghapus pesanan");
     }
   };
 
@@ -163,10 +204,11 @@ export default function TableOrder() {
 
   return (
     <>
-      <Table className={"rounded-2xl overflow-hidden shadow-lg"}>
-        <TableCaption className={"mt-8"}>
-          Semua order sudah ditampilkan
-        </TableCaption>
+      <Table
+        className={`rounded-2xl overflow-hidden shadow-lg ${
+          showDetail ? "hidden" : ""
+        }`}
+      >
         <TableHeader className={"gradiasi-btn-merah text-yellow-300"}>
           <TableRow className={"hover:bg-red-600 font-semibold"}>
             <TableHead className="px-4 font-semibold">No</TableHead>
@@ -215,16 +257,17 @@ export default function TableOrder() {
                   <Button
                     size="sm"
                     className="bg-yellow-300 hover:bg-yellow-400 text-red-800 px-3 py-2 h-auto"
-                    title="Edit"
+                    title="Manage"
                     onClick={() => getOrderDetail(item.id)}
                   >
-                    <Pencil className="w-4 h-4" />
+                    <SlidersHorizontal className="w-4 h-4" />
                   </Button>
                   <Button
                     size="sm"
                     variant="destructive"
                     className="px-3 py-2 h-auto"
                     title="Hapus"
+                    onClick={() => deleteOrder(item.id)}
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
@@ -234,18 +277,48 @@ export default function TableOrder() {
           ))}
         </TableBody>
       </Table>
+
+      <div className="bg-gray-50 px-6 py-4 mt-4 border-t border-gray-200 flex items-center justify-between">
+        <p className="text-sm text-gray-600">
+          Menampilkan <span className="font-semibold">{order.length}</span> dari{" "}
+          <span className="font-semibold">{total}</span> pesanan
+        </p>
+        <div className="flex items-center gap-4 gradiasi-btn-merah p-1.5 rounded-full">
+          <Button
+            size="icon"
+            disabled={page === 1}
+            onClick={() => setPage((p) => p - 1)}
+            className="bg-yellow-300 text-red-800 rounded-full duration-200 ease-in-out hover:bg-yellow-400 hover:text-red-900"
+          >
+            <ChevronLeft />
+          </Button>
+          <span className="text-yellow-300 font-semibold">
+            Halaman <b>{page}</b> dari <b>{totalPages || 1}</b>
+          </span>
+          <Button
+            size="icon"
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => p + 1)}
+            className="bg-yellow-300 text-red-800 rounded-full duration-200 ease-in-out hover:bg-yellow-400 hover:text-red-900"
+          >
+            <ChevronRight />
+          </Button>
+        </div>
+      </div>
+
+      {/* Detail Order */}
       <AnimatePresence>
         {showDetail && selectedOrder && (
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="absolute top-0 right-0 z-10 flex flex-col bg-white overflow-y-auto w-full h-dvh"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="absolute top-0 right-0 z-10 flex flex-col bg-white overflow-y-auto w-full h-fit"
           >
             <div className="flex items-center justify-between lg:py-6 lg:pl-6 lg:pr-12 py-4 px-3 sticky top-0 bg-white border-b z-20">
               <h1 className="text-3xl font-bold lg:bg-yellow-300 lg:text-red-800 lg:px-6 lg:py-2 text-red-800 rounded-full font-quicksand">
-                Detail Pesanan OID-00{selectedOrder.id}
+                DETAIL PESANAN OID-00{selectedOrder.id}
               </h1>
               <button
                 onClick={() => {
@@ -261,9 +334,7 @@ export default function TableOrder() {
             <div className="flex lg:flex-row flex-col gap-2 w-full font-inter">
               <div className="flex flex-col justify-between lg:w-2/3 w-full">
                 <div className="p-8 flex flex-col gap-4">
-                  <h2 className="text-2xl font-semibold">
-                    Informasi Pelanggan
-                  </h2>
+                  <h2 className="text-2xl font-bold">Informasi Pelanggan</h2>
                   <Table>
                     <TableBody className={"text-lg font-medium"}>
                       <TableRow>
@@ -288,27 +359,35 @@ export default function TableOrder() {
                       </TableRow>
                     </TableBody>
                   </Table>
-                  <div className="flex flex-col gap-2 border-t pt-4 mx-2">
-                    <h3 className="text-xl font-semibold">Lokasi Pengiriman</h3>
-
-                    {selectedOrder.address ? (
-                      <>
-                        <div className="text-gray-700">
-                          {selectedOrder.address.address}
-                        </div>
-                        <div className="w-full h-74 rounded-xl overflow-hidden shadow-md">
-                          <IframeMaps
-                            customLat={selectedOrder.address.lat}
-                            customLng={selectedOrder.address.lng}
-                          />
-                        </div>
-                      </>
-                    ) : (
-                      <div className="text-red-500 text-sm">
-                        Lokasi tidak tersedia atau gagal diproses
-                      </div>
-                    )}
+                  <div className="flex items-center gap-2 p-4 rounded-xl border shadow-md">
+                    <h4 className="font-semibold text-[1rem] text-red-800">
+                      Catatan Customer :
+                    </h4>
+                    <p
+                      className={`${
+                        selectedOrder.note ? "text-black" : "text-gray-400"
+                      }`}
+                    >
+                      {selectedOrder.note || "tidak ada catatan dari customer"}
+                    </p>
                   </div>
+
+                  {selectedOrder.address && (
+                    <div className="flex flex-col gap-2 border-t pt-4 mx-2">
+                      <h3 className="text-xl font-semibold">
+                        Lokasi Pengiriman
+                      </h3>
+                      <div className="text-gray-700">
+                        {selectedOrder.address.address}
+                      </div>
+                      <div className="w-full h-74 rounded-xl overflow-hidden shadow-lg">
+                        <IframeMaps
+                          customLat={selectedOrder.address.lat}
+                          customLng={selectedOrder.address.lng}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <form
                   onSubmit={handleAdminMessage}

@@ -101,26 +101,6 @@ export default function FormCheckout({ selectedProduct, allProducts = [] }) {
   );
 
   const handleSubmit = async () => {
-    if (selectedItems.length === 0) {
-      toast.error("Kamu belum memilih produk!");
-      return;
-    }
-
-    if (!userData.phone || userData.phone.trim() === "") {
-      toast.error("Nomor Handphone tidak boleh kosong!");
-      return;
-    }
-
-    if (userData.phone.length < 10 || userData.phone.length > 13) {
-      toast.error("Nomor Handphone harus berjumlah 10-14 angka!");
-      return;
-    }
-
-    if (!location && paymentMethod === "wallet") {
-      toast.error("Lokasi pengiriman harus dipilih!");
-      return;
-    }
-
     if (!userData.userId) {
       toast.error("Data user belum dimuat!");
       return;
@@ -129,6 +109,25 @@ export default function FormCheckout({ selectedProduct, allProducts = [] }) {
     SetIsLoading(true);
 
     try {
+      if (selectedItems.length === 0) {
+        toast.error("Kamu belum memilih produk!");
+        return;
+      }
+
+      if (!userData.phone || userData.phone === "") {
+        toast.error("Nomor Handphone tidak boleh kosong!");
+        return;
+      }
+
+      if (userData.phone.length < 10 || userData.phone.length > 13) {
+        toast.error("Nomor Handphone harus berjumlah 10-13 angka!");
+        return;
+      }
+
+      if (!location && paymentMethod === "wallet") {
+        toast.error("Lokasi pengiriman harus dipilih!");
+        return;
+      }
       const { error: handphoneError } = await supabase
         .from("profil_pengguna")
         .update({ handphone: userData.phone })
