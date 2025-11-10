@@ -286,7 +286,7 @@ export default function Navbar() {
                 </ul>
                 <div className="mt-4 flex gap-2 items-center justify-center">
                   {isLogin ? (
-                    role != "admin" ? (
+                    role === "admin" ? (
                       <Link
                         href={"/admin/dashboard"}
                         className="flex gap-2 items-center justify-center gradiasi-btn-merah text-yellow-300 font-semibold w-full px-4 py-2 rounded-full"

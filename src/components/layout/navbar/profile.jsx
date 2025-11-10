@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft,
+  ChevronsRight,
   KeyRound,
   Loader2,
   LogOut,
@@ -15,28 +16,33 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { getProfileUser, logout } from "@/service/auth.service";
+import ViewOrder from "../viewOrderUser/viewOrder";
 
 export const menuProfile = [
   {
     id: 1,
+    element: Link,
     text: "Edit Profil",
     href: "/profile/edit",
     icon: <UserPen size={20} />,
   },
   {
     id: 2,
+    element: Link,
     text: "Ubah Password",
     href: "/profile/password",
     icon: <KeyRound size={20} />,
   },
   {
     id: 3,
+    element: "button",
     text: "Pesanan Saya",
-    href: "/order",
+    href: "",
     icon: <ShoppingBasket size={20} />,
   },
   {
     id: 4,
+    element: Link,
     text: "Kritik & Saran",
     href: "/kritik-saran",
     icon: <MessagesSquare size={20} />,
@@ -45,6 +51,7 @@ export const menuProfile = [
 
 export default function Profile() {
   const [Open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [IsLoading, SetIsLoading] = useState(false);
   const [userData, setUserData] = useState({
     userId: "",
@@ -154,17 +161,25 @@ export default function Profile() {
                 <ul className="flex flex-col gap-4">
                   {menuProfile.map((item) => (
                     <li key={item.id}>
-                      <Link
-                        href={item.href}
-                        className={`flex gap-2 items-center text-red-800 font-semibold p-2 rounded hover:outline-2 outline-red-800 ${
+                      <item.element
+                        href={item.element === Link ? item.href : "#"}
+                        className={`flex gap-2 items-center text-red-800 font-semibold p-2 rounded hover:outline-2 outline-red-800 bg-transparent w-full cursor-pointer ${
                           item.href === window.location.pathname
                             ? " outline-2 outline-red-800"
                             : ""
                         }`}
-                        onClick={() => setOpen(false)}
+                        onClick={
+                          item.element === Link
+                            ? () => {
+                                setOpen(false);
+                              }
+                            : () => {
+                                setOpenModal(true);
+                              }
+                        }
                       >
                         {item.icon} {item.text}
-                      </Link>
+                      </item.element>
                     </li>
                   ))}
                 </ul>
@@ -185,6 +200,37 @@ export default function Profile() {
                 </div>
               </div>
             </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {openModal && (
+          <>
+            <motion.div
+              onClick={() => setOpenModal(!openModal)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-transparent z-20"
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className={`fixed top-0 right-0 h-full bg-neutral-100 lg:w-[55%] md:w-[55%] w-[60%] z-30 shadow-xl flex`}
+            >
+              <button
+                className="gradiasi-btn-merah text-yellow-300 w-10 flex-shrink-0 flex flex-col justify-center items-center cursor-pointer"
+                onClick={() => setOpenModal(false)}
+              >
+                <ChevronsRight size={24} />
+              </button>
+              <div className="flex-1 overflow-y-auto h-full">
+                <ViewOrder />
+              </div>
+            </motion.div>
           </>
         )}
       </AnimatePresence>
