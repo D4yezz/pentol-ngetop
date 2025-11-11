@@ -58,7 +58,7 @@ export default function ViewOrder() {
 
   const getOrderUser = async () => {
     try {
-      const res = await getProfileUser(); 
+      const res = await getProfileUser();
       const userId = res?.data?.profile?.id;
       if (!userId) {
         toast.error("User tidak ditemukan!");
@@ -115,7 +115,7 @@ export default function ViewOrder() {
       );
 
     return (
-      <div className="flex flex-col gap-6 mt-8 w-full">
+      <div className="flex flex-col gap-6 mt-8 mb-16 w-full">
         {filteredOrders.map((order) => (
           <Card
             key={order.id}
@@ -126,7 +126,13 @@ export default function ViewOrder() {
                 Order ID: OID-00{order.id}
               </CardTitle>
               <CardAction className="text-sm text-gray-500">
-                {new Date(order.created_at).toLocaleString("id-ID")}
+                {new Intl.DateTimeFormat("id-ID", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                }).format(new Date(order.created_at))}
               </CardAction>
             </CardHeader>
 
@@ -141,7 +147,7 @@ export default function ViewOrder() {
                   <div className="flex flex-col">
                     <p className="font-semibold">{item.product_id?.nama}</p>
                     <p className="text-sm text-gray-600">
-                      Jumlah: {item.quantity}
+                      Jumlah : {item.quantity}
                     </p>
                   </div>
                   <p className="ml-auto font-semibold text-red-700">
@@ -164,7 +170,7 @@ export default function ViewOrder() {
                     : "E-Wallet / Transfer"}
                 </Badge>
                 <p className="font-semibold text-red-700">
-                  Total: Rp {order.total_price.toLocaleString("id-ID")}
+                  Total : Rp {order.total_price.toLocaleString("id-ID")}
                 </p>
               </div>
             </CardContent>
@@ -238,6 +244,12 @@ export default function ViewOrder() {
       <TabsContent value="cancel" className={"w-full"}>
         {renderOrderList("cancel")}
       </TabsContent>
+      <div className="flex gap-1 mx-auto pb-6 items-center">
+        <p>Ada masalah di pesanan anda?</p>
+        <a href="#" className="text-blue-500 hover:text-blue-600">
+          hubungi admin
+        </a>
+      </div>
     </Tabs>
   );
 }

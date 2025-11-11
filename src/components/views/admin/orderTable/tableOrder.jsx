@@ -27,6 +27,17 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -205,7 +216,7 @@ export default function TableOrder() {
   return (
     <>
       <Table
-        className={`rounded-2xl overflow-hidden shadow-lg ${
+        className={`rounded-2xl overflow-hidden shadow-lg mb-8 ${
           showDetail ? "hidden" : ""
         }`}
       >
@@ -262,15 +273,32 @@ export default function TableOrder() {
                   >
                     <SlidersHorizontal className="w-4 h-4" />
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    className="px-3 py-2 h-auto"
-                    title="Hapus"
-                    onClick={() => deleteOrder(item.id)}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger className="bg-red-600 hover:bg-red-800 text-yellow-300 p-2.5 h-auto rounded-md flex items-center justify-center cursor-pointer">
+                      <Trash2 className="w-4 h-4" />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className={"font-inter"}>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Apakah anda ingin menghapus pesanan OID-00{item.id}?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Tindakan ini tidak dapat dibatalkan. Ini akan
+                          menghapus pesanan dari pelanggan secara permanen dan
+                          menghapus data dari server kami.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Batal</AlertDialogCancel>
+                        <AlertDialogAction
+                          className={"bg-red-800 text-yellow-300"}
+                          onClick={() => deleteOrder(item.id)}
+                        >
+                          Hapus Pesanan
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </TableCell>
             </TableRow>
