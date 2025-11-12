@@ -29,7 +29,7 @@ export default function OrderPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>Produk</BreadcrumbPage>
+                <BreadcrumbPage>Pesanan</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>

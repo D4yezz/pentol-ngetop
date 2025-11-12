@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import HeaderDashboard from "@/components/layout/adminComponents/headerAdmin";
 import CustTable from "@/components/views/admin/custTable/custTable";
+import AddCust from "@/components/views/admin/custTable/addCust";
 
 export default function CustomerPage() {
   return (
@@ -29,7 +30,7 @@ export default function CustomerPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>Produk</BreadcrumbPage>
+                <BreadcrumbPage>Pelanggan</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -37,7 +38,8 @@ export default function CustomerPage() {
       </header>
       <HeaderDashboard
         title={"Kelola Pelanggan"}
-        desc={"Atur data pelanggan dengan mudah"}
+        desc={"Atur data pelanggan pentol ngetop dengan mudah"}
+        action={<AddCust />}
       />
       <div className="flex flex-col px-8 mt-8 mb-20 gap-4">
         <CustTable />

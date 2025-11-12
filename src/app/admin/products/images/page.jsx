@@ -36,7 +36,7 @@ export default function ImagesPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>Produk</BreadcrumbPage>
+                <BreadcrumbLink href="/admin/products">Produk</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
