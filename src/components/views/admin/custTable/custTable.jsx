@@ -115,7 +115,7 @@ export default function CustTable() {
             ) : (
               allUser.map((item, index) => (
                 <TableRow key={item.id} className="hover:bg-gray-50 transition">
-                  <TableCell className={"text-center border-r"}>
+                  <TableCell className={"text-center border-r font-semibold"}>
                     {index + 1}
                   </TableCell>
                   <TableCell>
