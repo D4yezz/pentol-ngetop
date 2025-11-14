@@ -17,8 +17,12 @@ import {
 import HeaderDashboard from "@/components/layout/adminComponents/headerAdmin";
 import TableProduct from "@/components/views/admin/productTable/tableProduct";
 import { CirclePlus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import ProductForm from "@/components/views/admin/productTable/productForm";
 
 export default function ProductsPage() {
+  const [openForm, setOpenForm] = useState(false);
   return (
     <>
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
@@ -45,7 +49,10 @@ export default function ProductsPage() {
         title={"Kelola Produk"}
         desc={"Tambah atau edit produk dari Pentol Ngetop dengan praktis"}
         action={
-          <button className="gradiasi-btn-merah rounded-full flex items-center gap-2 py-2 px-4 text-white cursor-pointer hover:text-yellow-300 duration-200 ease-in-out">
+          <button
+            onClick={() => setOpenForm(true)}
+            className="gradiasi-btn-merah rounded-full flex items-center gap-2 py-2 px-4 text-white cursor-pointer hover:text-yellow-300 duration-200 ease-in-out"
+          >
             <CirclePlus size={20} />
             Tambah Produk
           </button>
@@ -53,6 +60,7 @@ export default function ProductsPage() {
       />
       <div className="flex flex-col px-8 mt-8 mb-20 gap-4">
         <TableProduct />
+        <ProductForm open={openForm} onOpenChange={setOpenForm} onSuccess={() => setOpenForm(false)} />
       </div>
     </>
   );

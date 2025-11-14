@@ -10,19 +10,33 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import supabase from "@/lib/db";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, SlidersVertical, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function TableProduct() {
   const [product, setProduct] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [openDialogId, setOpenDialogId] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
   const getProduct = async () => {
     try {
       const { data, error } = await supabase
         .from("product")
         .select(
-          "nama, deskripsi, varian, harga, stok, product_images (image_url)"
+          "id, nama, deskripsi, varian, harga, stok, product_images (id_product, image_url)"
         );
       if (error) {
         setError(error.message);
@@ -39,8 +53,47 @@ export default function TableProduct() {
     getProduct();
   }, []);
 
+  const deleteProduct = async (productId) => {
+    try {
+      setDeletingId(productId);
+
+      await supabase
+        .from("product_images")
+        .delete()
+        .eq("id_product", productId);
+
+      const { data: files, error: listError } = await supabase.storage
+        .from("pentol")
+        .list(`products/${productId}/`);
+
+      if (!listError && files?.length > 0) {
+        for (const file of files) {
+          await supabase.storage
+            .from("pentol")
+            .remove([`products/${productId}/${file.name}`]);
+        }
+      }
+
+      const { error: productError } = await supabase
+        .from("product")
+        .delete()
+        .eq("id", productId);
+
+      if (productError) throw productError;
+
+      getProduct();
+      toast.success("Produk berhasil dihapus!");
+      setOpenDialogId(null);
+    } catch (err) {
+      console.error("Gagal menghapus produk :", err);
+      toast.error("Terjadi kesalahan saat menghapus produk");
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   if (isLoading) {
-    return <Skeleton className="h-[250px] w-full rounded-xl" />;
+    return <Skeleton className="h-[350px] w-full rounded-xl" />;
   }
 
   return (
@@ -106,26 +159,47 @@ export default function TableProduct() {
                 <div className="flex gap-2 justify-center">
                   <Button
                     size="sm"
-                    className="bg-gray-800 hover:bg-gray-700 text-white px-3 py-2 h-auto"
-                    title="Detail"
-                  >
-                    <Eye className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 h-auto"
+                    className="bg-yellow-300 hover:bg-yellow-400 text-red-800 px-3 py-2 h-auto"
                     title="Edit"
                   >
-                    <Pencil className="w-4 h-4" />
+                    <SlidersVertical className="w-4 h-4" />
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    className="px-3 py-2 h-auto"
-                    title="Hapus"
+                  <AlertDialog
+                    open={openDialogId === item.id}
+                    onOpenChange={(open) => {
+                      if (!open && deletingId === item.id) return;
+                      setOpenDialogId(open ? item.id : null);
+                    }}
                   >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
+                    <AlertDialogTrigger className="bg-red-600 hover:bg-red-800 text-yellow-300 p-2.5 h-auto rounded-md flex items-center justify-center cursor-pointer">
+                      <Trash2 className="w-4 h-4" />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className={"font-inter"}>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Apakah anda ingin menghapus product {item.nama}?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Tindakan ini tidak dapat dibatalkan. Ini akan
+                          menghapus produk dari data di server kami.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel disabled={deletingId === item.id}>
+                          Batal
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          className={"bg-red-800 text-yellow-300"}
+                          onClick={() => deleteProduct(item.id)}
+                          disabled={deletingId === item.id}
+                        >
+                          {deletingId === item.id
+                            ? "Menghapus..."
+                            : "Hapus produk"}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </TableCell>
             </TableRow>
