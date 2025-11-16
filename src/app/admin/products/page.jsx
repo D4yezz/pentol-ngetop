@@ -1,5 +1,4 @@
 "use client";
-import { AppSidebar } from "@/components/views/admin/sidebar/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,20 +8,42 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import HeaderDashboard from "@/components/layout/adminComponents/headerAdmin";
 import TableProduct from "@/components/views/admin/productTable/tableProduct";
 import { CirclePlus } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductForm from "@/components/views/admin/productTable/productForm";
+import supabase from "@/lib/db";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ProductsPage() {
   const [openForm, setOpenForm] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const getProduct = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("product")
+        .select(
+          "id, nama, deskripsi, varian, harga, stok, product_images (id_product, image_url)"
+        );
+      if (error) {
+        setError(error.message);
+      } else {
+        setProducts(data);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getProduct();
+  }, []);
   return (
     <>
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
@@ -59,8 +80,24 @@ export default function ProductsPage() {
         }
       />
       <div className="flex flex-col px-8 mt-8 mb-20 gap-4">
-        <TableProduct />
-        <ProductForm open={openForm} onOpenChange={setOpenForm} onSuccess={() => setOpenForm(false)} />
+        {openForm ? null : (
+          <>
+            {isLoading ? (
+              <Skeleton className="w-full h-64 rounded-lg" />
+            ) : (
+              <TableProduct products={products} refresh={getProduct} />
+            )}
+          </>
+        )}
+
+        <ProductForm
+          open={openForm}
+          onOpenChange={setOpenForm}
+          onSuccess={() => {
+            getProduct();
+            setOpenForm(false);
+          }}
+        />
       </div>
     </>
   );

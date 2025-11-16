@@ -3,15 +3,6 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import supabase from "@/lib/db";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerFooter,
-  DrawerClose,
-  DrawerDescription,
-} from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,7 +18,7 @@ export default function ProductForm({ open, onOpenChange, onSuccess }) {
     varian: "",
     stok: "",
   });
-  const [images, setImages] = useState([null, null, null, null]);
+  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) =>
@@ -39,9 +30,18 @@ export default function ProductForm({ open, onOpenChange, onSuccess }) {
     setImages(next);
   };
 
-  const handleSubmit = async () => {
-    if (!form.nama || !form.harga) {
-      toast.error("Nama dan harga produk wajib diisi");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.nama || !form.harga || !form.varian) {
+      toast.error("Nama produk, varian dan harga produk wajib diisi");
+      return;
+    }
+    if (!images) {
+      toast.error("Tolong upload 4 foto produk");
+      return;
+    }
+    if (images.length <= 3) {
+      toast.error("Harap upload 4 foto produk");
       return;
     }
 
@@ -99,7 +99,7 @@ export default function ProductForm({ open, onOpenChange, onSuccess }) {
       onSuccess?.();
       onOpenChange?.(false);
       setForm({ name: "", description: "", price: "" });
-      setImages([null, null, null, null]);
+      setImages([]);
     } catch (err) {
       console.error(err);
       toast.error("Gagal menambahkan produk", { description: err.message });
@@ -116,7 +116,7 @@ export default function ProductForm({ open, onOpenChange, onSuccess }) {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 50 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          className="absolute top-0 right-0 z-10 flex flex-col bg-white overflow-y-auto w-full h-fit"
+          className="absolute top-0 right-0 z-10 flex flex-col bg-white overflow-y-auto w-full h-dvh"
         >
           <form action="">
             <div className="flex justify-between border-b p-4 border-red-800">
@@ -195,29 +195,43 @@ export default function ProductForm({ open, onOpenChange, onSuccess }) {
               </div>
 
               <div className="w-[40%] p-6 flex flex-col gap-4">
-                <Label>Gambar (maks 4)</Label>
-                <div className="flex flex-col gap-4">
-                  {images.map((img, idx) => (
-                    <div key={idx} className="flex flex-col">
-                      <Input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) =>
-                          handleFileChange(idx, e.target.files?.[0] ?? null)
-                        }
-                      />
-                      {img && (
-                        <span className="text-sm text-muted-foreground">
-                          {img.name}
+                <Label>Foto Produk (maks 4)</Label>
+                <div className="flex flex-col gap-2">
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    multiple={true}
+                    onChange={(e) => {
+                      const files = Array.from(e.target.files);
+                      if (files.length > 4) {
+                        e.target.value = null;
+                        setImages([]);
+                        toast.error("Maksimal 4 gambar saja");
+                        return;
+                      } else {
+                        setImages(files);
+                      }
+                    }}
+                  />
+                  {images && (
+                    <div className="flex flex-col gap-1">
+                      {images.map((img, idx) => (
+                        <span
+                          key={idx}
+                          className="text-sm text-muted-foreground"
+                        >
+                          {idx !== images.length - 1
+                            ? `${img.name},`
+                            : img.name}
                         </span>
-                      )}
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
               </div>
             </div>
 
-            <div className="px-6 flex justify-end gap-4 pb-6">
+            <div className="px-6 flex justify-end gap-4 pb-6 pt-12">
               <Button
                 className="gradiasi-btn-merah text-white hover:text-yellow-300"
                 onClick={handleSubmit}

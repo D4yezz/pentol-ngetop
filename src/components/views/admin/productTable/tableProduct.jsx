@@ -26,33 +26,9 @@ import { Eye, Pencil, SlidersVertical, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function TableProduct() {
-  const [product, setProduct] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+export default function TableProduct({ products, refresh }) {
   const [openDialogId, setOpenDialogId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
-  const getProduct = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("product")
-        .select(
-          "id, nama, deskripsi, varian, harga, stok, product_images (id_product, image_url)"
-        );
-      if (error) {
-        setError(error.message);
-      } else {
-        setProduct(data);
-      }
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getProduct();
-  }, []);
-
   const deleteProduct = async (productId) => {
     try {
       setDeletingId(productId);
@@ -81,9 +57,8 @@ export default function TableProduct() {
 
       if (productError) throw productError;
 
-      getProduct();
       toast.success("Produk berhasil dihapus!");
-      setOpenDialogId(null);
+      refresh();
     } catch (err) {
       console.error("Gagal menghapus produk :", err);
       toast.error("Terjadi kesalahan saat menghapus produk");
@@ -91,11 +66,6 @@ export default function TableProduct() {
       setDeletingId(null);
     }
   };
-
-  if (isLoading) {
-    return <Skeleton className="h-[350px] w-full rounded-xl" />;
-  }
-
   return (
     <>
       <Table className={"rounded-2xl overflow-hidden shadow-lg"}>
@@ -117,7 +87,7 @@ export default function TableProduct() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {product.map((item, index) => (
+          {products.map((item, index) => (
             <TableRow
               key={index}
               className="h-fit w-full py-4 border-b border-gray-300"
@@ -136,7 +106,9 @@ export default function TableProduct() {
                 <p className="text-balance">{item.nama}</p>
               </TableCell>
               <TableCell className="px-4 w-[400px]">
-                <p className="text-balance line-clamp-2">{item.deskripsi}</p>
+                <p className="text-balance line-clamp-2">
+                  {item.deskripsi || "-"}
+                </p>
               </TableCell>
               <TableCell className="px-4">
                 <p className="w-fit h-fit gradiasi-btn-merah rounded-full px-4 py-1.5 text-yellow-300">
