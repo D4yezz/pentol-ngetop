@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import HeaderDashboard from "@/components/layout/adminComponents/headerAdmin";
 import TableProduct from "@/components/views/admin/productTable/tableProduct";
-import { CirclePlus } from "lucide-react";
+import { ArrowLeft, ArrowRight, CirclePlus } from "lucide-react";
 import { useEffect, useState } from "react";
 import ProductForm from "@/components/views/admin/productTable/productForm";
 import supabase from "@/lib/db";
@@ -22,6 +22,8 @@ export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const getProduct = async () => {
     try {
@@ -85,7 +87,62 @@ export default function ProductsPage() {
             {isLoading ? (
               <Skeleton className="w-full h-64 rounded-lg" />
             ) : (
-              <TableProduct products={products} refresh={getProduct} />
+              <>
+                <TableProduct
+                  products={products}
+                  refresh={getProduct}
+                  currentPage={currentPage}
+                  itemsPerPage={itemsPerPage}
+                />
+                {products.length > 0 && (
+                  <div className="flex items-center justify-center gap-2 mt-6">
+                    <button
+                      onClick={() =>
+                        setCurrentPage(Math.max(1, currentPage - 1))
+                      }
+                      disabled={currentPage === 1}
+                      className="flex gap-2 items-center px-4 py-2 rounded-md border border-gray-300 text-gray-700 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
+                    >
+                      <ArrowLeft size={18}/> Sebelumnya
+                    </button>
+                    <div className="flex gap-1">
+                      {Array.from(
+                        { length: Math.ceil(products.length / itemsPerPage) },
+                        (_, i) => i + 1
+                      ).map((page) => (
+                        <button
+                          key={page}
+                          onClick={() => setCurrentPage(page)}
+                          className={`px-3 py-2 rounded-md font-medium cursor-pointer ${
+                            currentPage === page
+                              ? "gradiasi-btn-merah text-yellow-300"
+                              : "border border-gray-300 text-gray-700 hover:bg-gray-100"
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() =>
+                        setCurrentPage(
+                          Math.min(
+                            Math.ceil(products.length / itemsPerPage),
+                            currentPage + 1
+                          )
+                        )
+                      }
+                      disabled={
+                        currentPage ===
+                        Math.ceil(products.length / itemsPerPage)
+                      }
+                      className="flex gap-2 items-center px-4 py-2 rounded-md border border-gray-300 text-gray-700 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
+                    >
+                      Berikutnya <ArrowRight size={18} />
+                    </button>
+                  </div>
+                )}
+              </>
             )}
           </>
         )}
@@ -96,6 +153,7 @@ export default function ProductsPage() {
           onSuccess={() => {
             getProduct();
             setOpenForm(false);
+            setCurrentPage(1);
           }}
         />
       </div>

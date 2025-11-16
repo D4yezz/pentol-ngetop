@@ -26,9 +26,19 @@ import { Eye, Pencil, SlidersVertical, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function TableProduct({ products, refresh }) {
+export default function TableProduct({
+  products,
+  refresh,
+  currentPage = 1,
+  itemsPerPage = 5,
+}) {
   const [openDialogId, setOpenDialogId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
+
+  // Calculate pagination
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedProducts = products.slice(startIndex, endIndex);
   const deleteProduct = async (productId) => {
     try {
       setDeletingId(productId);
@@ -59,6 +69,7 @@ export default function TableProduct({ products, refresh }) {
 
       toast.success("Produk berhasil dihapus!");
       refresh();
+      setOpenDialogId(null);
     } catch (err) {
       console.error("Gagal menghapus produk :", err);
       toast.error("Terjadi kesalahan saat menghapus produk");
@@ -68,10 +79,7 @@ export default function TableProduct({ products, refresh }) {
   };
   return (
     <>
-      <Table className={"rounded-2xl overflow-hidden shadow-lg"}>
-        <TableCaption className={"mt-8"}>
-          Semua produk sudah ditampilkan
-        </TableCaption>
+      <Table className={"rounded-2xl overflow-hidden shadow-lg mb-8"}>
         <TableHeader className={"gradiasi-btn-merah text-yellow-300"}>
           <TableRow className={"hover:bg-red-600 font-semibold"}>
             <TableHead className="px-4 font-semibold">No</TableHead>
@@ -87,12 +95,14 @@ export default function TableProduct({ products, refresh }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.map((item, index) => (
+          {paginatedProducts.map((item, index) => (
             <TableRow
-              key={index}
+              key={item.id}
               className="h-fit w-full py-4 border-b border-gray-300"
             >
-              <TableCell className="font-semibold px-4">{index + 1}</TableCell>
+              <TableCell className="font-semibold px-4">
+                {startIndex + index + 1}
+              </TableCell>
               <TableCell className="p-4">
                 <div className="w-24 h-24 rounded-lg overflow-hidden shadow-md border-2 border-red-800">
                   <img
@@ -146,10 +156,10 @@ export default function TableProduct({ products, refresh }) {
                     <AlertDialogTrigger className="bg-red-600 hover:bg-red-800 text-yellow-300 p-2.5 h-auto rounded-md flex items-center justify-center cursor-pointer">
                       <Trash2 className="w-4 h-4" />
                     </AlertDialogTrigger>
-                    <AlertDialogContent className={"font-inter"}>
+                    <AlertDialogContent className="font-inter">
                       <AlertDialogHeader>
                         <AlertDialogTitle>
-                          Apakah anda ingin menghapus product {item.nama}?
+                          Apakah anda ingin menghapus produk {item.nama}?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
                           Tindakan ini tidak dapat dibatalkan. Ini akan
@@ -160,15 +170,15 @@ export default function TableProduct({ products, refresh }) {
                         <AlertDialogCancel disabled={deletingId === item.id}>
                           Batal
                         </AlertDialogCancel>
-                        <AlertDialogAction
-                          className={"bg-red-800 text-yellow-300"}
+                        <button
+                          className="bg-red-800 text-yellow-300 px-4 py-2 rounded-md cursor-pointer font-medium hover:bg-red-700"
                           onClick={() => deleteProduct(item.id)}
                           disabled={deletingId === item.id}
                         >
                           {deletingId === item.id
                             ? "Menghapus..."
                             : "Hapus produk"}
-                        </AlertDialogAction>
+                        </button>
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
