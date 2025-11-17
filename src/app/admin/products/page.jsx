@@ -103,7 +103,7 @@ export default function ProductsPage() {
                       disabled={currentPage === 1}
                       className="flex gap-2 items-center px-4 py-2 rounded-md border border-gray-300 text-gray-700 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-100"
                     >
-                      <ArrowLeft size={18}/> Sebelumnya
+                      <ArrowLeft size={18} /> Sebelumnya
                     </button>
                     <div className="flex gap-1">
                       {Array.from(

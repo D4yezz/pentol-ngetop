@@ -124,7 +124,7 @@ export default function ProductForm({ open, onOpenChange, onSuccess }) {
                 <h1 className="text-3xl font-semibold gradiasi-btn-merah text-transparent bg-clip-text">
                   Tambah Produk
                 </h1>
-                <p>Isi detail produk dan upload sampai 4 gambar.</p>
+                <p>Isi detail produk dan upload 4 foto produk.</p>
               </div>
               <Button
                 type="button"

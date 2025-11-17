@@ -1,10 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -12,7 +10,6 @@ import {
 } from "@/components/ui/table";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -22,9 +19,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import supabase from "@/lib/db";
-import { Eye, Pencil, SlidersVertical, Trash2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { SlidersVertical, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
+import EditProduct from "./editProduct";
 
 export default function TableProduct({
   products,
@@ -34,8 +32,8 @@ export default function TableProduct({
 }) {
   const [openDialogId, setOpenDialogId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
+  const [edit, setEdit] = useState(null);
 
-  // Calculate pagination
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedProducts = products.slice(startIndex, endIndex);
@@ -143,6 +141,7 @@ export default function TableProduct({
                     size="sm"
                     className="bg-yellow-300 hover:bg-yellow-400 text-red-800 px-3 py-2 h-auto"
                     title="Edit"
+                    onClick={() => setEdit(item)}
                   >
                     <SlidersVertical className="w-4 h-4" />
                   </Button>
@@ -188,6 +187,12 @@ export default function TableProduct({
           ))}
         </TableBody>
       </Table>
+      <EditProduct
+        open={edit}
+        onOpenChange={setEdit}
+        product={edit}
+        onSuccess={() => refresh()}
+      />
     </>
   );
 }
