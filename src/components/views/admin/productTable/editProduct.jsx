@@ -228,17 +228,19 @@ export default function EditProduct({
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-4 mt-8 px-8">
+                  <div className="flex flex-col gap-4 mt-8 px-8 w-[40%]">
                     <Label>Foto Produk (4 gambar wajib)</Label>
                     <div className="flex flex-wrap gap-4 w-70">
                       {images.map((image, i) => (
                         <div className="w-32 h-32" key={i} id="preview">
                           {image ? (
-                            <img
-                              src={URL.createObjectURL(image)}
-                              alt={`Preview ${i + 1}`}
-                              className="w-32 h-32 object-cover rounded-lg border-2 border-red-800 shadow-md"
-                            />
+                            <Label htmlFor={`image-${i + 1}`}>
+                              <img
+                                src={URL.createObjectURL(image)}
+                                alt={`Preview ${i + 1}`}
+                                className="w-32 h-32 object-cover rounded-lg border-2 border-red-800 shadow-md"
+                              />
+                            </Label>
                           ) : (
                             oldImages[i] && (
                               <Label htmlFor={`image-${i + 1}`}>
@@ -267,9 +269,8 @@ export default function EditProduct({
                           }}
                         />
 
-                        {/* preview nama file */}
                         {images[i] && (
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-sm text-muted-foreground line-clamp-2">
                             {images[i].name}
                           </span>
                         )}

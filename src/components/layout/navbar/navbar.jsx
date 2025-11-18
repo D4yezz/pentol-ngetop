@@ -2,6 +2,7 @@
 import ButtonShine from "@/components/uiVerse/btnShine";
 import supabase from "@/lib/db";
 import {
+  ChevronsRight,
   LayoutPanelLeft,
   Loader,
   Loader2,
@@ -22,12 +23,14 @@ import { toast } from "sonner";
 import navigasi from "./navigasi";
 import Profile, { menuProfile } from "./profile";
 import { DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import ViewOrder from "../viewOrderUser/viewOrder";
 
 export default function Navbar() {
   const [isLogin, setIsLogin] = useState(false);
   const [role, setRole] = useState(null);
   const [IsLoading, SetIsLoading] = useState(true);
   const [Open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [userData, setUserData] = useState({
     userId: "",
     name: "",
@@ -242,45 +245,27 @@ export default function Navbar() {
                       <DropdownMenuSeparator />
                       {menuProfile.map((item) => (
                         <li key={item.id}>
-                          <Link
-                            href={item.href}
-                            className={`flex gap-2 items-center text-red-800 font-semibold p-2 rounded hover:outline-2 outline-red-800 ${
+                          <item.element
+                            href={item.element === Link ? item.href : "#"}
+                            className={`flex gap-2 items-center text-red-800 font-semibold p-2 rounded hover:outline-2 outline-red-800 bg-transparent w-full cursor-pointer ${
                               item.href === window.location.pathname
                                 ? " outline-2 outline-red-800"
                                 : ""
                             }`}
-                            onClick={() => setOpen(false)}
+                            onClick={
+                              item.element === Link
+                                ? () => {
+                                    setOpen(false);
+                                  }
+                                : () => {
+                                    setOpenModal(true);
+                                  }
+                            }
                           >
                             {item.icon} {item.text}
-                          </Link>
+                          </item.element>
                         </li>
                       ))}
-                      {/* <li>
-                        <Link
-                          href="/order"
-                          className={`flex gap-2 items-center text-red-800 font-semibold p-2 rounded hover:outline-2 outline-red-800 ${
-                            window.location.pathname === "/order"
-                              ? " outline-2 outline-red-800"
-                              : ""
-                          }`}
-                          onClick={() => setOpen(false)}
-                        >
-                          <ShoppingBasket size={20} /> Pesanan Saya
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/profile/edit"
-                          className={`flex gap-2 items-center text-red-800 font-semibold p-2 rounded hover:outline-2 outline-red-800 ${
-                            window.location.pathname === "/profile/edit"
-                              ? " outline-2 outline-red-800"
-                              : ""
-                          }`}
-                          onClick={() => setOpen(false)}
-                        >
-                          <UserPen size={20} /> Edit Profil
-                        </Link>
-                      </li> */}
                     </>
                   )}
                 </ul>
@@ -324,6 +309,39 @@ export default function Navbar() {
                 </div>
               </div>
             </motion.aside>
+
+            {/* modal order */}
+            <AnimatePresence>
+              {openModal && (
+                <>
+                  <motion.div
+                    onClick={() => setOpenModal(!openModal)}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="fixed inset-0 bg-transparent z-20"
+                  />
+                  <motion.div
+                    initial={{ x: "100%" }}
+                    animate={{ x: 0 }}
+                    exit={{ x: "100%" }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    className={`fixed top-0 right-0 h-full bg-neutral-100 lg:w-[55%] md:w-[55%] w-full z-30 shadow-xl flex`}
+                  >
+                    <button
+                      className="gradiasi-btn-merah text-yellow-300 w-10 flex-shrink-0 flex flex-col justify-center items-center cursor-pointer"
+                      onClick={() => setOpenModal(false)}
+                    >
+                      <ChevronsRight size={24} />
+                    </button>
+                    <div className="flex-1 overflow-y-auto h-full">
+                      <ViewOrder />
+                    </div>
+                  </motion.div>
+                </>
+              )}
+            </AnimatePresence>
           </>
         )}
       </AnimatePresence>

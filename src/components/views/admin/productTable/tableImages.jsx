@@ -1,5 +1,12 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -11,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import supabase from "@/lib/db";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Eye } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function TableImages() {
@@ -25,7 +32,8 @@ export default function TableImages() {
         id_product (
           id,
           nama
-        )
+        ),
+        created_at
       `);
 
       if (error) throw error;
@@ -38,7 +46,10 @@ export default function TableImages() {
             images: [],
           };
         }
-        acc[productId].images.push(item.image_url);
+        acc[productId].images.push({
+          url: item.image_url,
+          created_at: item.created_at,
+        });
         return acc;
       }, {});
 
@@ -66,12 +77,10 @@ export default function TableImages() {
         </TableCaption>
         <TableHeader className={"gradiasi-btn-merah text-yellow-300"}>
           <TableRow className={"hover:bg-red-600 font-semibold"}>
-            <TableHead className="px-4 font-semibold">No</TableHead>
-            <TableHead className="px-4 font-semibold">Produk</TableHead>
-            <TableHead className="px-4 font-semibold">Gambar</TableHead>
-            <TableHead className="px-4 font-semibold text-center">
-              Aksi
-            </TableHead>
+            <TableHead className="px-4">No</TableHead>
+            <TableHead className="px-4">Produk</TableHead>
+            <TableHead className="px-4">Gambar</TableHead>
+            <TableHead className="px-4 text-center">Aksi</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -91,67 +100,68 @@ export default function TableImages() {
                     className="w-24 h-24 rounded-lg overflow-hidden border-2 border-green-100"
                   >
                     <img
-                      src={url}
+                      src={url.url}
                       alt={`image-${i}`}
                       className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                     />
                   </div>
                 ))}
               </TableCell>
-
-              {/* <TableCell className="px-4 w-[400px]">
-                <p className="text-balance line-clamp-2">{item.deskripsi}</p>
-              </TableCell>
-              <TableCell className="px-4">
-                <p className="w-fit h-fit gradiasi-btn-merah rounded-full px-4 py-1.5 text-yellow-300">
-                  {item.varian}
-                </p>
-              </TableCell>
-              <TableCell className="px-4">
-                <p className="text-balance">
-                  Rp.{" "}
-                  {item.harga?.toLocaleString("id-ID", {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 3,
-                  })}
-                </p>
-              </TableCell>
-              <TableCell className="px-4">
-                <p className="text-balance">{item.stok}</p>
-              </TableCell> */}
               <TableCell>
-                <div className="flex gap-2 justify-center">
-                  <Button
-                    size="sm"
-                    className="bg-gray-800 hover:bg-gray-700 text-white px-3 py-2 h-auto"
-                    title="Detail"
-                    //   onClick={() => navigasi("/detail/" + item.id)}
-                  >
+                <Dialog>
+                  <DialogTrigger className="bg-red-800 hover:bg-yellow-300 text-white hover:text-red-800 w-12 py-2 h-auto flex items-center justify-center rounded-md cursor-pointer">
                     <Eye className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-2 h-auto"
-                    title="Edit"
-                    //   onClick={() => navigasi("/edit-wisata/" + item.id)}
-                  >
-                    <Pencil className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    className="px-3 py-2 h-auto"
-                    title="Hapus"
-                    //   onClick={() => handleDelete(item.id)}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
+                  </DialogTrigger>
+                  <DetailImages imageData={item} />
+                </Dialog>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+    </>
+  );
+}
+
+export function DetailImages({ imageData }) {
+  return (
+    <>
+      <DialogContent className={"font-inter"}>
+        <DialogHeader>
+          <DialogTitle
+            className={"text-red-800 pb-4 mb-2 border-b border-red-800"}
+          >
+            Detail foto produk {imageData.product.nama}
+          </DialogTitle>
+          <DialogDescription />
+          <ul>
+            {imageData.images.map((img, i) => (
+              <li key={i} className="mb-4 flex gap-3 items-center">
+                <div className="size size-28 rounded-lg overflow-hidden shadow">
+                  <img
+                    src={img.url}
+                    alt={`image-${i}`}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="w-[80%] text-sm text-neutral-800">
+                    Foto ke - {i + 1}
+                  </span>
+                  <span className="flex items-center gap-2 text-sm text-neutral-600">
+                    <p className="font-medium text-black">Di unggah pada :</p>
+                    {new Date(img.created_at).toLocaleDateString("id-ID", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </DialogHeader>
+      </DialogContent>
     </>
   );
 }

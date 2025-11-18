@@ -48,13 +48,7 @@ export default function ImagesPage() {
       </header>
       <HeaderDashboard
         title={"Kelola Gambar Produk"}
-        desc={"Tambah atau edit gambar produk dengan mudah"}
-        action={
-          <button className="gradiasi-btn-merah rounded-full flex items-center gap-2 py-2 px-4 text-white cursor-pointer hover:text-yellow-300 duration-200 ease-in-out">
-            <CirclePlus size={20} />
-            Tambah Gambar
-          </button>
-        }
+        desc={"Lihat gambar setiap produk dengan detail"}
       />
       <div className="flex flex-col px-8 mt-8 mb-20 gap-4">
         <TableImages />
