@@ -53,6 +53,7 @@ export default function RegisterView() {
     setLoading(true);
 
     const response = await register({
+      username: credential.username,
       email: credential.email,
       password: credential.password,
       confirm_password: credential.confirm_password,
@@ -70,7 +71,7 @@ export default function RegisterView() {
 
   return (
     <>
-      <div className="flex justify-center text-red-800 w-full h-dvh mx-auto p-6 relative font-inter overflow-hidden">
+      <div className="flex justify-center text-red-800 w-full lg:h-dvh h-fit mx-auto p-6 relative font-inter overflow-hidden">
         {isDekstop ? (
           <motion.div
             initial={{ opacity: 0, x: -50 }}

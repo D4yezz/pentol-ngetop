@@ -41,6 +41,7 @@ export default function Footer() {
   return (
     <>
       <motion.footer
+        id="contact"
         ref={ref}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}

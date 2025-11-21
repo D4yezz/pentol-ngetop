@@ -1,13 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -40,6 +32,22 @@ export default function TableKritik() {
       console.log(error);
     }
   };
+
+  // const handleDelete = async (id) => {
+  //   try {
+  //     const { error } = await supabase
+  //       .from("kritik_saran")
+  //       .delete()
+  //       .eq("id", id);
+  //     if (error) {
+  //       console.log("Error deleting pesan:", error);
+  //     } else {
+  //       getPesan();
+  //     }
+  //   } catch (error) {
+  //     console.log("Error deleting pesan:", error);
+  //   }
+  // };
 
   useEffect(() => {
     getPesan();
@@ -91,14 +99,6 @@ export default function TableKritik() {
                     </DialogTrigger>
                     <DialogKritik pesan={item} />
                   </Dialog>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    className="px-3 py-2 h-auto"
-                    title="Hapus"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
                 </div>
               </TableCell>
             </TableRow>

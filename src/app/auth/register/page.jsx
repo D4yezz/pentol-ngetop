@@ -9,11 +9,11 @@ import { motion } from "framer-motion";
 export default function RegisterPage() {
   return (
     <>
-      <div className="bg-neutral-100 w-full h-dvh">
+      <div className="bg-neutral-100 w-full lg:h-dvh h-fit">
         <div className="px-12">
           <Logo />
         </div>
-        <div className="mx-auto flex flex-col relative">
+        <div className="mx-auto flex flex-col relative lg:pb-0 pb-20">
           <RegisterView />
           <motion.div
             initial={{ opacity: 0, y: 50 }}

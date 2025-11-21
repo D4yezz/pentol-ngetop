@@ -27,13 +27,13 @@ export default function SuccessPage() {
             Login
           </Link>
         </div>
-        <FiberWaves
+        {/* <FiberWaves
           className="absolute z-0"
           color={[100, 0, 0]}
           enableMouseInteraction={true}
           distance={0.1}
           amplitude={1.2}
-        />
+        /> */}
       </section>
     </>
   );

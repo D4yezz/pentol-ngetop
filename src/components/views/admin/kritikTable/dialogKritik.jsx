@@ -4,8 +4,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function DialogKritik({ pesan }) {
   return (
@@ -16,13 +14,13 @@ export default function DialogKritik({ pesan }) {
             Detail pesan dari {pesan.nama.split(" ")[0]}
           </DialogTitle>
         </DialogHeader>
-        <div className="mt-4 flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <Label>Nama Pengirim</Label>
-            <Input value={pesan.nama} readOnly />
+        <div className="mt-4 flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <p>Nama Pengirim :</p>
+            <p>{pesan.nama}</p>
           </div>
-          <div className="flex gap-2 border rounded-lg p-3 shadow-md">
-            <h4 className="text-sm font-semibold w-20">Isi Pesan : </h4>
+          <div className="flex gap-2 border rounded-lg p-3 shadow-md border-red-800">
+            <h4 className="text-sm font-semibold w-24">Isi Pesan :</h4>
             <p>{pesan.pesan}</p>
           </div>
 
