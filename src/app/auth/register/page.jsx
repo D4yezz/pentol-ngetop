@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 export default function RegisterPage() {
   return (
     <>
-      <div className="bg-neutral-100 w-full lg:h-dvh h-fit">
+      <div className="bg-neutral-100 w-full h-fit">
         <div className="px-12">
           <Logo />
         </div>
