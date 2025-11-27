@@ -1,4 +1,6 @@
-import { createClient } from "@supabase/supabase-js";
+// import { createClient } from "@supabase/supabase-js";
+
+import createClient from "./client";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -6,4 +8,3 @@ const supabase = createClient(
 );
 
 export default supabase;
-

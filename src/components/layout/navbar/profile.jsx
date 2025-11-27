@@ -26,13 +26,13 @@ export const menuProfile = [
     href: "/profile/edit",
     icon: <UserPen size={20} />,
   },
-  {
-    id: 2,
-    element: Link,
-    text: "Ubah Password",
-    href: "/profile/password",
-    icon: <KeyRound size={20} />,
-  },
+  // {
+  //   id: 2,
+  //   element: Link,
+  //   text: "Ubah Password",
+  //   href: "/profile/password",
+  //   icon: <KeyRound size={20} />,
+  // },
   {
     id: 3,
     element: "button",
