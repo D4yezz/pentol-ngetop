@@ -63,8 +63,7 @@ export default function Footer() {
               </p>
             </div>
             <p className="lg:text-balance text-wrap font-semibold lg:w-[80%] w-full">
-              Pentol Ngetop - Lorem ipsum, dolor sit amet consectetur
-              adipisicing elit. Animi ab commodi magnam.
+              Pentol Ngetop - Rasakan sensasi pedas mantap yang selalu bikin ketagihan, dijamin Ngetop banget!
             </p>
             <div className="w-fit h-fit py-4 flex gap-4 [&>*]:bg-yellow-300 [&>*]:px-1.5 [&>*]:py-1 [&>*]:rounded-full [&>*]:text-[1.4rem] [&>*]:text-red-800 [&>*]:hover:bg-yellow-400 [&>*]:duration-300 [&>*]:ease-in-out">
               <a href="/">
