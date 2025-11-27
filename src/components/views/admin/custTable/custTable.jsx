@@ -31,8 +31,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import CustDrawer from "./custDrawer";
 
 export default function CustTable({ allUser, loading, onSucces }) {
-  // const [allUser, setAllUser] = useState([]);
-  // const [isLoading, setIsLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
 

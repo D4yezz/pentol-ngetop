@@ -24,8 +24,8 @@ export default function CustDrawer({ user, onClose, onUpdate }) {
 
       if (error) throw error;
       toast.success("Data pengguna berhasil diperbarui ✅");
-      onUpdate(); // refresh data dari parent
-      onClose(); // tutup drawer
+      onUpdate();
+      onClose();
     } catch (err) {
       toast.error("Gagal memperbarui pengguna", { description: err.message });
     } finally {
