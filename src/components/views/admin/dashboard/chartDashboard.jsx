@@ -26,78 +26,31 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export const description = "An interactive area chart";
-
-const chartData = [
-  { date: "2025-08-01", desktop: 15, mobile: 20 },
-  { date: "2025-08-02", desktop: 23, mobile: 88 },
-  { date: "2025-08-03", desktop: 27, mobile: 90 },
-  { date: "2025-08-04", desktop: 35, mobile: 20 },
-  { date: "2025-08-05", desktop: 41, mobile: 90 },
-  { date: "2025-08-06", desktop: 48, mobile: 20 },
-  { date: "2025-08-07", desktop: 38, mobile: 40 },
-  { date: "2025-08-08", desktop: 19, mobile: 10 },
-  { date: "2025-08-27", desktop: 33, mobile: 20 },
-  { date: "2025-08-28", desktop: 12, mobile: 80 },
-  { date: "2025-08-29", desktop: 35, mobile: 40 },
-  { date: "2025-08-30", desktop: 44, mobile: 80 },
-  { date: "2025-09-01", desktop: 15, mobile: 20 },
-  { date: "2025-09-02", desktop: 23, mobile: 39 },
-  { date: "2025-09-03", desktop: 27, mobile: 90 },
-  { date: "2025-09-04", desktop: 35, mobile: 20 },
-  { date: "2025-09-05", desktop: 41, mobile: 90 },
-  { date: "2025-09-06", desktop: 48, mobile: 20 },
-  { date: "2025-09-07", desktop: 38, mobile: 60 },
-  { date: "2025-09-08", desktop: 19, mobile: 10 },
-  { date: "2025-09-27", desktop: 33, mobile: 20 },
-  { date: "2025-09-28", desktop: 12, mobile: 80 },
-  { date: "2025-09-29", desktop: 35, mobile: 40 },
-  { date: "2025-09-30", desktop: 44, mobile: 80 },
-  { date: "2025-10-01", desktop: 22, mobile: 50 },
-  { date: "2025-10-02", desktop: 9, mobile: 10 },
-  { date: "2025-10-03", desktop: 17, mobile: 20 },
-  { date: "2025-10-04", desktop: 22, mobile: 60 },
-  { date: "2025-10-05", desktop: 33, mobile: 90 },
-  { date: "2025-10-06", desktop: 31, mobile: 40 },
-  { date: "2025-10-07", desktop: 25, mobile: 80 },
-  { date: "2025-10-08", desktop: 49, mobile: 20 },
-  { date: "2025-10-09", desktop: 5, mobile: 10 },
-  { date: "2025-10-10", desktop: 21, mobile: 90 },
-  { date: "2025-10-11", desktop: 37, mobile: 50 },
-  { date: "2025-10-12", desktop: 22, mobile: 10 },
-  { date: "2025-10-13", desktop: 32, mobile: 80 },
-  { date: "2025-10-14", desktop: 17, mobile: 20 },
-  { date: "2025-10-15", desktop: 10, mobile: 70 },
-  { date: "2025-10-16", desktop: 18, mobile: 90 },
-  { date: "2025-10-17", desktop: 46, mobile: 60 },
-  { date: "2025-10-18", desktop: 34, mobile: 10 },
-  { date: "2025-10-19", desktop: 23, mobile: 80 },
-  { date: "2025-10-20", desktop: 8, mobile: 10 },
-  { date: "2025-10-21", desktop: 17, mobile: 20 },
-  { date: "2025-10-22", desktop: 24, mobile: 70 },
-  { date: "2025-10-23", desktop: 18, mobile: 30 },
-  { date: "2025-10-24", desktop: 37, mobile: 90 },
-  { date: "2025-10-25", desktop: 25, mobile: 50 },
-  { date: "2025-10-26", desktop: 7, mobile: 10 },
-  { date: "2025-10-27", desktop: 33, mobile: 20 },
-  { date: "2025-10-28", desktop: 12, mobile: 80 },
-];
-
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  desktop: {
-    label: "Pedas Banget",
-    color: "#fff",
-  },
-  mobile: {
-    label: "Pedas Manis",
-    color: "oklch(90.5% 0.182 98.111)",
-  },
-};
-
 export function ChartAreaInteractive() {
+  const [chartData, setChartData] = React.useState([]);
+  const [products, setProducts] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/api/chart/products");
+      const result = await res.json();
+
+      if (result.status) {
+        setProducts(result.products);
+        setChartData(result.chartData);
+      }
+    };
+
+    fetchData();
+  }, []);
+  const chartConfig = {
+    p1: { label: products[0]?.nama || "Produk 1", color: "#fff" },
+    p2: {
+      label: products[1]?.nama || "Produk 2",
+      color: "oklch(90.5% 0.182 98.111)",
+    },
+  };
+
   const [timeRange, setTimeRange] = React.useState("90d");
 
   const filteredData = chartData.filter((item) => {
@@ -153,24 +106,24 @@ export function ChartAreaInteractive() {
               <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-desktop)"
+                  stopColor="var(--color-p1)"
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-desktop)"
+                  stopColor="var(--color-p1)"
                   stopOpacity={0.1}
                 />
               </linearGradient>
               <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-mobile)"
+                  stopColor="var(--color-p2)"
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-mobile)"
+                  stopColor="var(--color-p2)"
                   stopOpacity={0.1}
                 />
               </linearGradient>
@@ -209,14 +162,18 @@ export function ChartAreaInteractive() {
               }
             />
             <Area
-              dataKey="mobile"
+              dataKey="p1"
+              // dataKey={topProducts?.[1]}
+              // dataKey="mobile"
               type="natural"
               fill="url(#fillMobile)"
               stroke="var(--color-mobile)"
               stackId="a"
             />
             <Area
-              dataKey="desktop"
+              dataKey="p2"
+              // dataKey={topProducts?.[0]}
+              // dataKey="desktop"
               type="natural"
               fill="url(#fillDesktop)"
               stroke="var(--color-desktop)"

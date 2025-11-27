@@ -9,7 +9,10 @@ export async function POST(req) {
 
     if (password !== confirm_password) {
       return NextResponse.json(
-        { status: false, pesan: "Password atau Konfirmasi Password tidak sesuai !" },
+        {
+          status: false,
+          pesan: "Password atau Konfirmasi Password tidak sesuai !",
+        },
         { status: 400 }
       );
     }
@@ -18,7 +21,7 @@ export async function POST(req) {
       email,
       password,
       options: {
-        data: { username }, 
+        data: { username },
       },
     });
 
@@ -35,14 +38,17 @@ export async function POST(req) {
       .from("profil_pengguna")
       .insert({
         id: user.id,
-        username: username, 
+        username: username,
+        role: "user",
       });
 
     if (insertError) {
       return NextResponse.json(
         {
           status: false,
-          pesan: "Akun berhasil dibuat tapi gagal membuat profil: " + insertError.message,
+          pesan:
+            "Akun berhasil dibuat tapi gagal membuat profil: " +
+            insertError.message,
         },
         { status: 500 }
       );
@@ -53,7 +59,6 @@ export async function POST(req) {
       pesan: "Registrasi berhasil",
       data: data,
     });
-
   } catch (error) {
     console.error("Register API error:", error);
     return NextResponse.json(
@@ -62,5 +67,3 @@ export async function POST(req) {
     );
   }
 }
-
-
