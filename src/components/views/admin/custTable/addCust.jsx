@@ -15,8 +15,13 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CirclePlus } from "lucide-react";
+import { CirclePlus, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
 
 export default function AddCust({ onSuccess }) {
   const [formData, setFormData] = useState({
@@ -25,6 +30,7 @@ export default function AddCust({ onSuccess }) {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -38,7 +44,6 @@ export default function AddCust({ onSuccess }) {
 
     try {
       setLoading(true);
-      // 1️⃣ Buat user di Authentication via API
       const res = await fetch("/api/add-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -48,19 +53,18 @@ export default function AddCust({ onSuccess }) {
       const result = await res.json();
       if (!res.ok) throw new Error(result.error || "Gagal membuat user.");
 
-      // 2️⃣ Masukkan ke tabel profil_pengguna
       const { data, error } = await supabase.from("profil_pengguna").insert([
         {
           username: formData.name,
-          auth_id: result.user.id,
-          role: "customer", // default role
+          id: result.user.id,
+          role: "user",
         },
       ]);
 
       if (error) throw error;
 
       toast.success("Berhasil menambahkan pengguna baru ✅");
-      onSuccess?.(); // refresh table user di parent
+      onSuccess?.();
       setFormData({ name: "", email: "", password: "" });
     } catch (err) {
       toast.error("Gagal menambahkan pengguna", { description: err.message });
@@ -106,14 +110,31 @@ export default function AddCust({ onSuccess }) {
           </div>
           <div>
             <Label htmlFor="password">Password</Label>
-            <Input
+            {/* <Input
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Masukkan password"
               value={formData.password}
               onChange={handleChange}
-            />
+            /> */}
+            <InputGroup>
+              <InputGroupInput
+                placeholder="*****"
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
+              <InputGroupAddon onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? (
+                  <Eye size={20} className="cursor-pointer" />
+                ) : (
+                  <EyeOff size={20} className="cursor-pointer" />
+                )}
+              </InputGroupAddon>
+            </InputGroup>
           </div>
         </div>
 

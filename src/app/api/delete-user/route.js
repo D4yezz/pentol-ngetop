@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-  const { auth_id } = await req.json();
+  const { id } = await req.json();
 
   const res = await fetch(
-    `https://dchgivhqxjfdndhvnfkq.supabase.co/auth/v1/admin/users/${auth_id}`,
+    `https://dchgivhqxjfdndhvnfkq.supabase.co/auth/v1/admin/users/${id}`,
     {
       method: "DELETE",
       headers: {

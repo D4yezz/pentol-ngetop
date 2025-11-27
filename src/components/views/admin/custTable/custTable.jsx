@@ -30,9 +30,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { motion, AnimatePresence } from "framer-motion";
 import CustDrawer from "./custDrawer";
 
-export default function CustTable() {
-  const [allUser, setAllUser] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+export default function CustTable({ allUser, loading, onSucces }) {
+  // const [allUser, setAllUser] = useState([]);
+  // const [isLoading, setIsLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -40,21 +40,7 @@ export default function CustTable() {
     setSelectedUser(user);
     setOpenDrawer(true);
   };
-  const getAllUser = async () => {
-    try {
-      const res = await fetch("/api/all-users");
-      if (!res.ok) throw new Error("Gagal memuat data pengguna dari server");
-
-      const result = await res.json();
-      setAllUser(result.users);
-    } catch (error) {
-      toast.error("Gagal memuat data pengguna", { description: error.message });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const deleteAkun = async (id, auth_id) => {
+  const deleteAkun = async (id) => {
     try {
       const { error: delProfileErr } = await supabase
         .from("profil_pengguna")
@@ -65,24 +51,20 @@ export default function CustTable() {
       const res = await fetch("/api/delete-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ auth_id }),
+        body: JSON.stringify({ id }),
       });
 
       if (!res.ok) throw new Error("Gagal menghapus dari auth.users");
 
       toast.success("Akun berhasil dihapus 🚮");
-      getAllUser();
+      onSucces();
     } catch (err) {
       console.error(err);
       toast.error("Gagal menghapus akun", { description: err.message });
     }
   };
 
-  useEffect(() => {
-    getAllUser();
-  }, []);
-
-  if (isLoading) {
+  if (loading) {
     return <Skeleton className="h-[300px] w-full rounded-xl" />;
   }
 
@@ -210,7 +192,7 @@ export default function CustTable() {
                             <AlertDialogCancel>Batal</AlertDialogCancel>
                             <AlertDialogAction
                               className="bg-red-700 text-yellow-300"
-                              onClick={() => deleteAkun(item.id, item.auth_id)}
+                              onClick={() => deleteAkun(item.id)}
                             >
                               Hapus
                             </AlertDialogAction>
@@ -230,7 +212,7 @@ export default function CustTable() {
           <CustDrawer
             user={selectedUser}
             onClose={() => setOpenDrawer(false)}
-            onUpdate={getAllUser}
+            onUpdate={onSucces}
           />
         )}
       </AnimatePresence>
