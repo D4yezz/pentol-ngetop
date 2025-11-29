@@ -1,5 +1,4 @@
 "use client";
-import { AppSidebar } from "@/components/views/admin/sidebar/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -47,7 +46,7 @@ export default function DashboardPage() {
       />
       <div className="flex flex-col px-8 mt-8 mb-20 gap-4">
         <Content />
-        {/* <ChartAreaInteractive /> */}
+        <ChartAreaInteractive />
       </div>
     </>
   );

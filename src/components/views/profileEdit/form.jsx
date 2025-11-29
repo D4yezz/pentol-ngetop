@@ -231,7 +231,7 @@ export default function FormEditProfil() {
           >
             <Save size={20} /> {loading ? "Menyimpan..." : "Simpan"}
           </Button>
-          <Button type="button" onClick={() => window.location.reload()}>
+          <Button type="button" onClick={() => window.history.back()}>
             Batal
           </Button>
         </div>

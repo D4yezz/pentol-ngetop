@@ -29,9 +29,11 @@ import {
 import { logout } from "@/service/auth.service";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function NavUser({ user }) {
   const [IsLoading, SetIsLoading] = useState(false);
+  const router = useRouter();
   const { isMobile } = useSidebar();
   const handleLogout = async () => {
     SetIsLoading(true);
@@ -86,13 +88,16 @@ export function NavUser({ user }) {
                 </div>
               </div>
             </DropdownMenuLabel>
-            {/* <DropdownMenuSeparator />
+            <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => router.push("/profile/edit")}
+                className="cursor-pointer"
+              >
                 <UserPen />
                 Pengaturan Akun
               </DropdownMenuItem>
-            </DropdownMenuGroup> */}
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className={"cursor-pointer"}
