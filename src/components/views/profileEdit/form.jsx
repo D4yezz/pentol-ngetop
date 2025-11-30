@@ -124,10 +124,10 @@ export default function FormEditProfil() {
     <>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-14 w-full items-end p-12 font-inter"
+        className="flex flex-col gap-14 w-full items-end lg:p-12 p-6 font-inter"
       >
-        <div className="w-full flex justify-between items-center">
-          <div className="w-1/2 flex flex-col gap-6">
+        <div className="w-full flex lg:flex-row flex-col lg:gap-0 gap-12 justify-between items-center">
+          <div className="lg:w-1/2 w-full flex flex-col gap-6">
             <div className="space-y-2">
               <h2 className="text-2xl font-semibold">Informasi Akun</h2>
               <p className="text-slate-500">
@@ -185,7 +185,7 @@ export default function FormEditProfil() {
               </div>
             </div>
           </div>
-          <div className="w-1/2 flex flex-col items-center gap-6 px-8">
+          <div className="lg:w-1/2 w-full flex flex-col items-center gap-6 px-8">
             <Label
               htmlFor="avatar"
               className={

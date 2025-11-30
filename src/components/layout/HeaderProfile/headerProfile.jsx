@@ -5,10 +5,10 @@ import React from "react";
 
 export default function HeaderProfile({ text }) {
   return (
-    <header className="w-full h-fit border-b border-gray-300 px-8 py-4 flex items-center gap-5 font-inter">
+    <header className="w-full h-fit border-b border-gray-300 lg:px-8 px-4 py-4 flex items-center gap-5 font-inter">
       <Button
         onClick={() => history.back()}
-        className="rounded-full bg-neutral-100 text-neutral-400 p-3 w-fit h-fit"
+        className="rounded-full bg-neutral-100 text-neutral-400 lg:p-3 p-2 w-fit h-fit"
       >
         <FontAwesomeIcon icon={faArrowLeft} size="xl" stroke="1" />
       </Button>
