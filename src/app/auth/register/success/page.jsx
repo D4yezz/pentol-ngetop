@@ -6,8 +6,8 @@ import React from "react";
 export default function SuccessPage() {
   return (
     <>
-      <section className="w-full h-dvh bg-white flex items-center justify-center font-inter relative">
-        <div className="w-1/3 h-fit flex flex-col gap-4 items-center justify-center gradiasi-btn-merah text-white shadow-xl rounded-3xl p-10 relative z-20">
+      <section className="w-full h-dvh lg:px-0 px-12 bg-white flex items-center justify-center font-inter relative">
+        <div className="lg:w-1/3 w-full h-fit flex flex-col gap-4 items-center justify-center gradiasi-btn-merah text-white shadow-xl rounded-3xl p-10 relative z-20">
           <div className="flex items-center justify-center mb-4 w-20 h-20 border-2 border-yellow-300 rounded-full overflow-hidden">
             <img
               src="/logos.png"
@@ -15,7 +15,9 @@ export default function SuccessPage() {
               className="h-full w-full object-cover"
             />
           </div>
-          <h1 className="font-semibold">Registrasi Berhasil</h1>
+          <h1 className="font-semibold text-center text-4xl">
+            Registrasi Berhasil
+          </h1>
           <p className="text-center px-8">
             Akun Anda telah berhasil didaftarkan. Silakan cek email untuk
             verifikasi akun.

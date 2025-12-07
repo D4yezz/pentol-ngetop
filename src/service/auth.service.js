@@ -101,17 +101,17 @@ export const logout = async () => {
 //   }
 // };
 
-// export const UpdatePassword = async (password) => {
-//   try {
-//     const response = await api.post("/update-password", password);
-//     return response.data;
-//   } catch (error) {
-//     if (axios.isAxiosError(error) && error.response) {
-//       return error.response.data;
-//     }
-//     return {
-//       status: false,
-//       pesan: "Network error",
-//     };
-//   }
-// };
+export const UpdatePassword = async (password) => {
+  try {
+    const response = await api.post("/update-password", password);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    return {
+      status: false,
+      pesan: "Network error",
+    };
+  }
+};
