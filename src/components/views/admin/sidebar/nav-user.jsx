@@ -6,6 +6,7 @@ import {
   ChevronsUpDown,
   CreditCard,
   LogOut,
+  RectangleEllipsis,
   Sparkles,
   UserPen,
 } from "lucide-react";
@@ -96,6 +97,16 @@ export function NavUser({ user }) {
               >
                 <UserPen />
                 Pengaturan Akun
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                onClick={() => router.push("/profile/update-password")}
+                className="cursor-pointer"
+              >
+                <RectangleEllipsis />
+                Ubah Password
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
