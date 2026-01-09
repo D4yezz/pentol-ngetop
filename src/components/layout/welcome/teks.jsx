@@ -51,13 +51,20 @@ export default function TeksWelcome() {
             }
           />
           <BtnGeserAtas
+            onClick={() =>
+              window.open(
+                "https://wa.me/6289653399316",
+                "_blank",
+                "noopener,noreferrer"
+              )
+            }
             text={isDekstop ? "Hubungi Kami" : "Hubungi"}
             styleText={
               "gradiasi-btn-merah text-yellow-300 font-semibold text-lg rounded-full lg:w-54 w-[35vw] lg:px-4 p-2"
             }
             iconAtas={<Phone size={20} />}
             iconBawah={<Send size={20} />}
-            textPopup={"0812-xxxx-xxxx"}
+            textPopup={"+62 896-5339-9316"}
             stylePopup={
               "text-xs bg-yellow-300 text-red-800 px-2 py-2 rounded-full"
             }

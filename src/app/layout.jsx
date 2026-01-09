@@ -12,7 +12,6 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import "leaflet/dist/leaflet.css";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -49,6 +48,16 @@ const instrumentSans = Instrument_Sans({
 export const metadata = {
   title: "Pentol Ngetop",
   description: "Website Pemesanan Pentol Ngetop Terpercaya",
+  keywords: [
+    "Pentol",
+    "Pentol Ngetop",
+    "Pentol Pedas",
+    "Pentol Pedas Manis",
+    "Pentol Pedas Terpercaya",
+    "Pentol Pedas Malang",
+    "Pentol Malang",
+    "Pentol Ngetop Terpercaya",
+  ],
 };
 
 export default function RootLayout({ children }) {

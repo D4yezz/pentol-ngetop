@@ -10,7 +10,7 @@ export const navigasi = [
   {
     id: 2,
     text: "Tentang Kami",
-    href: "#about",
+    href: "/#tentang-kami",
     icon: <ChefHat size={20} />,
   },
   {
@@ -22,7 +22,7 @@ export const navigasi = [
   {
     id: 4,
     text: "Kontak",
-    href: "#contact",
+    href: "/#kontak",
     icon: <Phone size={20} />,
   },
 ];

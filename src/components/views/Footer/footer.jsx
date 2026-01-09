@@ -11,24 +11,34 @@ import React, { useRef } from "react";
 const menu = [
   {
     menuCepat: [
-      { id: 1, title: "Beranda", href: "/" },
-      { id: 2, title: "Tentang Kami", href: "/" },
-      { id: 3, title: "Menu", href: "/" },
-      { id: 4, title: "Kontak", href: "/" },
-      { id: 5, title: "Pengaturan Akun", href: "/" },
+      { id: 1, title: "Beranda", href: "/#beranda" },
+      { id: 2, title: "Tentang Kami", href: "/#tentang-kami" },
+      { id: 3, title: "Menu", href: "/menu" },
+      { id: 4, title: "Kritik & Saran", href: "/kritik-saran" },
+      { id: 5, title: "Pengaturan Akun", href: "/profile/edit" },
     ],
     lokasi: [
-      { id: 1, title: "+62896xxxxxx", href: "/", icon: <Phone size={18} /> },
+      {
+        id: 1,
+        title: (
+          <>
+            <p>+62 896-5339-9316 (Sari)</p>
+            <p>+62 857-3640-8536 (Zihan)</p>
+          </>
+        ),
+        href: "#contact",
+        icon: <Phone size={18} />,
+      },
       {
         id: 2,
-        title: "pentolngetop@mail.com",
-        href: "/",
+        title: "pentolngetop@gmail.com",
+        href: "#contact",
         icon: <Mail size={18} />,
       },
       {
         id: 3,
         title: "JL. Jendral Bimantara No. 1",
-        href: "/",
+        href: "#contact",
         icon: <MapPin size={18} />,
       },
     ],
@@ -41,7 +51,7 @@ export default function Footer() {
   return (
     <>
       <motion.footer
-        id="contact"
+        id="kontak"
         ref={ref}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
@@ -63,16 +73,17 @@ export default function Footer() {
               </p>
             </div>
             <p className="lg:text-balance text-wrap font-semibold lg:w-[80%] w-full">
-              Pentol Ngetop - Rasakan sensasi pedas mantap yang selalu bikin ketagihan, dijamin Ngetop banget!
+              Pentol Ngetop - Rasakan sensasi pedas mantap yang selalu bikin
+              ketagihan, dijamin Ngetop banget!
             </p>
             <div className="w-fit h-fit py-4 flex gap-4 [&>*]:bg-yellow-300 [&>*]:px-1.5 [&>*]:py-1 [&>*]:rounded-full [&>*]:text-[1.4rem] [&>*]:text-red-800 [&>*]:hover:bg-yellow-400 [&>*]:duration-300 [&>*]:ease-in-out">
-              <a href="/">
+              <a href="https://wa.me/6289653399316" target="_blank">
                 <FontAwesomeIcon icon={faWhatsapp} />
               </a>
               <a href="/">
                 <FontAwesomeIcon icon={faInstagram} />
               </a>
-              <a href="/">
+              <a href="mailto:pentolngetop@gmail.com" target="_blank">
                 <FontAwesomeIcon icon={faEnvelope} />
               </a>
             </div>
@@ -104,7 +115,12 @@ export default function Footer() {
                     >
                       {item.icon}
                     </span>
-                    <a href={item.href}>{item.title}</a>
+                    <a
+                      href={item.href}
+                      className="flex flex-col justify-center "
+                    >
+                      {item.title}
+                    </a>
                   </li>
                 ))}
               </ul>

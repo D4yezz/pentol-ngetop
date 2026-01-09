@@ -102,7 +102,7 @@ export function NavUser({ user }) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem
-                onClick={() => router.push("/profile/update-password")}
+                onClick={() => router.push("/profile/change-password")}
                 className="cursor-pointer"
               >
                 <RectangleEllipsis />

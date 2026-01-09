@@ -8,9 +8,11 @@ const BtnGeserAtas = ({
   stylePopup,
   iconAtas,
   iconBawah,
+  onClick,
 }) => {
   return (
     <button
+      onClick={onClick}
       className={`relative cursor-pointer transition-colors duration-300 group ${styleText}`}
     >
       <div
