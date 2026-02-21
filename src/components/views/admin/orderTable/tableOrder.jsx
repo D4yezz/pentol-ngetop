@@ -105,11 +105,11 @@ export default function TableOrder() {
             total_price,
             order_items (
               id,
-              product_id (id, nama, harga, product_images(image_url)),
+              product_id (id, nama, harga, stok, product_images(image_url)),
               quantity,
               price
             )
-          `
+          `,
         )
         .eq("id", orderId)
         .single();
@@ -126,6 +126,34 @@ export default function TableOrder() {
 
   const updateStatus = async (newStatus) => {
     try {
+      if (newStatus === "done") {
+        for (const item of orderItems) {
+          try {
+            const prodId = item.product_id?.id;
+            const qty = Number(item.quantity) || 0;
+            if (!prodId || qty <= 0) continue;
+
+            const { data: prodData, error: prodErr } = await supabase
+              .from("product")
+              .select("stok")
+              .eq("id", prodId)
+              .single();
+            if (prodErr) throw prodErr;
+
+            const currentStok = Number(prodData?.stok) || 0;
+            const newStok = Math.max(0, currentStok - qty);
+
+            const { error: updateErr } = await supabase
+              .from("product")
+              .update({ stok: newStok })
+              .eq("id", prodId);
+            if (updateErr) throw updateErr;
+          } catch (e) {
+            console.error("Gagal mengurangi stok untuk item:", item, e);
+          }
+        }
+      }
+
       const { error } = await supabase
         .from("orders")
         .update({ status: newStatus })
