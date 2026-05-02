@@ -107,7 +107,7 @@ export default function EditProduct({
       document.body.style.overflow = "";
     }
   }, [open]);
-  console.log(product);
+
   return (
     <>
       <AnimatePresence>

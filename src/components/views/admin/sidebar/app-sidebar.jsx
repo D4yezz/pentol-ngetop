@@ -142,7 +142,7 @@ const data = {
           ],
         },
         {
-          title: "Pelanggan",
+          title: "Pengguna",
           url: "/admin/customer",
           icon: Users,
           subItem: false,

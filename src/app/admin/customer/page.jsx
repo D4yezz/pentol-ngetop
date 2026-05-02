@@ -50,15 +50,15 @@ export default function CustomerPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
-                <BreadcrumbPage>Pelanggan</BreadcrumbPage>
+                <BreadcrumbPage>Pengguna</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
         </div>
       </header>
       <HeaderDashboard
-        title={"Kelola Pelanggan"}
-        desc={"Atur data pelanggan pentol ngetop dengan mudah"}
+        title={"Kelola Pengguna"}
+        desc={"Atur data pengguna pentol ngetop dengan mudah"}
         action={<AddCust onSuccess={getAllUser} />}
       />
       <div className="flex flex-col px-8 mt-8 mb-20 gap-4">

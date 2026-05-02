@@ -20,9 +20,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import supabase from "@/lib/db";
 import { SlidersVertical, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import EditProduct from "./editProduct";
+import { getProfileUser } from "@/service/auth.service";
+import { useRouter } from "next/navigation";
 
 export default function TableProduct({
   products,
@@ -30,15 +32,51 @@ export default function TableProduct({
   currentPage = 1,
   itemsPerPage = 5,
 }) {
+  const ALLOW_ACC = "9c7bc38f-d880-4aab-8424-4ce0fb93a0f7";
+  const NOT_ALLOWED_PRODUCT = [1, 2, 26];
   const [openDialogId, setOpenDialogId] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
   const [edit, setEdit] = useState(null);
+  const [userLog, setUserLog] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedProducts = products.slice(startIndex, endIndex);
+  const router = useRouter();
+
+  const getUserLog = async () => {
+    try {
+      const user = await getProfileUser();
+      if (user.status && user.data) {
+        setUserLog(user.data.profile.id);
+      }
+    } catch (error) {
+      toast.error("error fetch userLog");
+      console.error("Error checking user login:", error);
+    }
+  };
+
+  useEffect(() => {
+    const checkLog = async () => {
+      await getUserLog();
+    };
+
+    checkLog();
+  }, []);
+
+  const handleEdit = (item) => {
+    if (NOT_ALLOWED_PRODUCT.includes(item.id) && userLog !== ALLOW_ACC) {
+      toast.error("Anda tidak punya akses edit produk ini");
+      return;
+    }
+
+    setEdit(item);
+  };
+
   const deleteProduct = async (productId) => {
     try {
+      setLoading(true);
       setDeletingId(productId);
 
       await supabase
@@ -68,6 +106,7 @@ export default function TableProduct({
       toast.success("Produk berhasil dihapus!");
       refresh();
       setOpenDialogId(null);
+      setLoading(false);
     } catch (err) {
       console.error("Gagal menghapus produk :", err);
       toast.error("Terjadi kesalahan saat menghapus produk");
@@ -75,6 +114,16 @@ export default function TableProduct({
       setDeletingId(null);
     }
   };
+
+  const handleDelete = (item) => {
+    if (NOT_ALLOWED_PRODUCT.includes(item) && userLog !== ALLOW_ACC) {
+      toast.error("Anda tidak punya akses menghapus produk ini");
+      return;
+    }
+
+    deleteProduct(item);
+  };
+
   return (
     <>
       <Table className={"rounded-2xl overflow-hidden shadow-lg mb-8"}>
@@ -96,17 +145,17 @@ export default function TableProduct({
           {paginatedProducts.map((item, index) => (
             <TableRow
               key={item.id}
-              className="h-fit w-full py-4 border-b border-gray-300"
+              className="w-full py-4 border-b border-gray-300 h-fit"
             >
-              <TableCell className="font-semibold px-4">
+              <TableCell className="px-4 font-semibold">
                 {startIndex + index + 1}
               </TableCell>
               <TableCell className="p-4">
-                <div className="w-24 h-24 rounded-lg overflow-hidden shadow-md border-2 border-red-800">
+                <div className="w-24 h-24 overflow-hidden border-2 border-red-800 rounded-lg shadow-md">
                   <img
                     src={item.product_images[0].image_url}
                     alt={item.nama}
-                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                    className="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
                   />
                 </div>
               </TableCell>
@@ -136,12 +185,12 @@ export default function TableProduct({
                 <p className="text-balance">{item.stok}</p>
               </TableCell>
               <TableCell>
-                <div className="flex gap-2 justify-center">
+                <div className="flex justify-center gap-2">
                   <Button
                     size="sm"
-                    className="bg-yellow-300 hover:bg-yellow-400 text-red-800 px-3 py-2 h-auto"
+                    className="h-auto px-3 py-2 text-red-800 bg-yellow-300 hover:bg-yellow-400"
                     title="Edit"
-                    onClick={() => setEdit(item)}
+                    onClick={() => handleEdit(item)}
                   >
                     <SlidersVertical className="w-4 h-4" />
                   </Button>
@@ -170,9 +219,9 @@ export default function TableProduct({
                           Batal
                         </AlertDialogCancel>
                         <button
-                          className="bg-red-800 text-yellow-300 px-4 py-2 rounded-md cursor-pointer font-medium hover:bg-red-700"
-                          onClick={() => deleteProduct(item.id)}
-                          disabled={deletingId === item.id}
+                          className="px-4 py-2 font-medium text-yellow-300 bg-red-800 rounded-md cursor-pointer hover:bg-red-700"
+                          onClick={() => handleDelete(item.id)}
+                          disabled={loading}
                         >
                           {deletingId === item.id
                             ? "Menghapus..."

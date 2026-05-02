@@ -220,6 +220,7 @@ export default function FormEditProfil() {
               name="avatar"
               className={"hidden"}
               onChange={handleFileChange}
+              accept="image/*"
             />
           </div>
         </div>

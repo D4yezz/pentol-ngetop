@@ -83,11 +83,11 @@ export default function AddCust({ onSuccess }) {
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Tambah Pengguna Baru</DrawerTitle>
-          <DrawerDescription>Menambahkan akun pelanggan baru</DrawerDescription>
+          <DrawerDescription>Menambahkan akun pengguna baru</DrawerDescription>
         </DrawerHeader>
 
         <div className="flex flex-col gap-4 px-6 py-4">
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="name">Nama</Label>
             <Input
               id="name"
@@ -97,7 +97,7 @@ export default function AddCust({ onSuccess }) {
               onChange={handleChange}
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
@@ -108,16 +108,8 @@ export default function AddCust({ onSuccess }) {
               onChange={handleChange}
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            {/* <Input
-              id="password"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="Masukkan password"
-              value={formData.password}
-              onChange={handleChange}
-            /> */}
             <InputGroup>
               <InputGroupInput
                 placeholder="*****"

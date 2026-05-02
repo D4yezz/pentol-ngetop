@@ -65,7 +65,7 @@ export default function Footer() {
               <Avatar className={"w-12 h-12"}>
                 <AvatarImage src="/logos.png" />
                 <AvatarFallback>
-                  <img src="/ilang.jpg" alt="" />
+                  <img src="/default.jpg" alt="" />
                 </AvatarFallback>
               </Avatar>
               <p className="text-xl font-medium font-poppins">

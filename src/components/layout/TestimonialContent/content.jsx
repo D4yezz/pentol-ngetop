@@ -74,7 +74,7 @@ export default function ContentTester({ index = null }) {
               <Avatar className={"w-12 h-12 border-2 border-red-800"}>
                 <AvatarImage src={item.img} />
                 <AvatarFallback>
-                  <img src="/ilang.jpg" alt="" />
+                  <img src="/default.jpg" alt="" />
                 </AvatarFallback>
               </Avatar>
               <div className="flex flex-col gap-1.5">

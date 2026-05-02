@@ -27,17 +27,52 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import supabase from "@/lib/db";
 import { Skeleton } from "@/components/ui/skeleton";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import CustDrawer from "./custDrawer";
+import { getProfileUser } from "@/service/auth.service";
+import { useRouter } from "next/navigation";
 
 export default function CustTable({ allUser, loading, onSucces }) {
+  const ALLOW_ALL = "9c7bc38f-d880-4aab-8424-4ce0fb93a0f7";
   const [selectedUser, setSelectedUser] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [userLog, setUserLog] = useState(null);
+  const router = useRouter();
+
+  const getUserLog = async () => {
+    try {
+      const user = await getProfileUser();
+      if (user.status && user.data) {
+        setUserLog(user.data.profile.id);
+      }
+    } catch (error) {
+      toast.error("error fetch userLog");
+      console.error("Error checking user login:", error);
+    }
+  };
+
+  useEffect(() => {
+    const checkLog = async () => {
+      await getUserLog();
+    };
+
+    checkLog();
+  }, []);
 
   const handleEdit = (user) => {
-    setSelectedUser(user);
-    setOpenDrawer(true);
+    if (user.id === ALLOW_ALL && userLog !== ALLOW_ALL) {
+      toast.error("Anda tidak punya akses edit pengguna ini");
+      return;
+    }
+
+    if (userLog === user.id) {
+      router.push("/profile/edit");
+    } else {
+      setSelectedUser(user);
+      setOpenDrawer(true);
+    }
   };
+
   const deleteAkun = async (id) => {
     try {
       const { error: delProfileErr } = await supabase
@@ -54,12 +89,26 @@ export default function CustTable({ allUser, loading, onSucces }) {
 
       if (!res.ok) throw new Error("Gagal menghapus dari auth.users");
 
-      toast.success("Akun berhasil dihapus 🚮");
+      toast.success("Akun berhasil dihapus");
       onSucces();
     } catch (err) {
       console.error(err);
       toast.error("Gagal menghapus akun", { description: err.message });
     }
+  };
+
+  const handleDelete = (user) => {
+    if (user.id === ALLOW_ALL && userLog !== ALLOW_ALL) {
+      toast.error("Anda tidak punya akses menghapus pengguna ini");
+      return;
+    }
+
+    if (userLog === user.id) {
+      toast.error("Tidak bisa menghapus akun diri sendiri");
+      return;
+    }
+
+    deleteAkun(user.id);
   };
 
   if (loading) {
@@ -152,7 +201,7 @@ export default function CustTable({ allUser, loading, onSucces }) {
                             day: "numeric",
                             hour: "2-digit",
                             minute: "2-digit",
-                          }
+                          },
                         )
                       : "-"}
                   </TableCell>
@@ -190,7 +239,7 @@ export default function CustTable({ allUser, loading, onSucces }) {
                             <AlertDialogCancel>Batal</AlertDialogCancel>
                             <AlertDialogAction
                               className="bg-red-700 text-yellow-300"
-                              onClick={() => deleteAkun(item.id)}
+                              onClick={() => handleDelete(item)}
                             >
                               Hapus
                             </AlertDialogAction>

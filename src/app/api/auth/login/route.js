@@ -17,7 +17,7 @@ export async function POST(req) {
           status: false,
           pesan: error.message,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -26,7 +26,7 @@ export async function POST(req) {
         status: true,
         data: data,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Login API error:", error);
@@ -35,7 +35,7 @@ export async function POST(req) {
         status: false,
         pesan: "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

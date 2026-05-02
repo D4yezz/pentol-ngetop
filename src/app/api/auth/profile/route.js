@@ -13,7 +13,7 @@ export async function GET() {
           status: false,
           pesan: error.message,
         },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -31,7 +31,7 @@ export async function GET() {
           status: false,
           pesan: userError.message,
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -52,7 +52,7 @@ export async function GET() {
         status: false,
         pesan: "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
